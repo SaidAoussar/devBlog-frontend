@@ -8,10 +8,11 @@ import Blog from '../homepage/Blog'
 import About from '../about/About'
 import Contact from '../contact/Contact'
 import Login from '../auth/Login'
-import ErrorPage from '../utils/ErrorPage';
+import Register from '../auth/Register'
+import ErrorPage from '../utils/ErrorPage'
 import Profile from '../profile/Profile'
 import Logout from '../auth/Logout'
-import NavAuth from './NavAuth';
+import NavAuth from './NavAuth'
 
 function NavBar({useAuth,user}) {
   const [isAuth,setIsAuth] = useAuth
@@ -28,16 +29,22 @@ function NavBar({useAuth,user}) {
           to: `/profile/${user._id}`
         },
         {
-          name: "logout",
+          name: "Logout",
           to: "/logout"
         }
       ])
  
     }else{
-      setMenu([      {
-        name: "login",
+      setMenu([
+        {
+        name: "Login",
         to: "/login"
-      }])
+        },
+        {
+          name: "Register",
+          to: "/register"
+        }
+    ])
 
     }
   },[isAuth])
@@ -72,12 +79,21 @@ function NavBar({useAuth,user}) {
       <Route path="/blog/:id" element={<Blog />}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/contact" element={<Contact/>}/>
-      <Route path="/login" element={<Login useAuth={useAuth}/>}/>
+      
       {
-        isAuth && <Route path="/profile/:id" element={<Profile/>}/>
+        isAuth && <>
+        <Route path="/profile/:id" element={<Profile/>}/>
+        <Route path="/logout" element={<Logout useAuth={useAuth}/>}/>
+        </>
+      }
+      {
+        !isAuth && <>
+        <Route path="/login" element={<Login useAuth={useAuth}/>}/>
+        <Route path="/register" element={<Register useAuth={useAuth}/>}/>
+        </>
       }
       
-      <Route path="/logout" element={<Logout useAuth={useAuth}/>}/>
+      
 
       
       <Route path="*" element={<ErrorPage/>}/>
