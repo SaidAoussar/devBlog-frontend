@@ -12,6 +12,16 @@ export const login = async (data) => {
   
 }
 
+
+export const register = async (data) =>{
+  try {
+    const doc = await axios.post(`${URL}/register`,data)
+    return doc
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 //get user info
 export const isAuthenticated = async () =>{
   const token = localStorage.getItem("token")
