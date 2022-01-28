@@ -50,7 +50,6 @@ function Login({useAuth}) {
         </Col>
       </Row>
     </Container>
-
   </div>;
 }
 
