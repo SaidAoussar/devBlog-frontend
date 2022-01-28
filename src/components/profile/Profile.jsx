@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Image } from 'react-bootstrap'
 import {useParams} from 'react-router-dom'
 import {isAuthenticated} from '../../api/Auth'
 import avatar from '../../assets/img/avatar.png'
-import './profile.css';
+import './profile.module.css';
 
 function Profile() {
   const [user,setUser] = useState({})
