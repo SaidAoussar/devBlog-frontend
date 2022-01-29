@@ -1,21 +1,42 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
+import { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
+import {register} from '../../api/Auth';
+import { Container, Row, Col, Card, Form, Button, Alert  } from 'react-bootstrap'
 
 function Register() {
   const [username,setUsername] = useState("")
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
+  const [error, setError] = useState("")
 
-
-  
-
-  const register = (e)=>{
+  const navigate = useNavigate()
+  const funRegister = (e)=>{
     e.preventDefault()
+    register({
+      email: email,
+      username: username,
+      password: password
+    }).then((res)=>{
+      if(res.data.message){
+        setError(res.data.message)
+      }else{
+        console.log(res)
+        navigate('/login')
+        console.log("register success")
+      }
+      
+    }).catch((e)=>{
+      setError(e.message)
+      console.log(e.message)
+    })
     console.log(username,password,email)
   }
   return <Container>
       <Row className='justify-content-md-center'>
         <Col md={6}>
+          {
+            error && <Alert variant="danger">{error}</Alert>
+          } 
           <Card>
             <Card.Body>
               <Form>
@@ -31,7 +52,7 @@ function Register() {
                   <Form.Label>Password</Form.Label>
                   <Form.Control type="password" placeholder="Password" onChange={(e)=>setPassword(e.target.value)} />
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={register}>sign in</Button>
+                <Button variant="primary" type="submit" onClick={funRegister}>sign in</Button>
               </Form>
             </Card.Body>
           </Card>
