@@ -7,7 +7,7 @@ export const login = async (data) => {
     const doc = await axios.post(`${URL}/login`,data)
     return doc
   } catch (e) {
-    console.log(e)
+    return e.response
   }
   
 }
@@ -18,7 +18,7 @@ export const register = async (data) =>{
     const doc = await axios.post(`${URL}/register`,data)
     return doc
   } catch (e) {
-    console.log(e)
+    return e.response
   }
 }
 
