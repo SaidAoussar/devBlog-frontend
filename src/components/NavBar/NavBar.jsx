@@ -26,7 +26,7 @@ function NavBar({useAuth,user}) {
       setMenu([
         {
           name: "profile",
-          to: `/profile/${user._id}`
+          to: `/profile`
         },
         {
           name: "Logout",
@@ -82,7 +82,7 @@ function NavBar({useAuth,user}) {
       
       {
         isAuth && <>
-        <Route path="/profile/:id" element={<Profile/>}/>
+        <Route path="/profile" element={<Profile/>}/>
         <Route path="/logout" element={<Logout useAuth={useAuth}/>}/>
         </>
       }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Container, Row, Col, Card, Image } from 'react-bootstrap'
-import {useParams} from 'react-router-dom'
 import {isAuthenticated} from '../../api/Auth'
 import avatar from '../../assets/img/avatar.png'
 import './profile.module.css';
@@ -15,7 +14,6 @@ function Profile() {
       console.log(e)
     })
   },[])
-  const {id} = useParams()
   return <Container>
     <Row>
       <Col>
