@@ -1,28 +1,30 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useContext} from 'react'
 import { Navbar } from 'react-bootstrap';
-import NavBar from './components/NavBar/NavBar';
+import NavBar from './components/NavBar/NavBar'
 import {isAuthenticated} from './api/Auth'
+import {AppContext} from './context/AppContext'
 
 export default function Home() {
-
-  const [user,setUser] = useState({})
-  const [isAuth,setIsAuth] = useState()
+  const context = useContext(AppContext)
+  const [user,setUser] = context.useUser
+  const [auth,setAuth] = context.useAuth
   useEffect(()=>{
-      isAuthenticated().then((res)=>{
-        setUser(res.data)
-        setIsAuth(res.data.isAuth)
-        console.log(res.data)
-      })
-      .catch(e => {
-        setIsAuth(false)
-        setUser({})
-        console.log(e.response.data.message)
-    });
+    isAuthenticated().then((res)=>{
+      setUser(res.data)
+      setAuth(res.data.isAuth)
+      console.log(res.data)
+    })
+    .catch(e => {
+      setAuth(false)
+      setUser({})
+      console.log(e.response.data.message)
+  });
 
   },[])
+
     return (
         <div>
-          <NavBar useAuth={[isAuth,setIsAuth]} user={user}></NavBar>
+          <NavBar></NavBar>
         </div>
     )
 }

@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
+import { AppContext } from '../../context/AppContext';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Container from 'react-bootstrap/Container'
@@ -14,19 +15,22 @@ import Profile from '../profile/Profile'
 import Logout from '../auth/Logout'
 import NavAuth from './NavAuth'
 
-function NavBar({useAuth,user}) {
-  const [isAuth,setIsAuth] = useAuth
+
+function NavBar({}) {
+  const context = useContext(AppContext)
+  const [user,setUser] = context.useUser
+  const [auth,setAuth] = context.useAuth
   const [menu,setMenu] =useState([])
   const navigate = useNavigate()
 
   useEffect(()=>{
     console.log("hello")
-    if(isAuth){
+    if(auth){
       console.log("true isAuth")
       setMenu([
         {
           name: "profile",
-          to: `/profile`
+          to: `/profile/${user._id}`
         },
         {
           name: "Logout",
@@ -47,12 +51,12 @@ function NavBar({useAuth,user}) {
     ])
 
     }
-  },[isAuth])
+  },[auth])
 
 
-  
 
-    console.log(menu)
+
+
 
 
 
@@ -81,23 +85,22 @@ function NavBar({useAuth,user}) {
       <Route path="/contact" element={<Contact/>}/>
       
       {
-        isAuth && <>
-        <Route path="/profile" element={<Profile/>}/>
-        <Route path="/logout" element={<Logout useAuth={useAuth}/>}/>
+        auth && <>
+        <Route path="/profile/:id/*" element={<Profile/>}/>
+        <Route path="/logout" element={<Logout/>}/>
         </>
       }
       {
-        !isAuth && <>
-        <Route path="/login" element={<Login useAuth={useAuth}/>}/>
-        <Route path="/register" element={<Register useAuth={useAuth}/>}/>
+        !auth && <>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
         </>
       }
-      
-      
-
-      
       <Route path="*" element={<ErrorPage/>}/>
-    </Routes>   
+    </Routes>
+    {/* <Routes basename="/blog/:id">
+        <Route path="*" element={<Blog />} />
+      </Routes>  */}
   </div>;
 }
 

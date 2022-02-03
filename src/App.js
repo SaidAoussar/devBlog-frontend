@@ -1,12 +1,13 @@
 import Home from './Home'
+import { ContextWrapper } from './context/AppContext';
 
 
 
 function App() {
   return (
-    <div>
-      <Home></Home>
-    </div>
+      <ContextWrapper>
+        <Home></Home>
+      </ContextWrapper>
   );
 }
 
