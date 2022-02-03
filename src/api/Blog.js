@@ -19,3 +19,12 @@ export const getBlog = async (id) => {
     console.log(e)
   }
 }
+export const allBlogsOfUser = async (id) =>{
+  console.log("id form blog api" + id)
+  try {
+    const res = await axios.get(`${URL}/blog/user/`+id)
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
