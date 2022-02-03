@@ -14,8 +14,8 @@ function NavAuth({routesLink}) {
   // ]
   return <>
     {
-      routesLink.map((routeLink)=>{
-        return <Nav.Link as={Link} to={routeLink.to}>{routeLink.name}</Nav.Link>
+      routesLink.map((routeLink,index)=>{
+        return <Nav.Link key={index} as={Link} to={routeLink.to}>{routeLink.name}</Nav.Link>
       })
     }
   </>;
