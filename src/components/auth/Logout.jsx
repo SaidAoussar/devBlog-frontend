@@ -1,11 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect,useContext } from 'react';
 import {Navigate} from 'react-router-dom'
-function Logout({useAuth}) {
-  const [isAuth,setIsAuth] = useAuth
+import { AppContext } from '../../context/AppContext';
+function Logout() {
+  const context = useContext(AppContext)
+  const [user,setUser] = context.useUser
+  const [auth,setAuth] = context.useAuth
 
   useEffect(()=>{
     localStorage.removeItem("token");
-    setIsAuth(false)
+    setAuth(false)
+    setUser({})
     console.log("logout")
   },[])
 
