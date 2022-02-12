@@ -1,8 +1,8 @@
 
 
-const tags = [
+const allTags = [
   { value: 'Html', label: 'Html' },
-  { value: 'Css', label: 'Javascript' },
+  { value: 'Css', label: 'Css' },
   { value: 'Javascript', label: 'Javascript' },
   { value: 'ReactJs', label: 'ReactJs' },
   { value: 'NodeJs', label: 'NodeJs' },
@@ -10,4 +10,4 @@ const tags = [
 ]
 
 
-module.exports.tags = tags
+module.exports.allTags = allTags
