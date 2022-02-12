@@ -4,6 +4,7 @@ import {getUser} from '../../api/User'
 import { Container, Row, Col, Card, Image } from 'react-bootstrap'
 import UserBlogs from './UserBlogs'
 import CreateBlog from './CreateBlog'
+import EditBlog from './EditBlog';
 import avatar from '../../assets/img/avatar.png'
 import './profile.module.css';
 
@@ -44,7 +45,8 @@ function Profile() {
     <Row className="mt-4 mb-5 justify-content-md-center">
       <Routes>
           <Route path="/blogs" element={<UserBlogs userId={id}/>}/>
-          <Route path="/create" element={<CreateBlog/>}/>
+          <Route path="/blogs/:blogid/edit" element={<EditBlog userId={id}/>}/>
+          <Route path="/create" element={<CreateBlog userId={id}/>}/>
       </Routes>
     </Row>
   </Container>;
