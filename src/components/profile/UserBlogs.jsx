@@ -18,7 +18,7 @@ function UserBlogs({userId}) {
         {
           blogs.map((blog)=>{
             return <Col key={blog._id}>
-              <BlogCard blog={blog} />
+              <BlogCard blog={blog} operation={true} userId={userId} setBlogs={setBlogs} />
             </Col>
           })
         }
