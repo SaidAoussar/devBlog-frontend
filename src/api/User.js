@@ -1,37 +1,44 @@
-import axios from 'axios'
+import axios from "axios";
 
 const URL = process.env.REACT_APP_URL;
 
-export async function getUsers(){
+export async function getUsers() {
   try {
-      const response = await axios.get(`${URL}/user`)
-      return response
+    const response = await axios.get(`${URL}/user`);
+    return response;
   } catch (e) {
-      console.log(e)
+    console.log(e);
   }
 }
 
-export async function getUser(id){
+export async function getUser(id) {
   try {
-    const res = await axios.get(`${URL}/user/${id}`)
-    return res
+    const res = await axios.get(`${URL}/user/${id}`);
+    return res;
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 }
 
-export async function removeUser(id){
-  const response = await axios.delete(`${URL}/user/'${id}`)
-  return response
+export async function removeUser(id) {
+  try {
+    const response = await axios.delete(`${URL}/user/'${id}`);
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
 }
 
-
-export async function updateUser(id,data) {
-  const response = await axios.put(`${URL}/user/${id}`,data)
-  return response
+export async function updateUser(id, formData) {
+  try {
+    const response = await axios.put(`${URL}/user/${id}`, formData);
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
 }
-export async function register(data){
-    const response = await axios.post(`${URL}/register`,data)
-    return response
 
+export async function register(data) {
+  const response = await axios.post(`${URL}/register`, data);
+  return response;
 }
