@@ -42,7 +42,13 @@ function Profile() {
                 <Image
                   width="170px"
                   height="170px"
-                  src={process.env.REACT_APP_URL + "/" + user.photo}
+                  src={
+                    process.env.REACT_APP_URL +
+                    "/" +
+                    user.photo +
+                    "?v=" +
+                    Date.now()
+                  }
                 ></Image>
               </div>
               <Card.Title className="text-center mt-3">
