@@ -2,9 +2,9 @@ import axios from "axios";
 
 const URL = process.env.REACT_APP_URL;
 
-export const getBlogs = async () => {
+export const getBlogs = async (p = 1) => {
   try {
-    const res = await axios.get(`${URL}/blog`);
+    const res = await axios.get(`${URL}/blog?page=${p}`);
     return res;
   } catch (e) {
     console.log(e);
