@@ -43,7 +43,7 @@ function Profile() {
                   width="170px"
                   height="170px"
                   src={
-                    process.env.REACT_APP_URL +
+                    import.meta.env.VITE_URL +
                     "/" +
                     user.photo +
                     "?v=" +

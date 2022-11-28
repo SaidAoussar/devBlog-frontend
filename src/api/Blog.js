@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = process.env.REACT_APP_URL;
+const URL = import.meta.env.VITE_URL;
 
 export const getBlogs = async (p = 1) => {
   try {
