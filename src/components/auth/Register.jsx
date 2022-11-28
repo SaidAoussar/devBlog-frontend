@@ -30,13 +30,11 @@ function Register() {
           setError(res.data.message);
         } else {
           navigate("/login");
-          console.log("register success");
         }
       })
       .catch((e) => {
         setError(e.message);
       });
-    console.log(username, password, email);
   };
   return (
     <Container>

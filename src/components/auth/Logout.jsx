@@ -1,22 +1,22 @@
-import { useEffect,useContext } from 'react';
-import {Navigate} from 'react-router-dom'
-import { AppContext } from '../../context/AppContext';
+import { useEffect, useContext } from "react";
+import { Navigate } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
 function Logout() {
-  const context = useContext(AppContext)
-  const [user,setUser] = context.useUser
-  const [auth,setAuth] = context.useAuth
+  const context = useContext(AppContext);
+  const [user, setUser] = context.useUser;
+  const [auth, setAuth] = context.useAuth;
 
-  useEffect(()=>{
+  useEffect(() => {
     localStorage.removeItem("token");
-    setAuth(false)
-    setUser({})
-    console.log("logout")
-  },[])
+    setAuth(false);
+    setUser({});
+  }, []);
 
-  console.log("logout")
-  return <div>
-    <Navigate to="/login"/>
+  return (
+    <div>
+      <Navigate to="/login" />
     </div>
+  );
 }
 
 export default Logout;

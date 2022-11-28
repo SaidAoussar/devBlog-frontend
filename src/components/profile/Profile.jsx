@@ -20,7 +20,6 @@ function Profile() {
   useEffect(() => {
     getUser(id)
       .then((res) => {
-        console.log(res.data);
         setUser(res.data);
       })
       .catch((e) => {

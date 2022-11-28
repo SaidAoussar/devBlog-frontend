@@ -19,8 +19,6 @@ function HomePage() {
       });
   }, []);
 
-  console.log(blogsInfo);
-
   /**
    * This means that you must never create new component types while rendering! Whenever you
    * create a new component type, it's a different reference, and that will cause React to
