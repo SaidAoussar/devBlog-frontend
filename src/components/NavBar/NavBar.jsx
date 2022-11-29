@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Link, Routes, Route } from "react-router-dom";
+
+// ant design
+import { Menu } from "antd";
+
 import { AppContext } from "../../context/AppContext";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Container from "react-bootstrap/Container";
-import { Link, Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import HomePage from "../homepage/HomePage";
 import Blog from "../homepage/Blog";
 import About from "../about/About";
@@ -13,36 +14,49 @@ import Register from "../auth/Register";
 import ErrorPage from "../utils/ErrorPage";
 import Profile from "../profile/Profile";
 import Logout from "../auth/Logout";
-import NavAuth from "./NavAuth";
+
+let items = [
+  {
+    label: <Link to="/">Stories</Link>,
+    key: "stories",
+  },
+  {
+    label: <Link to="/about">About</Link>,
+    key: "about",
+  },
+  {
+    label: <Link to="contact">Contact</Link>,
+    key: "contact",
+  },
+];
 
 function NavBar({}) {
   const context = useContext(AppContext);
   const [user, setUser] = context.useUser;
   const [auth, setAuth] = context.useAuth;
-  const [menu, setMenu] = useState([]);
-  const navigate = useNavigate();
+  const [authMenu, setAuthMenu] = useState([]);
 
   useEffect(() => {
     if (auth) {
-      setMenu([
+      setAuthMenu([
         {
-          name: "profile",
-          to: `/profile/${user._id}`,
+          label: <Link to={`/profile/${user._id}`}>Profile</Link>,
+          key: "profile",
         },
         {
-          name: "Logout",
-          to: "/logout",
+          label: <Link to="logout">Logout</Link>,
+          key: "logout",
         },
       ]);
     } else {
-      setMenu([
+      setAuthMenu([
         {
-          name: "Login",
-          to: "/login",
+          label: <Link to="/login">Login</Link>,
+          key: "login",
         },
         {
-          name: "Register",
-          to: "/register",
+          label: <Link to="/register">Register</Link>,
+          key: "register",
         },
       ]);
     }
@@ -50,30 +64,7 @@ function NavBar({}) {
 
   return (
     <div>
-      <Navbar bg="dark" variant="dark" expand="lg" className="mb-5">
-        <Container>
-          <Navbar.Brand as={Link} to="/">
-            MyBlog
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/">
-                Home
-              </Nav.Link>
-              <Nav.Link as={Link} to="/about">
-                About Us
-              </Nav.Link>
-              <Nav.Link as={Link} to="/contact">
-                Contact
-              </Nav.Link>
-            </Nav>
-            <Nav>
-              <NavAuth routesLink={menu}></NavAuth>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <Menu mode="horizontal" items={[...items, ...authMenu]} />
 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -95,11 +86,14 @@ function NavBar({}) {
         )}
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-      {/* <Routes basename="/blog/:id">
-        <Route path="*" element={<Blog />} />
-      </Routes> */}
     </div>
   );
 }
 
 export default NavBar;
+
+/***
+ * navbar i want:
+ * https://github.com/thisuraseniya/Ant-Design-Navbar/
+ *
+ */

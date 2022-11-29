@@ -1,16 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import Home from "./Home";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./assets/global.css";
+import App from "./App";
 import { ContextWrapper } from "./context/AppContext";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/global.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
-  <BrowserRouter>
-    <ContextWrapper>
-      <Home></Home>
-    </ContextWrapper>
-  </BrowserRouter>
+  <ContextWrapper>
+    <App />
+  </ContextWrapper>
 );
