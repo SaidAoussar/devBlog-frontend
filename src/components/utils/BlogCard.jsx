@@ -4,18 +4,20 @@ import {
   Card as OldCard,
   Tooltip,
   OverlayTrigger,
-  Modal,
+  Modal as OldModal,
   Button,
 } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+
 import { toast } from "react-toastify";
-import { Card } from "antd";
+import { Card, Modal } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { AppContext } from "../../context/AppContext";
 import { RemoveBlog, allBlogsOfUser } from "../../api/Blog";
+import { createContext } from "react";
 
 const { Meta } = Card;
+
+const ReachableContext = createContext(null);
 
 function BlogCard({ blog, operation, userId, setBlogs }) {
   let navigate = useNavigate();
@@ -23,9 +25,22 @@ function BlogCard({ blog, operation, userId, setBlogs }) {
   const context = useContext(AppContext);
   const [user, setUser] = context.useUser;
   // show and hide modal
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
+  const handleShow = () =>
+    Modal.confirm({
+      title: "Use Hook!",
+      content: (
+        <div>
+          Do you want to delete blog with title :
+          <p>
+            <strong>{blog.title}</strong>
+          </p>
+        </div>
+      ),
+      onOk: () => removeBlog(),
+      okText: "delete",
+      okButtonProps: { style: { backgroundColor: "red" } },
+    });
 
   const removeBlog = () => {
     RemoveBlog(blog._id)
@@ -35,7 +50,6 @@ function BlogCard({ blog, operation, userId, setBlogs }) {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 1000,
           });
-          setShow(false);
           allBlogsOfUser(userId)
             .then((res) => {
               setBlogs(res.data);
@@ -80,30 +94,6 @@ function BlogCard({ blog, operation, userId, setBlogs }) {
           description={`${blog.body.slice(0, 100)}`}
         />
       </Card>
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Blog</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Do you want to delete blog with title :
-          <p>
-            <strong>{blog.title}</strong>
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="danger" onClick={removeBlog}>
-            delete
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 }
