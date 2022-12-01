@@ -14,6 +14,7 @@ import Register from "../auth/Register";
 import ErrorPage from "../utils/ErrorPage";
 import Profile from "../profile/Profile";
 import Logout from "../auth/Logout";
+import Container from "./../utils/Container";
 
 let items = [
   {
@@ -64,7 +65,9 @@ function NavBar({}) {
 
   return (
     <div>
-      <Menu mode="horizontal" items={[...items, ...authMenu]} />
+      <Container>
+        <Menu mode="horizontal" items={[...items, ...authMenu]} />
+      </Container>
 
       <Routes>
         <Route path="/" element={<HomePage />} />

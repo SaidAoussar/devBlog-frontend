@@ -10,3 +10,48 @@ html {
 a {
   text-decoration: none;
 }
+
+a.title-card {
+  color: rgba(0, 0, 0, 0.88);
+}
+a.title-card:hover {
+  text-decoration: underline;
+}
+
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1140px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .container {
+    width: 1320px;
+  }
+}

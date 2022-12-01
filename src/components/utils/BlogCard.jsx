@@ -1,23 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Card as OldCard,
-  Tooltip,
-  OverlayTrigger,
-  Modal as OldModal,
-  Button,
-} from "react-bootstrap";
-
-import { toast } from "react-toastify";
 import { Card, Modal } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { toast } from "react-toastify";
 import { AppContext } from "../../context/AppContext";
 import { RemoveBlog, allBlogsOfUser } from "../../api/Blog";
-import { createContext } from "react";
 
 const { Meta } = Card;
-
-const ReachableContext = createContext(null);
 
 function BlogCard({ blog, operation, userId, setBlogs }) {
   let navigate = useNavigate();
@@ -90,7 +79,11 @@ function BlogCard({ blog, operation, userId, setBlogs }) {
         }
       >
         <Meta
-          title={`${blog.title}`}
+          title={
+            <Link to={`/blog/${blog._id}`} className="title-card">
+              {blog.title}
+            </Link>
+          }
           description={`${blog.body.slice(0, 100)}`}
         />
       </Card>
