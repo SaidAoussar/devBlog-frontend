@@ -1,30 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../api/Auth";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Form,
-  Button,
-  Alert,
-} from "react-bootstrap";
+import { Row, Col, Form, Input, Card, Button, Alert } from "antd";
 
+import { register } from "../../api/Auth";
+import Container from "./../utils/Container";
 function Register() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const funRegister = (e) => {
-    e.preventDefault();
-    register({
-      email: email,
-      username: username,
-      password: password,
-    })
+
+  const onFinish = (values) => {
+    register(values)
       .then((res) => {
         if (res.data.message) {
           setError(res.data.message);
@@ -38,41 +24,54 @@ function Register() {
   };
   return (
     <Container>
-      <Row className="justify-content-md-center">
-        <Col md={6}>
-          {error && <Alert variant="danger">{error}</Alert>}
+      <Row justify="center">
+        <Col md={12}>
+          {error && <Alert message={error} type="error" showIcon />}
           <Card>
-            <Card.Body>
-              <Form>
-                <Form.Group className="mb-3">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Username</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Username"
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Form.Group>
-                <Button variant="primary" type="submit" onClick={funRegister}>
-                  sign in
+            <Form
+              name="register-form"
+              labelCol={{ span: 6 }}
+              wrapperCol={{ span: 18 }}
+              onFinish={onFinish}
+            >
+              <Form.Item
+                label="Email"
+                name="email"
+                required
+                rules={[
+                  { required: true, message: "Please input your Email!" },
+                  { type: "email" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Username"
+                name="username"
+                rules={[
+                  { required: true, message: "Please input your username!" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                ]}
+              >
+                <Input.Password />
+              </Form.Item>
+              <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+                <Button type="primary" htmlType="submit">
+                  Sign In
                 </Button>
-              </Form>
-            </Card.Body>
+              </Form.Item>
+            </Form>
           </Card>
         </Col>
       </Row>

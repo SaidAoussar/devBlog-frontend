@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { login } from "../../api/Auth";
-import { Form as Fr, Button as Btn } from "react-bootstrap";
 
 import { Form, Input, Button, Card, Row, Col, Alert } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +7,6 @@ import { AppContext } from "../../context/AppContext";
 import Container from "./../utils/Container";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState();
   const context = useContext(AppContext);
   const [user, setUser] = context.useUser;
@@ -38,7 +35,7 @@ function Login() {
   return (
     <div>
       <Container>
-        <Row className="justify-content-md-center">
+        <Row justify="center">
           <Col md={12}>
             {error && (
               <>
@@ -47,7 +44,7 @@ function Login() {
             )}
             <Card>
               <Form
-                name="basic"
+                name="login-form"
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 18 }}
                 onFinish={onFinish}
