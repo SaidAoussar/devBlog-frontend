@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import { login } from "../../api/Auth";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import { Container, Row, Col, Card, Alert } from "react-bootstrap";
+import { Form as Fr, Button as Btn } from "react-bootstrap";
+
+import { Form, Input, Button, Card, Row, Col, Alert } from "antd";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
+import Container from "./../utils/Container";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,12 +16,8 @@ function Login() {
   const [auth, setAuth] = context.useAuth;
   const navigate = useNavigate();
 
-  const funLogin = (e) => {
-    e.preventDefault();
-    login({
-      email: email,
-      password: password,
-    })
+  const onFinish = (values) => {
+    login(values)
       .then((res) => {
         if (res.data.message) {
           setError(res.data.message);
@@ -37,41 +34,53 @@ function Login() {
         console.log(e);
       });
   };
+
   return (
     <div>
       <Container>
         <Row className="justify-content-md-center">
-          <Col md={6}>
+          <Col md={12}>
             {error && (
               <>
-                <Alert variant="danger">{error}</Alert>
+                <Alert message={error} type="error" showIcon />
               </>
             )}
             <Card>
-              <Card.Body>
-                <Form>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control
-                      type="email"
-                      placeholder="Enter email"
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </Form.Group>
-
-                  <Form.Group className="mb-3">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Button variant="primary" type="submit" onClick={funLogin}>
-                    sign in
+              <Form
+                name="basic"
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 18 }}
+                onFinish={onFinish}
+              >
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  required
+                  rules={[
+                    { required: true, message: "Please input yout Email!" },
+                    { type: "email" },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Password"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your password!",
+                    },
+                  ]}
+                >
+                  <Input.Password />
+                </Form.Item>
+                <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+                  <Button type="primary" htmlType="submit">
+                    Sign In
                   </Button>
-                </Form>
-              </Card.Body>
+                </Form.Item>
+              </Form>
             </Card>
           </Col>
         </Row>
