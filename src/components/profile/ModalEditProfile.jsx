@@ -1,37 +1,34 @@
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenSquare } from "@fortawesome/free-solid-svg-icons";
+
+import { Modal } from "antd";
+import { EditFilled } from "@ant-design/icons";
 
 function ModalEditProfile({ children }) {
-  const [show, setShow] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const showModal = () => setIsModalOpen(true);
+  const handleCancel = () => setIsModalOpen(false);
+  const handleOk = () => setIsModalOpen(false);
 
   return (
     <>
-      <FontAwesomeIcon
-        icon={faPenSquare}
+      <EditFilled
         style={{
-          fontSize: "1.5rem",
+          fontSize: "1.2rem",
           cursor: "pointer",
           marginRight: "4px",
           color: "#0d6efd",
         }}
-        onClick={handleShow}
+        onClick={showModal}
       />
-      <Modal show={show} onHide={handleClose} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{children}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
+
+      <Modal
+        title="Update blog"
+        open={isModalOpen}
+        onCancel={handleCancel}
+        onOk={handleOk}
+      >
+        {children}
       </Modal>
     </>
   );

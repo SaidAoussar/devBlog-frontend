@@ -1,27 +1,20 @@
-import { useContext, useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { useContext } from "react";
+import { Form, Input, Button, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import { AppContext } from "../../context/AppContext";
 import { updateUser } from "./../../api/User";
 
 function EditProfile() {
   const context = useContext(AppContext);
   const [user, setUser] = context.useUser;
-  const [userState, setUserState] = useState({
-    ...user,
-    password: "",
-  });
 
-  const [avatar, setAvatar] = useState(null);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const onFinish = (values) => {
     const formData = new FormData();
-    formData.append("_id", userState._id);
-    formData.append("username", userState.username);
-    formData.append("email", userState.email);
-    formData.append("password", userState.password);
-    formData.append("avatar", avatar);
+    formData.append("_id", user._id);
+    formData.append("username", values.username);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+    formData.append("avatar", values.avatar);
 
     // console.log("avatar", avatar);
 
@@ -35,62 +28,43 @@ function EditProfile() {
       });
   };
 
+  const normFile = (e) => {
+    return e?.file;
+  };
+
   return (
     <div>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="username"
-            value={userState.username}
-            onChange={(e) => {
-              setUserState({
-                ...userState,
-                username: e.target.value,
-              });
-            }}
-            autoFocus
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            value={userState.email}
-            onChange={(e) => {
-              setUserState({
-                ...userState,
-                email: e.target.value,
-              });
-            }}
-            placeholder="name@example.com"
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            name="password"
-            type="password"
-            onChange={(e) => {
-              setUserState({
-                ...userState,
-                password: e.target.value,
-              });
-            }}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>avatar</Form.Label>
-          <Form.Control
-            name="avatar"
-            type="file"
-            onChange={(e) => {
-              setAvatar(e.target.files[0]);
-            }}
-          />
-        </Form.Group>
+      <Form
+        onFinish={onFinish}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
+      >
+        <Form.Item
+          label="Username"
+          name="username"
+          initialValue={user.username}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item label="Email" name="email" initialValue={user.email}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="Password" name="password" initialValue="">
+          <Input.Password />
+        </Form.Item>
 
-        <Button variant="primary" type="submit">
+        <Form.Item
+          label="Avatar"
+          name="avatar"
+          valuePropName="file"
+          getValueFromEvent={normFile}
+        >
+          <Upload listType="picture" maxCount={1} beforeUpload={() => false}>
+            <Button icon={<UploadOutlined />}>Click to upload</Button>
+          </Upload>
+        </Form.Item>
+
+        <Button type="primary" htmlType="submit">
           Save Changes
         </Button>
       </Form>
