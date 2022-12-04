@@ -28,7 +28,6 @@ function HomePage() {
     getBlogs(page)
       .then((res) => {
         const { items, ...info } = res.data;
-        console.log(info);
         setBlogs(items);
         setBlogsInfo(info);
       })
@@ -53,7 +52,7 @@ function HomePage() {
               {blogs && (
                 <>
                   {blogs.map((blog) => (
-                    <Col xs={24} sm={12} md={8} lg={6}>
+                    <Col xs={24} sm={12} md={8} lg={6} key={blog._id}>
                       <BlogCard blog={blog} />
                     </Col>
                   ))}
