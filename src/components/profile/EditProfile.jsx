@@ -16,7 +16,6 @@ function EditProfile() {
     formData.append("password", values.password);
     formData.append("avatar", values.avatar);
 
-    // console.log("avatar", avatar);
 
     updateUser(user._id, formData)
       .then((res) => {

@@ -1,32 +1,20 @@
 import { useState } from "react";
-import { Col, Form, Button, Spinner } from "react-bootstrap";
-import Select from "react-select";
+import { Col, Form, Input, Select, Button, Space, Spin } from "antd";
 import { allTags } from "../utils/tagsData";
 import { createBlog } from "../../api/Blog";
 import { toast } from "react-toastify";
 
-function CreateBlog({ userId }) {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [tags, setTags] = useState([]);
-  const [loading, setLoading] = useState(false);
+const { TextArea } = Input;
 
-  const funCreateBlog = (e) => {
-    e.preventDefault();
-    const newTags = [];
-    tags.map((tag) => {
-      newTags.push(tag.value);
-    });
+function CreateBlog({ userId }) {
+  const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
+
+  const onFinish = (values) => {
     setLoading(true);
-    createBlog({
-      title: title,
-      body: body,
-      tags: newTags,
-    })
+    createBlog(values)
       .then((res) => {
-        setTitle("");
-        setBody("");
-        setTags([]);
+        form.resetFields();
         toast.success("the blog add with success", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 1000,
@@ -40,46 +28,41 @@ function CreateBlog({ userId }) {
     setLoading(false);
   };
   return (
-    <Col md={8}>
+    <Col md={16}>
       {loading && (
-        <div className="text-center">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <Space
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            marginBottom: "16px",
+          }}
+        >
+          <Spin tip="Loading..." size="large"></Spin>
+        </Space>
       )}
 
-      <Form>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>title</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
+      <Form
+        form={form}
+        labelCol={6}
+        wrapperCol={16}
+        layout="vertical"
+        onFinish={onFinish}
+      >
+        <Form.Item label="Title" name="title">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Body" name="body">
+          <TextArea rows={5} />
+        </Form.Item>
+        <Form.Item label="Tags" name="tags">
+          <Select
+            mode="multiple"
+            allowClear
+            placeholder="Select Tags"
+            options={allTags}
           />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Body</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={5}
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="w-50">
-          <Form.Label>Tags</Form.Label>
-          <Select options={allTags} isMulti value={tags} onChange={setTags} />
-        </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          onClick={funCreateBlog}
-          className="mt-4"
-          disabled={loading}
-        >
+        </Form.Item>
+        <Button type="primary" htmlType="submit" disabled={loading}>
           create blog
         </Button>
       </Form>

@@ -1,5 +1,11 @@
 import { useEffect, useState, useContext } from "react";
-import { useParams, Routes, Route, useNavigate } from "react-router-dom";
+import {
+  useParams,
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { Image } from "react-bootstrap";
 import { Row, Col, Card, Space, Radio } from "antd";
 import Container from "./../utils/Container";
@@ -17,8 +23,11 @@ const { Meta } = Card;
 
 function Profile() {
   const { id } = useParams();
+  const location = useLocation();
+
   const [user, setUser] = useState({});
   const [content, setContent] = useState("allBlogs"); // allBlogs / createBlog
+  const [isEditPgae, setIsEditPage] = useState(false);
   const navigate = useNavigate();
   const context = useContext(AppContext);
   const [userContext, setUserContext] = context.useUser;
@@ -34,7 +43,15 @@ function Profile() {
   }, [userContext]);
 
   useEffect(() => {
-    navigate(content);
+    const routePath = location.pathname.split("/").at(-1);
+    if (routePath !== "edit") {
+      navigate(content);
+      setIsEditPage(false);
+    } else {
+      setIsEditPage(true);
+    }
+
+    //console.log("routePath", routePath);
   }, [content, navigate]);
 
   return (
@@ -70,17 +87,19 @@ function Profile() {
           </Card>
         </Col>
       </Row>
-      <Row className="my-4">
-        <Radio.Group
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          optionType="button"
-          buttonStyle="solid"
-        >
-          <Radio.Button value="allBlogs">All Blogs</Radio.Button>
-          <Radio.Button value="createBlog">Create Blog</Radio.Button>
-        </Radio.Group>
-      </Row>
+      {!isEditPgae && (
+        <Row className="my-4">
+          <Radio.Group
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            optionType="button"
+            buttonStyle="solid"
+          >
+            <Radio.Button value="allBlogs">All Blogs</Radio.Button>
+            <Radio.Button value="createBlog">Create Blog</Radio.Button>
+          </Radio.Group>
+        </Row>
+      )}
       <Row className="mt-4 mb-5" justify="center">
         <Routes>
           <Route path="/allBlogs" element={<UserBlogs userId={id} />} />
