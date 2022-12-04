@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getBlog, updateBlog } from "../../api/Blog";
-import Select from "react-select";
-import { allTags } from "../utils/tagsData";
-import { Col, Form, Button, Spinner } from "react-bootstrap";
+
 import { toast } from "react-toastify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Col, Form, Input, Select, Button, Space, Spin } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { allTags } from "../utils/tagsData";
+import { getBlog, updateBlog } from "../../api/Blog";
+
+const { TextArea } = Input;
 
 function EditBlog({ userId }) {
   const { blogid } = useParams();
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [tags, setTags] = useState([]);
+  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
   let navigate = useNavigate();
@@ -20,59 +19,45 @@ function EditBlog({ userId }) {
   useEffect(() => {
     getBlog(blogid)
       .then((res) => {
-        setTitle(res.data.title);
-        setBody(res.data.body);
-
-        const newTags = [];
-        res.data.tags.map((tag) => {
-          newTags.push({ value: tag, label: tag });
+        form.setFieldsValue({
+          title: res.data.title,
+          body: res.data.body,
+          tags: res.data.tags,
         });
-        setTags(newTags);
       })
       .catch((e) => {
         console.log(e);
       });
   }, []);
 
-  const fnEditBlog = (e) => {
-    e.preventDefault();
-
-    const newTags = [];
-    tags.map((tag) => {
-      newTags.push(tag.value);
-    });
+  const onFinish = (values) => {
+    setLoading(true);
 
     updateBlog({
-      title,
-      body,
-      tags: newTags,
+      ...values,
       _id: blogid,
       author: userId,
     })
       .then((res) => {
-        setTitle(res.data.title);
-        setBody(res.data.body);
-        const newTags = [];
-        res.data.tags.map((tag) => {
-          newTags.push({ value: tag, label: tag });
-        });
-        setTags(newTags);
-        toast.success(`${body} update with success`, {
+        toast.success(`update with success`, {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 1000,
         });
+
+        setLoading(false);
       })
       .catch((e) => {
         toast.error("something wrong", {
           position: toast.POSITION.TOP_CENTER,
         });
+
+        setLoading(false);
       });
   };
 
   return (
-    <Col md={8}>
-      <FontAwesomeIcon
-        icon={faArrowLeft}
+    <Col md={16}>
+      <ArrowLeftOutlined
         onClick={() => navigate(-1)}
         style={{
           fontSize: "1.5rem",
@@ -83,45 +68,40 @@ function EditBlog({ userId }) {
       />
 
       {loading && (
-        <div className="text-center">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <Space
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            marginBottom: "16px",
+          }}
+        >
+          <Spin tip="Loading..." size="large"></Spin>
+        </Space>
       )}
 
-      <Form>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>title</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
+      <Form
+        form={form}
+        labelCol={6}
+        wrapperCol={16}
+        layout="vertical"
+        onFinish={onFinish}
+      >
+        <Form.Item label="Title" name="title">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Body" name="body">
+          <TextArea rows={7} />
+        </Form.Item>
+        <Form.Item label="tags" name="tags">
+          <Select
+            mode="multiple"
+            allowClear
+            placeholder="Update Tags"
+            options={allTags}
           />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Body</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={5}
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="w-50">
-          <Form.Label>Tags</Form.Label>
-          <Select options={allTags} isMulti value={tags} onChange={setTags} />
-        </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          onClick={fnEditBlog}
-          className="mt-4"
-          disabled={loading}
-        >
-          edit blog
+        </Form.Item>
+        <Button type="primary" htmlType="submit" disabled={loading}>
+          Edit blog
         </Button>
       </Form>
     </Col>

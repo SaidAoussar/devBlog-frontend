@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button } from "antd";
 import { isAuthenticated } from "../../api/Auth";
 
 function About() {
@@ -19,7 +19,9 @@ function About() {
   return (
     <div>
       <div>hello from about us</div>
-      <Button onClick={getInfoUser}>get auth</Button>
+      <Button type="primary" onClick={getInfoUser}>
+        get auth
+      </Button>
       {user && <div>{user.username}</div>}
       {error && <div>{error}</div>}
     </div>
