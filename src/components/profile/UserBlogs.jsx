@@ -1,34 +1,53 @@
 import { useEffect, useState } from "react";
 import BlogCard from "../utils/BlogCard";
-import { Row, Col } from "antd";
+import { Row, Col, Space, Spin, Alert } from "antd";
 import { allBlogsOfUser } from "../../api/Blog";
 
 function UserBlogs({ userId }) {
   const [blogs, setBlogs] = useState([]);
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    setStatus("pending");
     allBlogsOfUser(userId)
       .then((res) => {
-        setBlogs(res.data);
+        if (res.data) {
+          setBlogs(res.data);
+          setStatus("resolved");
+        }
+
+        if (res.name === "Error") {
+          throw res.message;
+        }
       })
       .catch((e) => {
-        console.log(e);
+        setError(e);
+        setStatus("rejected");
       });
   }, []);
   return (
     <Row gutter={[16, 16]}>
-      {blogs.map((blog) => {
-        return (
-          <Col xs={24} sm={12} md={8} lg={6} key={blog._id}>
-            <BlogCard
-              blog={blog}
-              operation={true}
-              userId={userId}
-              setBlogs={setBlogs}
-            />
-          </Col>
-        );
-      })}
+      {status === "idle" && <p>Request idle</p>}
+      {status === "pending" && (
+        <Space style={{ width: "100%", justifyContent: "center" }}>
+          <Spin size="large" />
+        </Space>
+      )}
+      {status === "rejected" && <Alert message={error} type="error" />}
+      {status === "resolved" &&
+        blogs.map((blog) => {
+          return (
+            <Col xs={24} sm={12} md={8} lg={6} key={blog._id}>
+              <BlogCard
+                blog={blog}
+                operation={true}
+                userId={userId}
+                setBlogs={setBlogs}
+              />
+            </Col>
+          );
+        })}
     </Row>
   );
 }

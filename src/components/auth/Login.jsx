@@ -16,6 +16,7 @@ function Login() {
   const onFinish = (values) => {
     login(values)
       .then((res) => {
+        console.log(res);
         if (res.data.message) {
           setError(res.data.message);
         } else {

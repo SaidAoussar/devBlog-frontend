@@ -1,35 +1,37 @@
 import { useState } from "react";
-import { Col, Form, Input, Select, Button, Space, Spin } from "antd";
+import { Col, Form, Input, Select, Button, Space, Spin, Alert } from "antd";
 import { allTags } from "../utils/tagsData";
 import { createBlog } from "../../api/Blog";
-import { toast } from "react-toastify";
 
 const { TextArea } = Input;
 
 function CreateBlog({ userId }) {
-  const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState(null);
 
   const onFinish = (values) => {
-    setLoading(true);
+    setStatus("pending");
     createBlog(values)
       .then((res) => {
-        form.resetFields();
-        toast.success("the blog add with success", {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 1000,
-        });
+        console.log(res);
+        if (res.status === 200) {
+          form.resetFields();
+          setStatus("resolved");
+        }
+
+        if (res.status === 400) {
+          throw res.data.message;
+        }
       })
       .catch((e) => {
-        toast.error("something wrong", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        setError(e);
+        setStatus("rejected");
       });
-    setLoading(false);
   };
   return (
     <Col md={16}>
-      {loading && (
+      {status === "pending" && (
         <Space
           style={{
             width: "100%",
@@ -37,8 +39,25 @@ function CreateBlog({ userId }) {
             marginBottom: "16px",
           }}
         >
-          <Spin tip="Loading..." size="large"></Spin>
+          <Spin size="large"></Spin>
         </Space>
+      )}
+
+      {status === "rejected" && (
+        <Alert
+          message={error}
+          type="error"
+          closable
+          onClose={() => setStatus("idle")}
+        />
+      )}
+      {status === "resolved" && (
+        <Alert
+          message="Blog Added with success"
+          type="success"
+          closable
+          onClose={() => setStatus("idle")}
+        />
       )}
 
       <Form
@@ -62,7 +81,11 @@ function CreateBlog({ userId }) {
             options={allTags}
           />
         </Form.Item>
-        <Button type="primary" htmlType="submit" disabled={loading}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          disabled={status === "pending"}
+        >
           create blog
         </Button>
       </Form>

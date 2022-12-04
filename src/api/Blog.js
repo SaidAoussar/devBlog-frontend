@@ -7,7 +7,7 @@ export const getBlogs = async (p = 1) => {
     const res = await axios.get(`${URL}/blog?page=${p}`);
     return res;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
