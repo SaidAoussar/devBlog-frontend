@@ -16,7 +16,7 @@ export const getBlog = async (id) => {
     const res = await axios.get(`${URL}/blog/${id}`);
     return res;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const allBlogsOfUser = async (id) => {
@@ -24,7 +24,7 @@ export const allBlogsOfUser = async (id) => {
     const res = await axios.get(`${URL}/blog/user/` + id);
     return res;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 

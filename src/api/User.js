@@ -7,7 +7,7 @@ export async function getUsers() {
     const response = await axios.get(`${URL}/user`);
     return response;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 }
 
@@ -16,7 +16,7 @@ export async function getUser(id) {
     const res = await axios.get(`${URL}/user/${id}`);
     return res;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 }
 
@@ -25,7 +25,7 @@ export async function removeUser(id) {
     const response = await axios.delete(`${URL}/user/'${id}`);
     return response;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 }
 
@@ -34,7 +34,7 @@ export async function updateUser(id, formData) {
     const response = await axios.put(`${URL}/user/${id}`, formData);
     return response;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 }
 
