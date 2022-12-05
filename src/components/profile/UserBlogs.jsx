@@ -17,12 +17,8 @@ function UserBlogs({ userId }) {
           setStatus("resolved");
         }
 
-        if (res.status === 400) {
-          throw res.data.message;
-        }
-
-        if (res.name === "Error") {
-          throw res.message;
+        if (res.response?.status === 400) {
+          throw res.response.data.message;
         }
       })
       .catch((e) => {

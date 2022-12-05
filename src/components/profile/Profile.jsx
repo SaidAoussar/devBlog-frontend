@@ -43,8 +43,8 @@ function Profile() {
           setStatus("resolved");
         }
 
-        if (res.status === 400) {
-          throw res.data.message;
+        if (res.response?.status === 400) {
+          throw res.response.data.message;
         }
       })
       .catch((e) => {
@@ -77,7 +77,7 @@ function Profile() {
         </Space>
       )}
 
-      {status === "resolved" && <Alert message={error} type="error" />}
+      {status === "rejected" && <Alert message={error} type="error" />}
       {status === "resolved" && (
         <>
           <Row>

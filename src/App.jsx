@@ -18,7 +18,7 @@ function App() {
           setAuth(res.data.isAuth);
         }
 
-        if (res.status === 400) {
+        if (res.response?.status === 400) {
           throw Error("Somethinh is wrong");
         }
       })

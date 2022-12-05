@@ -18,8 +18,8 @@ function Register() {
           setStatus("resolved");
         }
 
-        if (res.status === 400) {
-          throw res.data.message;
+        if (res.response?.status === 400) {
+          throw res.response.data.message;
         }
       })
       .catch((e) => {
@@ -48,9 +48,12 @@ function Register() {
 
           {status === "resolved" && (
             <Alert
-              message={`You register with success, you can ${(
-                <Link to="/login">login</Link>
-              )} `}
+              message={
+                <p>
+                  You register with succcess, you can
+                  <Link to="login">login</Link>
+                </p>
+              }
               type="success"
             />
           )}
