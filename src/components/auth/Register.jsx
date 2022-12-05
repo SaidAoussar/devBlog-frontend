@@ -1,32 +1,59 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Row, Col, Form, Input, Card, Button, Alert } from "antd";
+import { useNavigate, Link } from "react-router-dom";
+import { Row, Col, Form, Input, Card, Button, Alert, Space, Spin } from "antd";
 
 import { register } from "../../api/Auth";
 import Container from "./../utils/Container";
 function Register() {
-  const [error, setError] = useState("");
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
   const onFinish = (values) => {
+    setStatus("pending");
     register(values)
       .then((res) => {
-        if (res.data.message) {
-          setError(res.data.message);
-        } else {
-          navigate("/login");
+        if (res.status === 200) {
+          setStatus("resolved");
+        }
+
+        if (res.status === 400) {
+          throw res.data.message;
         }
       })
       .catch((e) => {
-        setError(e.message);
+        setError(e);
+        setStatus("rejected");
       });
   };
   return (
     <Container>
       <Row justify="center">
         <Col md={12}>
-          {error && <Alert message={error} type="error" showIcon />}
+          {status === "pending" && (
+            <Space
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                marginBottom: "16px",
+              }}
+            >
+              <Spin />
+            </Space>
+          )}
+          {status === "rejected" && (
+            <Alert message={error} type="error" showIcon />
+          )}
+
+          {status === "resolved" && (
+            <Alert
+              message={`You register with success, you can ${(
+                <Link to="/login">login</Link>
+              )} `}
+              type="success"
+            />
+          )}
           <Card>
             <Form
               name="register-form"
@@ -67,7 +94,11 @@ function Register() {
                 <Input.Password />
               </Form.Item>
               <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-                <Button type="primary" htmlType="submit">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  disabled={status === "pending"}
+                >
                   Sign In
                 </Button>
               </Form.Item>

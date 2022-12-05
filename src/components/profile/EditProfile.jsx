@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { Form, Input, Button, Upload } from "antd";
+import { useContext, useState } from "react";
+import { Form, Input, Button, Upload, Space, Spin, Alert } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { AppContext } from "../../context/AppContext";
 import { updateUser } from "./../../api/User";
@@ -7,8 +7,11 @@ import { updateUser } from "./../../api/User";
 function EditProfile() {
   const context = useContext(AppContext);
   const [user, setUser] = context.useUser;
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState(null);
 
   const onFinish = (values) => {
+    setStatus("pending");
     const formData = new FormData();
     formData.append("_id", user._id);
     formData.append("username", values.username);
@@ -16,14 +19,20 @@ function EditProfile() {
     formData.append("password", values.password);
     formData.append("avatar", values.avatar);
 
-
     updateUser(user._id, formData)
       .then((res) => {
-        console.log(res);
-        setUser(res.data);
+        if (res.status === 200) {
+          setUser(res.data);
+          setStatus("resolved");
+        }
+
+        if (res.status === 400) {
+          throw res.data.message;
+        }
       })
       .catch((e) => {
-        console.log(e);
+        setError(e);
+        setStatus("rejected");
       });
   };
 
@@ -33,6 +42,22 @@ function EditProfile() {
 
   return (
     <div>
+      {status === "pending" && (
+        <Space
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            marginBottom: "16px",
+          }}
+        >
+          <Spin size="large" />
+        </Space>
+      )}
+
+      {status === "resolved" && <Alert message={error} type="error" />}
+      {status === "resolved" && (
+        <Alert message="your info updated with success" type="success" />
+      )}
       <Form
         onFinish={onFinish}
         labelCol={{ span: 6 }}
@@ -63,7 +88,11 @@ function EditProfile() {
           </Upload>
         </Form.Item>
 
-        <Button type="primary" htmlType="submit">
+        <Button
+          type="primary"
+          htmlType="submit"
+          disabled={status === "pending"}
+        >
           Save Changes
         </Button>
       </Form>

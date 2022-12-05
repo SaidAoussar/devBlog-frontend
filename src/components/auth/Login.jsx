@@ -1,35 +1,38 @@
 import React, { useState, useContext } from "react";
 import { login } from "../../api/Auth";
 
-import { Form, Input, Button, Card, Row, Col, Alert } from "antd";
+import { Form, Input, Button, Card, Row, Col, Alert, Space, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import Container from "./../utils/Container";
 
 function Login() {
-  const [error, setError] = useState();
   const context = useContext(AppContext);
   const [user, setUser] = context.useUser;
   const [auth, setAuth] = context.useAuth;
+
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const onFinish = (values) => {
+    setStatus("pending");
     login(values)
       .then((res) => {
-        console.log(res);
-        if (res.data.message) {
-          setError(res.data.message);
-        } else {
+        if (res.status === 200) {
           localStorage.setItem("token", res.data.token);
           setAuth(true);
-
           const { token, ...user } = res.data;
           setUser(user);
           navigate("/profile/" + user._id);
         }
+        if (res.status === 400) {
+          throw res.data.message;
+        }
       })
       .catch((e) => {
-        console.log(e);
+        setError(e);
+        setStatus("rejected");
       });
   };
 
@@ -38,10 +41,20 @@ function Login() {
       <Container>
         <Row justify="center">
           <Col md={12}>
-            {error && (
-              <>
-                <Alert message={error} type="error" showIcon />
-              </>
+            {status === "pending" && (
+              <Space
+                style={{
+                  width: "100%",
+                  justifyContent: "center",
+                  marginBottom: "16px",
+                }}
+              >
+                <Spin />
+              </Space>
+            )}
+
+            {status === "rejected" && (
+              <Alert message={error} type="error" showIcon />
             )}
             <Card>
               <Form
@@ -74,7 +87,11 @@ function Login() {
                   <Input.Password />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
-                  <Button type="primary" htmlType="submit">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    disabled={status === "pending"}
+                  >
                     Sign In
                   </Button>
                 </Form.Item>

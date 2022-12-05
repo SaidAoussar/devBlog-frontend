@@ -12,9 +12,13 @@ function UserBlogs({ userId }) {
     setStatus("pending");
     allBlogsOfUser(userId)
       .then((res) => {
-        if (res.data) {
+        if (res.status === 200) {
           setBlogs(res.data);
           setStatus("resolved");
+        }
+
+        if (res.status === 400) {
+          throw res.data.message;
         }
 
         if (res.name === "Error") {

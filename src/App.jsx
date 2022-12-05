@@ -13,8 +13,14 @@ function App() {
   useEffect(() => {
     isAuthenticated()
       .then((res) => {
-        setUser(res.data);
-        setAuth(res.data.isAuth);
+        if (res.status === 200) {
+          setUser(res.data);
+          setAuth(res.data.isAuth);
+        }
+
+        if (res.status === 400) {
+          throw Error("Somethinh is wrong");
+        }
       })
       .catch((e) => {
         setAuth(false);
