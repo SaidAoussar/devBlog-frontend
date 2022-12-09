@@ -4,7 +4,7 @@ import { login } from "../../api/Auth";
 import { Form, Input, Button, Card, Row, Col, Alert, Space, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
-import Container from "./../utils/Container";
+import Container from "../../components/utils/Container";
 
 function Login() {
   const context = useContext(AppContext);

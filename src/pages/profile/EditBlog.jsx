@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Col, Form, Input, Select, Button, Space, Spin, Alert } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { allTags } from "../utils/tagsData";
+import { allTags } from "../../components/utils/tagsData";
 import { getBlog, updateBlog } from "../../api/Blog";
 
 const { TextArea } = Input;

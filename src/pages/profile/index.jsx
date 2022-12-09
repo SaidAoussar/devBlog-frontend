@@ -7,13 +7,15 @@ import {
   useLocation,
 } from "react-router-dom";
 import { Row, Col, Card, Space, Radio, Image, Spin, Alert } from "antd";
-import Container from "./../utils/Container";
+import Container from "../../components/utils/Container";
 import { AppContext } from "../../context/AppContext";
 import { getUser } from "../../api/User";
 
 import UserBlogs from "./UserBlogs";
 import CreateBlog from "./CreateBlog";
+// todo : should make edit blog to other page
 import EditBlog from "./EditBlog";
+
 import ModalEditProfile from "./ModalEditProfile";
 import EditProfile from "./EditProfile";
 import "./profile.module.css";

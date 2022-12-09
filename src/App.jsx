@@ -1,10 +1,19 @@
-import React, { useEffect, useContext } from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
-import { BrowserRouter } from "react-router-dom";
-import NavBar from "./components/NavBar/NavBar";
+import React, { useEffect, useContext, Fragment } from "react";
+import { Routes, Route } from "react-router-dom";
+
 import { isAuthenticated } from "./api/Auth";
 import { AppContext } from "./context/AppContext";
+
+import Layout from "./layouts/Layout";
+import Home from "./pages/home";
+import Blog from "./pages/blog";
+import About from "./components/about/About";
+import Contact from "./components/contact/Contact";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import ErrorPage from "./components/utils/ErrorPage";
+import Profile from "./pages/profile";
+import Logout from "./components/auth/Logout";
 
 function App() {
   const context = useContext(AppContext);
@@ -28,10 +37,24 @@ function App() {
       });
   }, []);
   return (
-    <BrowserRouter>
-      <ToastContainer />
-      <NavBar></NavBar>
-    </BrowserRouter>
+    <Fragment>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/blog/:id" element={<Blog />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+
+          <Route path="/profile/:id/*" element={<Profile />} />
+          <Route path="/logout" element={<Logout />} />
+
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          <Route path="*" element={<ErrorPage />} />
+        </Route>
+      </Routes>
+    </Fragment>
   );
 }
 

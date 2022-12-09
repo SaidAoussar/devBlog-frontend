@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Row, Col, Form, Input, Card, Button, Alert, Space, Spin } from "antd";
 
 import { register } from "../../api/Auth";
-import Container from "./../utils/Container";
+import Container from "../../components/utils/Container";
 function Register() {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);

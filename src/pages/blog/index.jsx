@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getBlog } from "../../api/Blog";
 import { getUser } from "../../api/User";
-import Container from "../utils/Container";
+import Container from "../../components/utils/Container";
 import { Layout, Row, Col, Image, Tag, Space, Spin, Alert } from "antd";
 
-function Blog() {
+const Blog = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState({});
   const [user, setUser] = useState({});
@@ -74,6 +74,6 @@ function Blog() {
       </Layout>
     </div>
   );
-}
+};
 
 export default Blog;

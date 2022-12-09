@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { getBlogs } from "../../api/Blog";
-import BlogCard from "../utils/BlogCard";
+import BlogCard from "../../components/utils/BlogCard";
 import { Col, Row, Layout, Alert, Spin, Space } from "antd";
-import Container from "../utils/Container";
+import Container from "../../components/utils/Container";
 
 import { Pagination } from "antd";
 
 const { Content } = Layout;
 
-function HomePage() {
+const Home = () => {
   const [blogs, setBlogs] = useState([]);
   const [blogsInfo, setBlogsInfo] = useState(null);
   const [error, setError] = useState(null);
@@ -93,6 +93,14 @@ function HomePage() {
       </Layout>
     </div>
   );
-}
+};
 
-export default HomePage;
+export default Home;
+/*
+https://github.com/Rizwan17/reactjs-blog/
+
+https://github.com/weihomechen/blog/
+
+https://profy.dev/article/react-folder-structure
+
+*/

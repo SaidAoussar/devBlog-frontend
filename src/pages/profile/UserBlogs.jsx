@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import BlogCard from "../utils/BlogCard";
+import BlogCard from "../../components/utils/BlogCard";
 import { Row, Col, Space, Spin, Alert } from "antd";
 import { allBlogsOfUser } from "../../api/Blog";
 

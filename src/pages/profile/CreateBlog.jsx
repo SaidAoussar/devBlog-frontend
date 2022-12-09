@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Col, Form, Input, Select, Button, Space, Spin, Alert } from "antd";
-import { allTags } from "../utils/tagsData";
+import { allTags } from "../../components/utils/tagsData";
 import { createBlog } from "../../api/Blog";
 
 const { TextArea } = Input;
@@ -20,7 +20,7 @@ function CreateBlog({ userId }) {
           setStatus("resolved");
         }
 
-        if (res.response.status === 400) {
+        if (res.response?.status === 400) {
           throw res.response.data.message;
         }
       })
