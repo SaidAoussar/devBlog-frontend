@@ -1,20 +1,15 @@
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Card, Modal } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
-import { AppContext } from "../../context/AppContext";
 import { RemoveBlog, allBlogsOfUser } from "../../api/Blog";
+import { useUserStore } from "../../store/user";
 
 const { Meta } = Card;
 
 function BlogCard({ blog, operation, userId, setBlogs }) {
-  let navigate = useNavigate();
-
-  const context = useContext(AppContext);
-  const [user, setUser] = context.useUser;
+  const authUser = useUserStore((state) => state.user);
   // show and hide modal
-
   const handleShow = () =>
     Modal.confirm({
       title: "Use Hook!",
@@ -68,7 +63,7 @@ function BlogCard({ blog, operation, userId, setBlogs }) {
           />
         }
         actions={
-          operation && user._id == userId
+          operation && authUser._id === userId
             ? [
                 <Link to={`/profile/${userId}/blogs/${blog._id}/edit`}>
                   <EditOutlined />

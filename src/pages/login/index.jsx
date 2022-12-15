@@ -1,15 +1,13 @@
-import React, { useState, useContext } from "react";
+import { useState } from "react";
 import { login } from "../../api/Auth";
 
 import { Form, Input, Button, Card, Row, Col, Alert, Space, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../context/AppContext";
 import Container from "../../components/utils/Container";
-
+import { useUserStore } from "../../store/user";
 function Login() {
-  const context = useContext(AppContext);
-  const [user, setUser] = context.useUser;
-  const [auth, setAuth] = context.useAuth;
+  const setUser = useUserStore((state) => state.setUser);
+  const authUser = useUserStore((state) => state.user);
 
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
@@ -20,11 +18,9 @@ function Login() {
     login(values)
       .then((res) => {
         if (res.status === 200) {
-          localStorage.setItem("token", res.data.token);
-          setAuth(true);
-          const { token, ...user } = res.data;
-          setUser(user);
-          navigate("/profile/" + user._id);
+          localStorage.setItem("current_user", JSON.stringify(res.data));
+          setUser(res.data);
+          navigate("/profile/" + res.data._id);
         }
         if (res.response?.status === 400) {
           throw res.response.data.message;

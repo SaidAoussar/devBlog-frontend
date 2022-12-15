@@ -22,7 +22,7 @@ export const register = async (data) => {
 
 //get user info
 export const isAuthenticated = async () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("current_user");
   const doc = await axios.get(`${URL}/isAuthenticated`, {
     headers: {
       "auth-token": token,

@@ -29,7 +29,7 @@ export const allBlogsOfUser = async (id) => {
 };
 
 export const createBlog = async (data) => {
-  const token = localStorage.getItem("token");
+  const { token } = JSON.parse(localStorage.getItem("current_user"));
   try {
     const res = await axios.post(`${URL}/blog`, data, {
       headers: {
@@ -43,7 +43,7 @@ export const createBlog = async (data) => {
 };
 
 export const updateBlog = async (data) => {
-  const token = localStorage.getItem("token");
+  const { token } = JSON.parse(localStorage.getItem("current_user"));
   try {
     const res = await axios.put(`${URL}/blog`, data, {
       headers: {
@@ -57,7 +57,7 @@ export const updateBlog = async (data) => {
 };
 
 export const RemoveBlog = async (id) => {
-  const token = localStorage.getItem("token");
+  const { token } = JSON.parse(localStorage.getItem("current_user"));
   try {
     const doc = axios.delete(`${URL}/blog/${id}`, {
       headers: {

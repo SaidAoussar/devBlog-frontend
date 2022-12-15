@@ -1,8 +1,5 @@
-import React, { useEffect, useContext, Fragment } from "react";
+import { Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
-
-import { isAuthenticated } from "./api/Auth";
-import { AppContext } from "./context/AppContext";
 
 import Layout from "./layouts/Layout";
 import Home from "./pages/home";
@@ -16,26 +13,6 @@ import Profile from "./pages/profile";
 import Logout from "./components/auth/Logout";
 
 function App() {
-  const context = useContext(AppContext);
-  const [user, setUser] = context.useUser;
-  const [auth, setAuth] = context.useAuth;
-  useEffect(() => {
-    isAuthenticated()
-      .then((res) => {
-        if (res.status === 200) {
-          setUser(res.data);
-          setAuth(res.data.isAuth);
-        }
-
-        if (res.response?.status === 400) {
-          throw Error("Somethinh is wrong");
-        }
-      })
-      .catch((e) => {
-        setAuth(false);
-        setUser({});
-      });
-  }, []);
   return (
     <Fragment>
       <Routes>

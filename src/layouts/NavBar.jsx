@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Button, Menu } from "antd";
 import { useLogout } from "../hooks/useLogout";
-import { AppContext } from "../context/AppContext";
 
 import Container from "../components/utils/Container";
+import { useUserStore } from "../store/user";
 
 let items = [
   {
@@ -23,19 +23,19 @@ let items = [
 ];
 
 function NavBar({}) {
-  const context = useContext(AppContext);
-  const [user, setUser] = context.useUser;
-  const [auth, setAuth] = context.useAuth;
   const [authMenu, setAuthMenu] = useState([]);
   const navigate = useNavigate();
+
+  const authUser = useUserStore((state) => state.user);
 
   const { logout } = useLogout();
 
   useEffect(() => {
-    if (auth) {
+    console.log("is auth", authUser, Object.keys(authUser).length !== 0);
+    if (Object.keys(authUser).length !== 0) {
       setAuthMenu([
         {
-          label: <Link to={`/profile/${user._id}`}>Profile</Link>,
+          label: <Link to={`/profile/${authUser._id}`}>Profile</Link>,
           key: "profile",
         },
         {
@@ -66,7 +66,7 @@ function NavBar({}) {
         },
       ]);
     }
-  }, [auth, user]);
+  }, [authUser]);
 
   return (
     <div>

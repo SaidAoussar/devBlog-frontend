@@ -103,4 +103,6 @@ https://github.com/weihomechen/blog/
 
 https://profy.dev/article/react-folder-structure
 
+https://www.freecodecamp.org/news/fullstack-react-blog-app-with-express-and-psql/
+
 */

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import {
   useParams,
   Routes,
@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import { Row, Col, Card, Space, Radio, Image, Spin, Alert } from "antd";
 import Container from "../../components/utils/Container";
-import { AppContext } from "../../context/AppContext";
 import { getUser } from "../../api/User";
 
 import UserBlogs from "./UserBlogs";
@@ -30,8 +29,6 @@ function Profile() {
   const [content, setContent] = useState("allBlogs"); // allBlogs / createBlog
   const [isEditPgae, setIsEditPage] = useState(false);
   const navigate = useNavigate();
-  const context = useContext(AppContext);
-  const [userContext, setUserContext] = context.useUser;
 
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
@@ -53,7 +50,7 @@ function Profile() {
         setError(e);
         setStatus("rejected");
       });
-  }, [userContext]);
+  }, []);
 
   useEffect(() => {
     const routePath = location.pathname.split("/").at(-1);

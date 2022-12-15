@@ -1,15 +1,10 @@
-import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
+import { useUserStore } from "../store/user";
 
 export function useLogout() {
-  const context = useContext(AppContext);
-  const [, setUser] = context.useUser;
-  const [, setAuth] = context.useAuth;
-
+  const setAuthUser = useUserStore((state) => state.setUser);
   const logout = () => {
-    localStorage.removeItem("token");
-    setAuth(false);
-    setUser({});
+    localStorage.removeItem("current_user");
+    setAuthUser({});
   };
 
   return { logout };

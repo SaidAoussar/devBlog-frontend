@@ -1,29 +1,15 @@
 import React, { useState } from "react";
 import { Button } from "antd";
 import { isAuthenticated } from "../../api/Auth";
+import { useUserStore } from "../../store/user";
 
 function About() {
-  const [user, setUser] = useState({});
-  const [error, setError] = useState("");
-  const getInfoUser = () => {
-    isAuthenticated()
-      .then((res) => {
-        setError("");
-        setUser(res.data);
-      })
-      .catch((e) => {
-        setUser({});
-        setError(e.response.data.message);
-      });
-  };
+  const authUser = useUserStore((state) => state.user);
+
   return (
     <div>
       <div>hello from about us</div>
-      <Button type="primary" onClick={getInfoUser}>
-        get auth
-      </Button>
-      {user && <div>{user.username}</div>}
-      {error && <div>{error}</div>}
+      {JSON.stringify(authUser)}
     </div>
   );
 }

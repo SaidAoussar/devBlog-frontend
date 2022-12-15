@@ -1,28 +1,28 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Form, Input, Button, Upload, Space, Spin, Alert } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { AppContext } from "../../context/AppContext";
+import { useUserStore } from "../../store/user";
 import { updateUser } from "./../../api/User";
 
 function EditProfile() {
-  const context = useContext(AppContext);
-  const [user, setUser] = context.useUser;
+  const authUser = useUserStore((state) => state.user);
+  const setAuthUser = useUserStore((state) => state.setUser);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
 
   const onFinish = (values) => {
     setStatus("pending");
     const formData = new FormData();
-    formData.append("_id", user._id);
+    formData.append("_id", authUser._id);
     formData.append("username", values.username);
     formData.append("email", values.email);
     formData.append("password", values.password);
     formData.append("avatar", values.avatar);
 
-    updateUser(user._id, formData)
+    updateUser(authUser._id, formData)
       .then((res) => {
         if (res.status === 200) {
-          setUser(res.data);
+          setAuthUser(res.data);
           setStatus("resolved");
         }
 
@@ -66,11 +66,11 @@ function EditProfile() {
         <Form.Item
           label="Username"
           name="username"
-          initialValue={user.username}
+          initialValue={authUser.username}
         >
           <Input />
         </Form.Item>
-        <Form.Item label="Email" name="email" initialValue={user.email}>
+        <Form.Item label="Email" name="email" initialValue={authUser.email}>
           <Input />
         </Form.Item>
         <Form.Item label="Password" name="password" initialValue="">
