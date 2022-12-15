@@ -10,7 +10,6 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import ErrorPage from "./components/utils/ErrorPage";
 import Profile from "./pages/profile";
-import Logout from "./components/auth/Logout";
 
 function App() {
   return (
@@ -23,7 +22,6 @@ function App() {
           <Route path="/contact" element={<Contact />} />
 
           <Route path="/profile/:id/*" element={<Profile />} />
-          <Route path="/logout" element={<Logout />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
