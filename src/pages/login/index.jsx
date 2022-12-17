@@ -17,10 +17,12 @@ function Login() {
     setStatus("pending");
     login(values)
       .then((res) => {
-        if (res.status === 200) {
+        console.log(res);
+        // 201 : created
+        if (res.status === 201) {
           localStorage.setItem("current_user", JSON.stringify(res.data));
           setUser(res.data);
-          navigate("/profile/" + res.data._id);
+          navigate("/profile/" + res.data.id);
         }
         if (res.response?.status === 400) {
           throw res.response.data.message;

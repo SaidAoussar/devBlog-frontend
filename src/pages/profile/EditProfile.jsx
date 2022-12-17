@@ -13,16 +13,22 @@ function EditProfile() {
   const onFinish = (values) => {
     setStatus("pending");
     const formData = new FormData();
-    formData.append("_id", authUser._id);
-    formData.append("username", values.username);
+    formData.append("firstName", values.firstName);
+    formData.append("lastName", values.lastName);
     formData.append("email", values.email);
-    formData.append("password", values.password);
-    formData.append("avatar", values.avatar);
+    if (values.password) {
+      formData.append("password", values.password);
+    }
+    if (values.avatar) {
+      formData.append("img", values.avatar);
+    }
 
-    updateUser(authUser._id, formData)
+    updateUser(authUser.id, formData)
       .then((res) => {
         if (res.status === 200) {
-          setAuthUser(res.data);
+          console.log("res.data", res.data);
+          // bc res.data dont containt token
+          setAuthUser({ ...authUser, ...res.data });
           setStatus("resolved");
         }
 
@@ -54,7 +60,7 @@ function EditProfile() {
         </Space>
       )}
 
-      {status === "resolved" && <Alert message={error} type="error" />}
+      {status === "rejected" && <Alert message={error} type="error" />}
       {status === "resolved" && (
         <Alert message="your info updated with success" type="success" />
       )}
@@ -64,16 +70,23 @@ function EditProfile() {
         wrapperCol={{ span: 18 }}
       >
         <Form.Item
-          label="Username"
-          name="username"
-          initialValue={authUser.username}
+          label="First Name"
+          name="firstName"
+          initialValue={authUser.firstName}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Last Name"
+          name="lastName"
+          initialValue={authUser.lastName}
         >
           <Input />
         </Form.Item>
         <Form.Item label="Email" name="email" initialValue={authUser.email}>
           <Input />
         </Form.Item>
-        <Form.Item label="Password" name="password" initialValue="">
+        <Form.Item label="Password" name="password">
           <Input.Password />
         </Form.Item>
 

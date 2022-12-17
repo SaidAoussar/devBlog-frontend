@@ -11,10 +11,10 @@ function Register() {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
-    setStatus("pending");
     register(values)
       .then((res) => {
-        if (res.status === 200) {
+        console.log(res);
+        if (res.status === 201) {
           setStatus("resolved");
         }
 
@@ -48,12 +48,7 @@ function Register() {
 
           {status === "resolved" && (
             <Alert
-              message={
-                <p>
-                  You register with succcess, you can
-                  <Link to="login">login</Link>
-                </p>
-              }
+              message={<p>You register with succcess, check your email.</p>}
               type="success"
             />
           )}
@@ -65,6 +60,29 @@ function Register() {
               onFinish={onFinish}
             >
               <Form.Item
+                label="First Name"
+                name="firstName"
+                required
+                rules={[
+                  { required: true, message: "Please input your first name!" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Last Name"
+                name="lastName"
+                required
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your first last name!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
                 label="Email"
                 name="email"
                 required
@@ -75,7 +93,8 @@ function Register() {
               >
                 <Input />
               </Form.Item>
-              <Form.Item
+              {/* todo: create username in database unique. localhost/sabiri10 */}
+              {/* <Form.Item
                 label="Username"
                 name="username"
                 rules={[
@@ -83,7 +102,7 @@ function Register() {
                 ]}
               >
                 <Input />
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item
                 label="Password"
                 name="password"

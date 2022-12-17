@@ -35,7 +35,7 @@ function NavBar({}) {
     if (Object.keys(authUser).length !== 0) {
       setAuthMenu([
         {
-          label: <Link to={`/profile/${authUser._id}`}>Profile</Link>,
+          label: <Link to={`/profile/${authUser.id}`}>Profile</Link>,
           key: "profile",
         },
         {

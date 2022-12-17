@@ -65,7 +65,7 @@ function BlogCard({ blog, operation, userId, setBlogs }) {
         actions={
           operation && authUser._id === userId
             ? [
-                <Link to={`/profile/${userId}/blogs/${blog._id}/edit`}>
+                <Link to={`/profile/${userId}/blogs/${blog.id}/edit`}>
                   <EditOutlined />
                 </Link>,
                 <DeleteOutlined onClick={handleShow} />,
@@ -75,11 +75,11 @@ function BlogCard({ blog, operation, userId, setBlogs }) {
       >
         <Meta
           title={
-            <Link to={`/blog/${blog._id}`} className="title-card">
+            <Link to={`/blog/${blog.id}`} className="title-card">
               {blog.title}
             </Link>
           }
-          description={`${blog.body.slice(0, 100)}`}
+          description={`${blog.content.slice(0, 100)}`}
         />
       </Card>
     </>

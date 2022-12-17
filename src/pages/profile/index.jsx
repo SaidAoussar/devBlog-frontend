@@ -18,6 +18,16 @@ import EditBlog from "./EditBlog";
 import ModalEditProfile from "./ModalEditProfile";
 import EditProfile from "./EditProfile";
 import "./profile.module.css";
+import { useUserStore } from "../../store/user";
+
+//TODO: figure out : when we update img user should update in profile: soleve
+// problem : this approach is good but when the img dont change name dont work
+/*solution:
+component (Image) dont change if url img dont change.
+so i well add property KEY to compnent with (updatedAt) to force component to change.
+// url updatedAt in prisma
+https://www.prisma.io/docs/guides/upgrade-guides/upgrade-from-prisma-1/schema-incompatibilities-postgres#workarounds-2 
+ */
 
 const { Meta } = Card;
 
@@ -26,17 +36,20 @@ function Profile() {
   const location = useLocation();
 
   const [user, setUser] = useState({});
+  const authUser = useUserStore((state) => state.user);
   const [content, setContent] = useState("allBlogs"); // allBlogs / createBlog
   const [isEditPgae, setIsEditPage] = useState(false);
   const navigate = useNavigate();
 
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
+  console.log("authUser", authUser);
 
   useEffect(() => {
     setStatus("pending");
     getUser(id)
       .then((res) => {
+        console.log("res", res);
         if (res.status === 200) {
           setUser(res.data);
           setStatus("resolved");
@@ -79,31 +92,62 @@ function Profile() {
       {status === "rejected" && <Alert message={error} type="error" />}
       {status === "resolved" && (
         <>
-          <Row>
-            <Col span={24}>
-              <Card
-                title="Profile"
-                extra={
-                  <ModalEditProfile>
-                    <EditProfile />
-                  </ModalEditProfile>
-                }
-              >
-                <Space
-                  direction="vertical"
-                  align="center"
-                  style={{ width: "100%" }}
+          {authUser.id === user.id ? (
+            <Row>
+              <Col span={24}>
+                <Card
+                  title="Profile"
+                  extra={
+                    <ModalEditProfile>
+                      <EditProfile />
+                    </ModalEditProfile>
+                  }
                 >
-                  <Image
-                    width="170px"
-                    height="170px"
-                    src={import.meta.env.VITE_URL + "/" + user.photo}
-                  ></Image>
-                  <Meta title={user.username} description={user.email} />
-                </Space>
-              </Card>
-            </Col>
-          </Row>
+                  <Space
+                    direction="vertical"
+                    align="center"
+                    style={{ width: "100%" }}
+                  >
+                    <Image
+                      width="170px"
+                      height="170px"
+                      src={import.meta.env.VITE_URL + "/" + authUser.img}
+                    ></Image>
+                    <Meta
+                      title={authUser.username}
+                      description={authUser.email}
+                    />
+                  </Space>
+                </Card>
+              </Col>
+            </Row>
+          ) : (
+            <Row>
+              <Col span={24}>
+                <Card
+                  title="Profile"
+                  extra={
+                    <ModalEditProfile>
+                      <EditProfile />
+                    </ModalEditProfile>
+                  }
+                >
+                  <Space
+                    direction="vertical"
+                    align="center"
+                    style={{ width: "100%" }}
+                  >
+                    <Image
+                      width="170px"
+                      height="170px"
+                      src={import.meta.env.VITE_URL + "/" + user.img}
+                    ></Image>
+                    <Meta title={user.username} description={user.email} />
+                  </Space>
+                </Card>
+              </Col>
+            </Row>
+          )}
           {!isEditPgae && (
             <Row className="my-4">
               <Radio.Group

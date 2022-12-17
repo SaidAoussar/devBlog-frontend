@@ -4,7 +4,7 @@ const URL = import.meta.env.VITE_URL;
 
 export const login = async (data) => {
   try {
-    const doc = await axios.post(`${URL}/login`, data);
+    const doc = await axios.post(`${URL}/auth/login`, data);
     return doc;
   } catch (e) {
     return e;
@@ -13,7 +13,7 @@ export const login = async (data) => {
 
 export const register = async (data) => {
   try {
-    const doc = await axios.post(`${URL}/register`, data);
+    const doc = await axios.post(`${URL}/auth/register`, data);
     return doc;
   } catch (e) {
     return e;

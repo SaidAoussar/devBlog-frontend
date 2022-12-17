@@ -19,9 +19,9 @@ const Home = () => {
     getBlogs()
       .then((res) => {
         if (res.data) {
-          const { items, ...info } = res.data;
-          setBlogs(items);
-          setBlogsInfo(info);
+          const { records, _metadata } = res.data;
+          setBlogs(records);
+          setBlogsInfo(_metadata);
           setStatus("resolved");
         }
 
@@ -40,9 +40,9 @@ const Home = () => {
     getBlogs(page)
       .then((res) => {
         if (res.data) {
-          const { items, ...info } = res.data;
-          setBlogs(items);
-          setBlogsInfo(info);
+          const { records, _metadata } = res.data;
+          setBlogs(records);
+          setBlogsInfo(_metadata);
           setStatus("resolved");
         }
         if (res.name === "Error") {
@@ -62,8 +62,8 @@ const Home = () => {
             {status === "idle" && <p>loading..</p>}
             {blogsInfo && (
               <Pagination
-                current={blogsInfo.currentPage}
-                total={blogsInfo.totalItem}
+                current={blogsInfo.page}
+                total={blogsInfo.total_count}
                 onChange={handlePagination}
                 showSizeChanger={false}
                 style={{ marginTop: "20px", marginBottom: "20px" }}

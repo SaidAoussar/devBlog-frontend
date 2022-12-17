@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getBlog } from "../../api/Blog";
-import { getUser } from "../../api/User";
 import Container from "../../components/utils/Container";
 import { Layout, Row, Col, Image, Tag, Space, Spin, Alert } from "antd";
 
 const Blog = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState({});
-  const [user, setUser] = useState({});
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
 
@@ -18,9 +16,6 @@ const Blog = () => {
       .then((res) => {
         if (res.status === 200) {
           setBlog(res.data);
-          getUser(res.data.author).then((res) => {
-            setUser(res.data);
-          });
           setStatus("resolved");
         }
 
@@ -56,16 +51,15 @@ const Blog = () => {
               <Col md={14}>
                 <Image width="100%" src="https://via.placeholder.com/600x300" />
                 <h5>{blog.title}</h5>
-                <div>{new Date(blog.postTime).toLocaleString()}</div>
-                <small style={{ fontWeight: "bold" }}>{user?.username}</small>
-                <p>{blog.body}</p>
+                <div>{new Date(blog.createdAt).toLocaleString()}</div>
+                <small
+                  style={{ fontWeight: "bold" }}
+                >{`${blog?.author.firstName} ${blog?.author.lastName}`}</small>
+                <p>{blog.content}</p>
                 <div>
-                  {blog.tags?.map((tag) => {
-                    const myTags = tag.split(", ");
-                    return myTags.map((myTag) => (
-                      <Tag color="blue">{myTag}</Tag>
-                    ));
-                  })}
+                  {blog.tags?.map((tag) => (
+                    <Tag color="blue">{tag.name}</Tag>
+                  ))}
                 </div>
               </Col>
             </Row>

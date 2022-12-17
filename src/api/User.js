@@ -4,7 +4,7 @@ const URL = import.meta.env.VITE_URL;
 
 export async function getUsers() {
   try {
-    const response = await axios.get(`${URL}/user`);
+    const response = await axios.get(`${URL}/users`);
     return response;
   } catch (e) {
     return e;
@@ -13,7 +13,7 @@ export async function getUsers() {
 
 export async function getUser(id) {
   try {
-    const res = await axios.get(`${URL}/user/${id}`);
+    const res = await axios.get(`${URL}/users/${id}`);
     return res;
   } catch (e) {
     return e;
@@ -31,7 +31,7 @@ export async function removeUser(id) {
 
 export async function updateUser(id, formData) {
   try {
-    const response = await axios.put(`${URL}/user/${id}`, formData);
+    const response = await axios.patch(`${URL}/users/${id}`, formData);
     return response;
   } catch (e) {
     return e;

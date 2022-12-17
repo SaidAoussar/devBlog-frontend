@@ -4,7 +4,7 @@ const URL = import.meta.env.VITE_URL;
 
 export const getBlogs = async (p = 1) => {
   try {
-    const res = await axios.get(`${URL}/blog?page=${p}`);
+    const res = await axios.get(`${URL}/posts?page=${p}`);
     return res;
   } catch (e) {
     return e;
@@ -13,7 +13,7 @@ export const getBlogs = async (p = 1) => {
 
 export const getBlog = async (id) => {
   try {
-    const res = await axios.get(`${URL}/blog/${id}`);
+    const res = await axios.get(`${URL}/posts/${id}`);
     return res;
   } catch (e) {
     return e;
@@ -21,7 +21,7 @@ export const getBlog = async (id) => {
 };
 export const allBlogsOfUser = async (id) => {
   try {
-    const res = await axios.get(`${URL}/blog/user/` + id);
+    const res = await axios.get(`${URL}/posts/user/` + id);
     return res;
   } catch (e) {
     return e;
