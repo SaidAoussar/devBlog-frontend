@@ -42,12 +42,12 @@ export const createBlog = async (data) => {
   }
 };
 
-export const updateBlog = async (data) => {
+export const updateBlog = async (id, data) => {
   const { token } = JSON.parse(localStorage.getItem("current_user"));
   try {
-    const res = await axios.put(`${URL}/blog`, data, {
+    const res = await axios.patch(`${URL}/posts/${id}`, data, {
       headers: {
-        "auth-token": token,
+        Authorization: `Bearer ${token}`,
       },
     });
     return res;

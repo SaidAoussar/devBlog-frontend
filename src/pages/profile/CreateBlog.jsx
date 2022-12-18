@@ -16,7 +16,7 @@ import { getTags } from "../../api/Tag";
 import { getCategories } from "../../api/Category";
 
 // this function formatting array come from database to select option array shap
-function formatSelectOptions(arr) {
+export function formatSelectOptions(arr) {
   let options = [];
   arr.forEach((tag) => {
     options.push({ value: tag.id, label: tag.name });
@@ -54,11 +54,12 @@ function CreateBlog({ userId }) {
 
   const onFinish = (values) => {
     console.log(values);
+
     setStatus("pending");
     createBlog(values)
       .then((res) => {
         console.log(res);
-        if (res.status === 200) {
+        if (res.status === 201) {
           form.resetFields();
           setStatus("resolved");
         }
@@ -116,7 +117,7 @@ function CreateBlog({ userId }) {
         <Form.Item label="Content" name="content">
           <TextArea rows={5} />
         </Form.Item>
-        <Form.Item label="Category" name="category">
+        <Form.Item label="Category" name="categoryId">
           <Select
             allowClear
             placeholder="Select Category"
