@@ -26,7 +26,10 @@ function EditProfile() {
     updateUser(authUser.id, formData)
       .then((res) => {
         if (res.status === 200) {
-          console.log("res.data", res.data);
+          localStorage.setItem(
+            "current_user",
+            JSON.stringify({ ...authUser, ...res.data })
+          );
           // bc res.data dont containt token
           setAuthUser({ ...authUser, ...res.data });
           setStatus("resolved");

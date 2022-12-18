@@ -31,9 +31,9 @@ export const allBlogsOfUser = async (id) => {
 export const createBlog = async (data) => {
   const { token } = JSON.parse(localStorage.getItem("current_user"));
   try {
-    const res = await axios.post(`${URL}/blog`, data, {
+    const res = await axios.post(`${URL}/posts`, data, {
       headers: {
-        "auth-token": token,
+        Authorization: `Bearer ${token}`,
       },
     });
     return res;

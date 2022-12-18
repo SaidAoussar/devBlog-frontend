@@ -25,7 +25,7 @@ function UserBlogs({ userId }) {
         setError(e);
         setStatus("rejected");
       });
-  }, []);
+  }, [userId]);
   return (
     <Row gutter={[16, 16]}>
       {status === "idle" && <p>Request idle</p>}

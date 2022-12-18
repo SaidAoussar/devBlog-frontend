@@ -31,7 +31,6 @@ function NavBar({}) {
   const { logout } = useLogout();
 
   useEffect(() => {
-    console.log("is auth", authUser, Object.keys(authUser).length !== 0);
     if (Object.keys(authUser).length !== 0) {
       setAuthMenu([
         {

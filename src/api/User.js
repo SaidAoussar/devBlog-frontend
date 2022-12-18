@@ -22,7 +22,7 @@ export async function getUser(id) {
 
 export async function removeUser(id) {
   try {
-    const response = await axios.delete(`${URL}/user/'${id}`);
+    const response = await axios.delete(`${URL}/users/'${id}`);
     return response;
   } catch (e) {
     return e;

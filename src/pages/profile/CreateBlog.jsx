@@ -1,16 +1,59 @@
-import { useState } from "react";
-import { Col, Form, Input, Select, Button, Space, Spin, Alert } from "antd";
-import { allTags } from "../../components/utils/tagsData";
+import { useEffect, useState } from "react";
+import {
+  Col,
+  Form,
+  Input,
+  Select,
+  Button,
+  Space,
+  Spin,
+  Alert,
+  Switch,
+} from "antd";
+//import { allTags } from "../../components/utils/tagsData";
 import { createBlog } from "../../api/Blog";
+import { getTags } from "../../api/Tag";
+import { getCategories } from "../../api/Category";
+
+// this function formatting array come from database to select option array shap
+function formatSelectOptions(arr) {
+  let options = [];
+  arr.forEach((tag) => {
+    options.push({ value: tag.id, label: tag.name });
+  });
+  return options;
+}
 
 const { TextArea } = Input;
 
 function CreateBlog({ userId }) {
   const [form] = Form.useForm();
+  const [tags, setTags] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    getTags()
+      .then((res) => {
+        console.log(res.data);
+        setTags(() => formatSelectOptions(res.data));
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    getCategories()
+      .then((res) => {
+        setCategories(() => formatSelectOptions(res.data));
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   const onFinish = (values) => {
+    console.log(values);
     setStatus("pending");
     createBlog(values)
       .then((res) => {
@@ -70,16 +113,26 @@ function CreateBlog({ userId }) {
         <Form.Item label="Title" name="title">
           <Input />
         </Form.Item>
-        <Form.Item label="Body" name="body">
+        <Form.Item label="Content" name="content">
           <TextArea rows={5} />
+        </Form.Item>
+        <Form.Item label="Category" name="category">
+          <Select
+            allowClear
+            placeholder="Select Category"
+            options={categories}
+          />
         </Form.Item>
         <Form.Item label="Tags" name="tags">
           <Select
             mode="multiple"
             allowClear
             placeholder="Select Tags"
-            options={allTags}
+            options={tags}
           />
+        </Form.Item>
+        <Form.Item label="Publish" name="published" valuePropName="checked">
+          <Switch />
         </Form.Item>
         <Button
           type="primary"
