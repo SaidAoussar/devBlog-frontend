@@ -27,7 +27,7 @@ function BlogCard({ blog, operation, userId, setBlogs }) {
     });
 
   const removeBlog = () => {
-    RemoveBlog(blog._id)
+    RemoveBlog(blog.id)
       .then((res) => {
         if (res.data) {
           toast.success(`${res.data.title} deleted with success`, {

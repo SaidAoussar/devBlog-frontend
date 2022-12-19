@@ -59,9 +59,9 @@ export const updateBlog = async (id, data) => {
 export const RemoveBlog = async (id) => {
   const { token } = JSON.parse(localStorage.getItem("current_user"));
   try {
-    const doc = axios.delete(`${URL}/blog/${id}`, {
+    const doc = axios.delete(`${URL}/posts/${id}`, {
       headers: {
-        "auth-token": token,
+        Authorization: `Bearer ${token}`,
       },
     });
     return doc;
