@@ -1,0 +1,15 @@
+@media (max-width: 768px) {
+  .hide-for-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .hide-for-desktop {
+    display: none;
+  }
+
+  .flex-auto-desktop {
+    flex: auto;
+  }
+}
