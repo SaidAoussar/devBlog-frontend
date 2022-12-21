@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/pro-components": "^2.3.47",
     "antd": "^5.0.2",
     "axios": "^0.24.0",
     "eslint-config-react-app": "^7.0.0",

@@ -5,6 +5,7 @@ import { Col, Row, Layout, Alert, Spin, Space } from "antd";
 import Container from "../../components/utils/Container";
 
 import { Pagination } from "antd";
+import Intro from "./components/Intro";
 
 const { Content } = Layout;
 
@@ -57,6 +58,7 @@ const Home = () => {
   return (
     <div>
       <Layout>
+        <Intro />
         <Content>
           <Container>
             {status === "idle" && <p>loading..</p>}
@@ -105,4 +107,12 @@ https://profy.dev/article/react-folder-structure
 
 https://www.freecodecamp.org/news/fullstack-react-blog-app-with-express-and-psql/
 
+
+ -- infinite scroll with reactjs:
+ https://www.youtube.com/watch?v=NZKUirTtxcg
+ https://www.youtube.com/watch?v=2IbRtjez6ag
+
+
+
+ https://www.youtube.com/watch?v=6ardZEhjvV0
 */
