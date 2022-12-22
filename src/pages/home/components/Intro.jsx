@@ -5,7 +5,7 @@ const { Title, Paragraph } = Typography;
 
 const Intro = () => {
   return (
-    <div className="intro_section">
+    <div className="intro_section" style={{ margin: "40px 0px" }}>
       <Container>
         <Title style={{ fontSize: "60px" }}>Stay curious.</Title>
         <Paragraph style={{ fontSize: "24px" }}>

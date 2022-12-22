@@ -4,7 +4,12 @@ const URL = import.meta.env.VITE_URL;
 
 export const getBlogs = async (p = 1) => {
   try {
-    const res = await axios.get(`${URL}/posts?page=${p}`);
+    //const res = await axios.get(`${URL}/posts?page=${p}`);
+    const res = await axios({
+      url: `${URL}/posts`,
+      method: "GET",
+      params: { page: p },
+    });
     return res;
   } catch (e) {
     return e;

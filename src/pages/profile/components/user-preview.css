@@ -1,0 +1,37 @@
+.profile-header {
+  border: solid 1px black;
+  margin-top: 100px;
+  background-color: red;
+}
+
+.profile-header__top {
+  position: relative;
+  height: 76px;
+}
+
+.profile-header button {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+}
+
+.profile-header__top img {
+  border: solid 8px white;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 100%;
+}
+
+.profile-header__details {
+  text-align: center;
+}
+
+.profile-header__details .author-name {
+  font-weight: 700;
+  margin-top: 16px;
+}
+
+.profile-header__details .author-bio {
+  font-size: 18px;
+}
