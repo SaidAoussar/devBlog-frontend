@@ -21,7 +21,7 @@ const UserPreview = () => {
           Said Aoussar
         </Title>
         <Text className="author-bio"> Front end developper</Text>
-        <div className="author-date">Joined on Dec 6, 2020</div>
+        <Text className="author-date">Joined on Dec 6, 2020</Text>
       </div>
     </header>
   );

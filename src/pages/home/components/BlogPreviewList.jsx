@@ -10,6 +10,7 @@ const BlogPreviewList = () => {
 
   const lastBlogElementRef = useCallback(
     (node) => {
+      console.log("render");
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {

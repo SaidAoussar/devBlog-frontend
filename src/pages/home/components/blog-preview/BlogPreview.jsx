@@ -6,7 +6,6 @@ import { format } from "date-fns";
 const { Title, Paragraph, Text } = Typography;
 
 const BlogPreview = React.forwardRef(({ blog }, ref) => {
-  console.log(blog);
   const { author, title } = blog;
   return (
     <article ref={ref} className="cardpreview">

@@ -1,7 +1,8 @@
 .profile-header {
-  border: solid 1px black;
+  background-color: white;
   margin-top: 100px;
-  background-color: red;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px #1717171a;
 }
 
 .profile-header__top {
@@ -16,7 +17,7 @@
 }
 
 .profile-header__top img {
-  border: solid 8px white;
+  border: solid 8px #3063b0;
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -25,6 +26,7 @@
 
 .profile-header__details {
   text-align: center;
+  padding-bottom: 30px;
 }
 
 .profile-header__details .author-name {
@@ -33,5 +35,12 @@
 }
 
 .profile-header__details .author-bio {
+  display: block;
   font-size: 18px;
+  margin-bottom: 14px;
+}
+
+.profile-header__details .author-date {
+  display: block;
+  color: #717171;
 }
