@@ -1,0 +1,25 @@
+.left-sidebar .link {
+  display: block;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.left-sidebar .link span {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  font-size: 16px;
+}
+
+.left-sidebar .link:hover:not(.left-sidebar .link--active) {
+  background-color: rgba(59, 73, 223, 0.1);
+}
+
+.left-sidebar .link--active {
+  background-color: rgb(253, 253, 253);
+  font-weight: 500;
+}
+
+.left-sidebar .link span .anticon {
+  font-size: 22px;
+}

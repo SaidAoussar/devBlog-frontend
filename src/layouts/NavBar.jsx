@@ -6,6 +6,7 @@ import {
   LogoutOutlined,
   MenuOutlined,
   PlusCircleOutlined,
+  SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { useLogout } from "../hooks/useLogout";
@@ -74,6 +75,15 @@ function NavBar({}) {
                 </Link>
               ),
               key: "create-post",
+            },
+            {
+              label: (
+                <Link to="/settings">
+                  <SettingOutlined style={{ marginRight: "8px" }} />
+                  Settings
+                </Link>
+              ),
+              key: "Settings",
             },
             {
               label: (
