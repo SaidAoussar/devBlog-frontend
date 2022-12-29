@@ -69,7 +69,7 @@ function NavBar({}) {
             },
             {
               label: (
-                <Link>
+                <Link to="new">
                   <PlusCircleOutlined style={{ marginRight: "8px" }} />
                   Create Post
                 </Link>

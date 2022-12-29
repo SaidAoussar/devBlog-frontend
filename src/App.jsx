@@ -14,6 +14,7 @@ import Settings from "./pages/settings";
 import ProfileSetting from "./pages/settings/components/setting/profile-setting/ProfileSetting";
 import AccountSetting from "./pages/settings/components/setting/account-setting/AccountSetting";
 import CustomizationSetting from "./pages/settings/components/setting/customization-setting/CustomizationSetting";
+import CreatePost from "./pages/create-post";
 
 function App() {
   return (
@@ -38,9 +39,9 @@ function App() {
               element={<CustomizationSetting />}
             ></Route>
           </Route>
-
           <Route path="*" element={<ErrorPage />} />
         </Route>
+        <Route path="/new" element={<CreatePost />} />
       </Routes>
     </Fragment>
   );
