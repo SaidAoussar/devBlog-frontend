@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import parse from "html-react-parser";
 
-import "react-quill/dist/quill.snow.css";
 import "./text-editor.css";
 
 const modules = {
@@ -44,6 +43,7 @@ const TextEditor = () => {
   return (
     <>
       <ReactQuill
+        className="text-editor"
         style={{
           height: "calc(100vh - 48px - 48px - 310px)",
         }}

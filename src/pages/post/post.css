@@ -1,0 +1,298 @@
+.layout-post {
+  display: grid;
+  grid-template-columns: 4rem 7fr 3fr;
+
+  gap: 12px;
+  padding: 16px;
+}
+
+@media (max-width: 768px) {
+  .layout-post {
+    grid-template-columns: 4rem 1fr;
+  }
+}
+
+.sidebar-left {
+  grid-row-end: initial;
+}
+
+@media (max-width: 768px) {
+  .sidebar-left {
+    grid-row-end: span 2;
+  }
+}
+
+.article_actions {
+  display: grid;
+  position: sticky;
+  top: 50px;
+}
+
+.article_actions--inner {
+  display: grid;
+  row-gap: 20px;
+  justify-content: center;
+}
+
+.article_actions .reaction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.article_actions .reaction .anticon {
+  font-size: 24px;
+  padding: 8px;
+}
+
+.content .article {
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(23, 23, 23, 0.1);
+  position: relative;
+}
+
+.content .article .article_cover {
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 100%;
+}
+
+.content .article .article_header_meta {
+  padding: 32px 64px 0px 64px;
+}
+
+.content .article .article_header_meta .author {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.content .article .article_header_meta .author div span:first-child {
+  font-size: 16px;
+  font-weight: 700;
+  display: block;
+}
+
+.content .article .article_header_meta .author div span:last-child {
+  font-size: 12px;
+  font-weight: 400;
+  display: block;
+}
+
+.content .article .article_header_meta img {
+  border-radius: 100%;
+}
+
+.content .article .article_main {
+  padding: 32px 64px;
+}
+
+.article .article_title {
+  font-weight: 800;
+  margin-top: 0px;
+  margin-bottom: 8px;
+}
+
+.article .article_tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.article .article_tags .tag {
+  font-size: 16px;
+  color: rgb(64, 64, 64);
+  padding: 4px 8px;
+  background: transparent;
+  border-radius: 6px;
+}
+
+.article .article_tags .tag:hover {
+  background: rgba(247, 223, 30, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(247, 223, 30, 0.1),
+    inset 0 0 0 1px rgba(247, 223, 30, 0.1),
+    inset 0 0 0 1px rgba(247, 223, 30, 0.1);
+}
+
+.article .article_tags .tag .tag_prefix {
+  color: #f7df1e;
+}
+
+.sidebar-right .sidebar-right--sticky {
+  position: sticky;
+  top: 50px;
+}
+
+.sidebar-right .author_details {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+  background-color: rgb(250, 250, 250);
+  border-top: 32px solid #726fbf;
+  box-shadow: 0 0 0 1px rgba(23, 23, 23, 0.1);
+  border-radius: 8px;
+}
+
+.sidebar-right .author_details .avatar {
+  margin-top: -30px;
+}
+
+.sidebar-right .author_details a {
+  display: flex;
+  column-gap: 4px;
+}
+
+.sidebar-right .author_details a span:first-child {
+  margin-right: 8px;
+  height: 48px;
+  width: 48px;
+  display: inline-block;
+  border-radius: 100%;
+}
+
+.sidebar-right .author_details a span:last-child {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+.sidebar-right .author_details a span:first-child img {
+  border-radius: 100%;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.sidebar-right .author_details .bio {
+  color: #575757;
+  line-height: 24px;
+  font-size: 16px;
+  margin-bottom: 0px;
+}
+
+.sidebar-right .author_details .metadata_details ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-right .author_details .metadata_details ul li .key {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgb(82, 82, 82);
+}
+
+.sidebar-right .author_details .metadata_details ul li .value {
+  display: block;
+  color: rgb(64, 64, 64);
+  font-size: 16px;
+}
+
+.comments {
+  padding: 32px 64px;
+}
+
+.comments .wrapper-new-comment {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.comments .wrapper-new-comment .avatar img {
+  border-radius: 100%;
+}
+
+.comments .wrapper-new-comment .new-comment .quill {
+  margin-bottom: 12px;
+}
+
+.comments .wrapper-new-comment .new-comment .ql-container.ql-snow {
+  min-height: 100px;
+  max-height: 250px;
+  overflow: auto;
+  border-radius: 0px 0px 8px 8px;
+}
+
+.comments .wrapper-new-comment .new-comment .ql-toolbar.ql-snow {
+  border-radius: 8px 8px 0px 0px;
+}
+
+.comments .wrapper-new-comment .new-comment > button {
+  margin-bottom: 16px;
+}
+
+.comments_list .comment {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.comments_list .comment .comment__content {
+  padding: 4px 12px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(23, 23, 23, 0.1);
+}
+
+/* this for img author of comment to make it circle and border  */
+.comments_list .comment .comment__author-img {
+  position: relative;
+  display: inline-block;
+  height: 32px;
+  width: 32px;
+  border-radius: 100%;
+  vertical-align: middle;
+}
+
+.comments_list .comment .comment__author-img::after {
+  content: "";
+  border: 1px solid rgb(64, 64, 64);
+  opacity: 0.15;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 100%;
+}
+
+.comments_list .comment .comment__author-img img {
+  border-radius: 100%;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.comments_list .comment .comment__header {
+  display: flex;
+  align-items: center;
+}
+
+.comments_list .comment .comment__header button {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(61, 61, 61);
+  padding: 4px;
+}
+
+.comments_list .comment .comment__header .separate-point {
+  color: #bdbdbd;
+  margin-right: 8px;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.comments_list .comment .comment__header .comment__date {
+  color: rgb(113, 113, 113);
+}
+
+.comments_list .comment .comment__body {
+  margin-top: 8px;
+  font-size: 16px;
+}

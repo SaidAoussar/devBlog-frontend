@@ -20,7 +20,7 @@ code {
   display: inline;
 }
 
-.ql-toolbar.ql-snow {
+.text-editor .ql-toolbar.ql-snow {
   position: sticky;
   top: 0;
   z-index: 50;
@@ -32,7 +32,7 @@ code {
   margin-bottom: 24px;
 }
 
-.ql-container.ql-snow {
+.text-editor .ql-container.ql-snow {
   font-size: 16px;
   z-index: 10;
   padding-right: 48px;
@@ -43,11 +43,11 @@ code {
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-.ql-container.ql-snow .ql-editor {
+.text-editor .ql-container.ql-snow .ql-editor {
   padding: 0px;
 }
 
-.ql-editor.ql-blank::before {
+.text-editor .ql-editor.ql-blank::before {
   left: 48px;
   font-style: normal;
   font-size: 18px;
@@ -56,6 +56,6 @@ code {
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-.ql-editor.ql-blank {
+.text-editor .ql-editor.ql-blank {
   padding: 0px;
 }

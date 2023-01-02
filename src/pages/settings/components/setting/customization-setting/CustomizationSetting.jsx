@@ -50,7 +50,7 @@ const CustomizationSetting = () => {
           />
           <div>
             <Title level={5} style={{ marginTop: "0px" }}>
-              Light Theme
+              Dark Theme
             </Title>
             <img
               style={{
