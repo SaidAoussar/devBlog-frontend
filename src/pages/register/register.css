@@ -1,0 +1,19 @@
+.register h1.register__title.ant-typography {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 37px;
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 16px;
+}
+
+.register .register__card div.ant-card-body {
+  background-color: rgb(255, 255, 255);
+  padding: 48px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(23, 23, 23, 0.1);
+}
+.register div.ant-col.ant-form-item-label span {
+  font-weight: 500;
+  font-size: 16px;
+}

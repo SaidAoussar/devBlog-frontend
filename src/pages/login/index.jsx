@@ -1,10 +1,24 @@
 import { useState } from "react";
 import { login } from "../../api/Auth";
 
-import { Form, Input, Button, Card, Row, Col, Alert, Space, Spin } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Card,
+  Row,
+  Col,
+  Alert,
+  Space,
+  Spin,
+  Typography,
+} from "antd";
 import { useNavigate } from "react-router-dom";
 import Container from "../../components/utils/Container";
 import { useUserStore } from "../../store/user";
+import "./login.css";
+
+const { Title, Paragraph } = Typography;
 function Login() {
   const setUser = useUserStore((state) => state.setUser);
   const authUser = useUserStore((state) => state.user);
@@ -35,10 +49,10 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="login">
       <Container>
         <Row justify="center">
-          <Col md={12}>
+          <Col md={14}>
             {status === "pending" && (
               <Space
                 style={{
@@ -54,15 +68,27 @@ function Login() {
             {status === "rejected" && (
               <Alert message={error} type="error" showIcon />
             )}
-            <Card>
-              <Form
-                name="login-form"
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 18 }}
-                onFinish={onFinish}
+            <Card className="login__card">
+              <Title className="login__title">
+                Welcome to DevBlog Community
+              </Title>
+              <Paragraph
+                style={{
+                  textAlign: "center",
+                  fontSize: "16px",
+                  fontWeight: "500",
+                  color: "rgb(113,113,113)",
+                }}
               >
+                Login
+              </Paragraph>
+              <Form name="login-form" layout="vertical" onFinish={onFinish}>
                 <Form.Item
-                  label="Email"
+                  label={
+                    <span style={{ fontSize: "16px", fontWeight: "500" }}>
+                      Email
+                    </span>
+                  }
                   name="email"
                   required
                   rules={[
@@ -70,10 +96,14 @@ function Login() {
                     { type: "email" },
                   ]}
                 >
-                  <Input />
+                  <Input size="large" />
                 </Form.Item>
                 <Form.Item
-                  label="Password"
+                  label={
+                    <span style={{ fontSize: "16px", fontWeight: "500" }}>
+                      Password
+                    </span>
+                  }
                   name="password"
                   rules={[
                     {
@@ -82,15 +112,22 @@ function Login() {
                     },
                   ]}
                 >
-                  <Input.Password />
+                  <Input.Password size="large" />
                 </Form.Item>
-                <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+                <Form.Item style={{ marginBottom: "16px" }}>
                   <Button
+                    block
                     type="primary"
                     htmlType="submit"
                     disabled={status === "pending"}
+                    size="large"
                   >
-                    Sign In
+                    Continue
+                  </Button>
+                </Form.Item>
+                <Form.Item style={{ marginBottom: "0px" }}>
+                  <Button block type="link" htmlType="submit">
+                    I forgot my password
                   </Button>
                 </Form.Item>
               </Form>

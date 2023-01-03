@@ -109,7 +109,7 @@ function NavBar({}) {
   }, [authUser]);
 
   return (
-    <div>
+    <div style={{ marginBottom: "16px" }}>
       <Container>
         <div
           style={{
