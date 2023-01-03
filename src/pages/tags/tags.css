@@ -1,18 +1,18 @@
-nav {
+.tags-page nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
 }
 
-nav h1.ant-typography {
+.tags-page nav h1.ant-typography {
   font-size: 30px;
   line-height: 45px;
   font-weight: 700;
   margin: 0;
 }
 
-nav .input-search {
+.tags-page nav .input-search {
   width: 200px;
 }
 

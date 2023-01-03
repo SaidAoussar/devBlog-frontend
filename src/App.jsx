@@ -15,7 +15,9 @@ import ProfileSetting from "./pages/settings/components/setting/profile-setting/
 import AccountSetting from "./pages/settings/components/setting/account-setting/AccountSetting";
 import CustomizationSetting from "./pages/settings/components/setting/customization-setting/CustomizationSetting";
 import Tags from "./pages/tags";
+import Search from "./pages/search";
 import CreatePost from "./pages/create-post";
+import Tag from "./pages/tag";
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
             ></Route>
           </Route>
           <Route path="tags" element={<Tags />} />
+          <Route path="t/:tag" element={<Tag />} />
+          <Route path="search" element={<Search />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
         <Route path="/new" element={<CreatePost />} />

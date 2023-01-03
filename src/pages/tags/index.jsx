@@ -10,6 +10,7 @@ function Tags() {
       style={{
         padding: "16px 0px",
       }}
+      className="tags-page"
     >
       <Container>
         <nav>

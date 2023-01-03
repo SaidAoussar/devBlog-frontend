@@ -1,0 +1,26 @@
+.tags-filter .tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px #1717171a;
+}
+
+.tags-filter .tag h4.ant-typography {
+  margin: 0;
+  font-weight: 700;
+}
+
+.tags-filter .wrapper-hashicon {
+  background-color: red;
+  color: #f7df1e;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.tags-filter .wrapper-hashicon svg {
+  vertical-align: bottom;
+}

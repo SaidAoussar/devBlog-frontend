@@ -2,7 +2,6 @@ import { Typography } from "antd";
 import { Outlet } from "react-router-dom";
 import Container from "../../components/utils/Container";
 import LeftSidebar from "./components/left-sidebar/LeftSidebar";
-import WrapperSetting from "./components/WrapperSetting";
 
 const { Title } = Typography;
 const Settings = () => {
