@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { Button, Menu, Drawer, Avatar } from "antd";
+import { Button, Menu, Drawer, Avatar, Input } from "antd";
 import {
   LogoutOutlined,
   MenuOutlined,
@@ -42,7 +42,9 @@ let rightItems = [
   },
 ];
 
-function NavBar({}) {
+const { Search } = Input;
+
+function NavBar() {
   const [authMenu, setAuthMenu] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
@@ -108,29 +110,25 @@ function NavBar({}) {
     }
   }, [authUser]);
 
+  const onSearch = (value) => {
+    console.log("on search : ", value);
+  };
+
   return (
-    <div style={{ marginBottom: "16px" }}>
+    <div className="navbar">
       <Container>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <div
-            className="right-navbar"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              flexGrow: 2,
-            }}
-          >
-            <span className="logo" style={{ flexGrow: 1 }}>
+        <div className="inner-navbar-wrapper">
+          <div className="right-navbar">
+            <Link className="logo" to="/">
               DevBlog
-            </span>
-            <div className="links hide-for-mobile" style={{ flexGrow: 3 }}>
-              <Menu mode="horizontal" items={leftItems} />
+            </Link>
+            <div
+              className="links hide-for-mobile"
+              style={{
+                width: "300px",
+              }}
+            >
+              <Search placeholder="Search" size="large" onSearch={onSearch} />
             </div>
           </div>
           <div
@@ -157,7 +155,6 @@ function NavBar({}) {
           onClose={() => setOpenDrawer(false)}
           open={openDrawer}
         >
-          <Menu mode="inline" items={leftItems} />
           <Menu
             mode="inline"
             style={{ justifyContent: "end" }}
