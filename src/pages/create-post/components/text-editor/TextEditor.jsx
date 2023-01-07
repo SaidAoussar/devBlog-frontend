@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import parse from "html-react-parser";
+import { useAtom } from "jotai";
 
 import "./text-editor.css";
+import { contentFieldAtom } from "../../store/content-field";
 
 const modules = {
   toolbar: [
@@ -36,10 +38,8 @@ const formats = [
 ];
 
 const TextEditor = () => {
-  const [content, setContent] = useState("");
-  useEffect(() => {
-    console.log("content", content);
-  }, [content]);
+  const [contentField, setContentField] = useAtom(contentFieldAtom);
+
   return (
     <>
       <ReactQuill
@@ -49,8 +49,8 @@ const TextEditor = () => {
         }}
         placeholder="Write your post content here..."
         theme="snow"
-        value={content}
-        onChange={setContent}
+        value={contentField}
+        onChange={(value) => setContentField(value)}
         modules={modules}
         formats={formats}
       />
