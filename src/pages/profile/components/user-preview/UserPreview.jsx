@@ -1,27 +1,61 @@
+import { useEffect, useState } from "react";
 import { Button, Typography } from "antd";
+import { format } from "date-fns";
+import { getUser } from "../../../../api/User";
+
 import "./user-preview.css";
+import { Link } from "react-router-dom";
 
 const { Title, Text } = Typography;
-const UserPreview = () => {
+const UserPreview = ({ id }) => {
+  const [user, setUser] = useState({});
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setStatus("pending");
+    getUser(id)
+      .then((res) => {
+        if (res.status === 200) {
+          setUser(res.data);
+          setStatus("resolved");
+        }
+
+        if (res.response?.status === 400) {
+          throw res.response.data.message;
+        }
+      })
+      .catch((e) => {
+        setError(e);
+        setStatus("rejected");
+      });
+  }, [id]);
   return (
     <header className="profile-header">
       <div className="profile-header__top">
         <img
-          src="https://res.cloudinary.com/practicaldev/image/fetch/s--RN1fQUTf--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/534025/a0031f0c-e12a-41d9-b87c-ba47b66b6c48.jpg"
+          src={`${import.meta.env.VITE_URL}/${user.img}`}
           width="128"
           height="128"
           alt="said"
         />
-        <Button type="primary" size="large">
-          Edit profile
-        </Button>
+        <Link to="/settings">
+          <Button type="primary" size="large">
+            Edit profile
+          </Button>
+        </Link>
       </div>
       <div className="profile-header__details">
         <Title level={2} className="author-name">
-          Said Aoussar
+          {user.firstName} {user.lastName}
         </Title>
-        <Text className="author-bio"> Front end developper</Text>
-        <Text className="author-date">Joined on Dec 6, 2020</Text>
+        <Text className="author-bio">{user.intro}</Text>
+        <Text className="author-date">
+          Joined on
+          <time dateTime={user.registeredAt}>
+            {format(new Date(user.registeredAt || Date.now()), " MMM d, y")}
+          </time>
+        </Text>
       </div>
     </header>
   );

@@ -1,4 +1,6 @@
+import React from "react";
 import { Button, Typography, Tag } from "antd";
+import { format } from "date-fns";
 import {
   HeartOutlined,
   MessageOutlined,
@@ -7,32 +9,38 @@ import {
 import "./article.css";
 
 const { Title, Text } = Typography;
-const Article = () => {
+const Article = React.forwardRef(({ post }, ref) => {
+  const { title, createdAt, author, tags } = post;
   return (
-    <div className="story">
+    <div ref={ref} className="story">
       <article className="story__body">
         <div className="story__top">
           <img
             className="story__author-pic"
-            src="https://res.cloudinary.com/practicaldev/image/fetch/s--VSWDxyxd--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/21839/3bffe2cb-6603-4757-a8d5-5652fe12e7a1.png"
+            src={`${import.meta.env.VITE_URL}/${author.img}`}
             alt="said"
             width="34"
             height="34"
           />
           <div>
             <Title className="story__author-name" level={5}>
-              Said Aousssar
+              {author.lastName} {author.firstName}
             </Title>
-            <Text>Dec 19</Text>
+            <Text>
+              <time dateTime={createdAt}>
+                {format(new Date(createdAt), "MMM d, y")}
+              </time>
+            </Text>
           </div>
         </div>
         <div style={{ marginLeft: "44px" }}>
           <Title className="story__title" level={3}>
-            Concepts behind modern frameworks
+            {title}
           </Title>
           <div className="story__tags">
-            <Text>#Javascript</Text>
-            <Text>#Java</Text>
+            {tags.map((t) => (
+              <Text key={t.tag.id}>#{t.tag.name}</Text>
+            ))}
           </div>
           <div className="story__bottom">
             <div className="story__details">
@@ -58,6 +66,6 @@ const Article = () => {
       </article>
     </div>
   );
-};
+});
 
 export default Article;

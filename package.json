@@ -8,6 +8,7 @@
     "date-fns": "^2.29.3",
     "eslint-config-react-app": "^7.0.0",
     "html-react-parser": "^3.0.6",
+    "jotai": "^1.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-infinite-scroll-component": "^6.1.0",

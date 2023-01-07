@@ -2,13 +2,13 @@ import axios from "axios";
 
 const URL = import.meta.env.VITE_URL;
 
-export const getBlogs = async (p = 1) => {
+export const getBlogs = async (p = 1, filter) => {
   try {
     //const res = await axios.get(`${URL}/posts?page=${p}`);
     const res = await axios({
       url: `${URL}/posts`,
       method: "GET",
-      params: { page: p },
+      params: { page: p, ...filter },
     });
     return res;
   } catch (e) {
@@ -70,6 +70,15 @@ export const RemoveBlog = async (id) => {
       },
     });
     return doc;
+  } catch (e) {
+    return e;
+  }
+};
+
+export const nbrPostsOfUser = async (id) => {
+  try {
+    const res = await axios.get(`${URL}/posts/nbrPostsOfUser/` + id);
+    return res;
   } catch (e) {
     return e;
   }
