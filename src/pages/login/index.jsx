@@ -31,18 +31,17 @@ function Login() {
     setStatus("pending");
     login(values)
       .then((res) => {
-        console.log(res);
         // 201 : created
         if (res.status === 201) {
           localStorage.setItem("current_user", JSON.stringify(res.data));
           setUser(res.data);
           navigate("/profile/" + res.data.id);
         }
-        if (res.response?.status === 400) {
-          throw res.response.data.message;
-        }
+
+        throw new Error("password and email incorrect");
       })
       .catch((e) => {
+        console.log(e);
         setError(e);
         setStatus("rejected");
       });
@@ -66,7 +65,7 @@ function Login() {
             )}
 
             {status === "rejected" && (
-              <Alert message={error} type="error" showIcon />
+              <Alert message={error.toString()} type="error" showIcon />
             )}
             <Card className="login__card">
               <Title className="login__title">

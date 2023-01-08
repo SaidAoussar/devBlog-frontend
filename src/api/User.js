@@ -42,3 +42,18 @@ export async function register(data) {
   const response = await axios.post(`${URL}/register`, data);
   return response;
 }
+
+export async function setNewPassword(data) {
+  const { token } = JSON.parse(localStorage.getItem("current_user"));
+  try {
+    const response = await axios.patch(`${URL}/users/update-password`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  } catch (e) {
+    return e;
+  }
+}
