@@ -22,9 +22,9 @@ function Search() {
         }}
       >
         <LeftSidebar q={q} filters={filters} />
-        {filters === "posts" && <PostsFilter />}
-        {filters === "people" && <UsersFilter />}
-        {filters === "tags" && <TagsFilter />}
+        {filters === "posts" && <PostsFilter q={q} />}
+        {filters === "people" && <UsersFilter q={q} />}
+        {filters === "tags" && <TagsFilter q={q} />}
       </section>
     </Container>
   );

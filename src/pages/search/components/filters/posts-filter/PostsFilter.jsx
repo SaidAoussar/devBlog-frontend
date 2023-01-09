@@ -1,63 +1,39 @@
+import { useCallback, useRef } from "react";
+import { useAtom } from "jotai";
+import Article from "./Article";
 import "./posts-filter.css";
-import { Button, Typography, Tag } from "antd";
-import {
-  HeartOutlined,
-  MessageOutlined,
-  BookOutlined,
-} from "@ant-design/icons";
+import useBlogs from "../../../hooks/useBlogs";
+import { pageNumberAtom } from "../../../store/page-number";
 
-const { Title, Text } = Typography;
-function PostsFilter() {
+function PostsFilter({ q }) {
+  const [pageNumber, setPageNumber] = useAtom(pageNumberAtom);
+  const { loading, error, posts, hasMore } = useBlogs(pageNumber, q);
+
+  const observer = useRef();
+  const lastPostElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore, setPageNumber]
+  );
+
   return (
-    <section>
-      <div className="story">
-        <article className="story__body">
-          <div className="story__top">
-            <img
-              className="story__author-pic"
-              src="https://res.cloudinary.com/practicaldev/image/fetch/s--VSWDxyxd--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/21839/3bffe2cb-6603-4757-a8d5-5652fe12e7a1.png"
-              alt="said"
-              width="34"
-              height="34"
-            />
-            <div>
-              <Title className="story__author-name" level={5}>
-                Said Aousssar
-              </Title>
-              <Text>Dec 19</Text>
-            </div>
-          </div>
-          <div style={{ marginLeft: "44px" }}>
-            <Title className="story__title" level={3}>
-              Concepts behind modern frameworks
-            </Title>
-            <div className="story__tags">
-              <Text>#Javascript</Text>
-              <Text>#Java</Text>
-            </div>
-            <div className="story__bottom">
-              <div className="story__details">
-                <Text>
-                  <HeartOutlined style={{ marginRight: "8px" }} />
-                  <span>540 reactions</span>
-                </Text>
-                <Text>
-                  <MessageOutlined style={{ marginRight: "8px" }} />
-                  <span> 42 comments</span>
-                </Text>
-              </div>
-              <div className="story__save">
-                <Text style={{ fontSize: "12px", color: "rgb(82,82,82)" }}>
-                  9 min
-                </Text>
-                <Button className="bookmark" type="text" size="small">
-                  <BookOutlined style={{ fontSize: "16px" }} />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
+    <section className="list-posts">
+      {posts.map((post, index) => {
+        if (posts.length === index + 1) {
+          return <Article key={post.id} ref={lastPostElementRef} post={post} />;
+        } else {
+          return <Article key={post.id} post={post} />;
+        }
+      })}
     </section>
   );
 }

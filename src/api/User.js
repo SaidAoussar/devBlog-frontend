@@ -2,9 +2,16 @@ import axios from "axios";
 
 const URL = import.meta.env.VITE_URL;
 
-export async function getUsers() {
+export async function getUsers(p, filters) {
   try {
-    const response = await axios.get(`${URL}/users`);
+    const response = await axios({
+      url: `${URL}/users`,
+      method: "GET",
+      params: {
+        page: p,
+        ...filters,
+      },
+    });
     return response;
   } catch (e) {
     return e;

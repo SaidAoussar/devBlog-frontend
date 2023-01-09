@@ -40,14 +40,12 @@ const CreatePost = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    getTags().then((res) => {
+    getTags({ paginate: "false" }).then((res) => {
       setTags(() => formatSelectOptions(res.data));
     });
   }, []);
 
   const onFinish = (values) => {
-    console.log(values);
-    console.log(contentField);
     setStatus("pending");
     const formData = new FormData();
     formData.append("title", values.title);

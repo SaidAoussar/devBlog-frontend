@@ -2,13 +2,13 @@ import axios from "axios";
 
 const URL = import.meta.env.VITE_URL;
 
-export const getBlogs = async (p = 1, filter) => {
+export const getBlogs = async (p = 1, filters) => {
   try {
     //const res = await axios.get(`${URL}/posts?page=${p}`);
     const res = await axios({
       url: `${URL}/posts`,
       method: "GET",
-      params: { page: p, ...filter },
+      params: { page: p, ...filters },
     });
     return res;
   } catch (e) {

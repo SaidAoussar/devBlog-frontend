@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import { Button, Menu, Drawer, Avatar, Input } from "antd";
 import {
   LogoutOutlined,
@@ -13,6 +12,8 @@ import { useLogout } from "../hooks/useLogout";
 
 import Container from "../components/utils/Container";
 import { useUserStore } from "../store/user";
+import { useAtom } from "jotai";
+import { pageNumberAtom } from "../pages/search/store/page-number";
 
 import "./Navbar.css";
 
@@ -47,6 +48,7 @@ const { Search } = Input;
 function NavBar() {
   const [authMenu, setAuthMenu] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [_, setPageNumber] = useAtom(pageNumberAtom);
   const navigate = useNavigate();
 
   const authUser = useUserStore((state) => state.user);
@@ -111,7 +113,8 @@ function NavBar() {
   }, [authUser]);
 
   const onSearch = (value) => {
-    console.log("on search : ", value);
+    setPageNumber(1);
+    navigate(`/search?q=${value}&filters=posts`);
   };
 
   return (
