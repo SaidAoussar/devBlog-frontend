@@ -1,10 +1,20 @@
+import { useState } from "react";
+import { useAtom } from "jotai";
 import { Typography, Input } from "antd";
+import { pageNumberAtom } from "./store/page-number";
 import Container from "../../components/utils/Container";
+import TagsList from "./components/TagsList";
 import "./tags.css";
 
 const { Title, Paragraph } = Typography;
 const { Search } = Input;
 function Tags() {
+  const [pageNumber, setPageNumber] = useAtom(pageNumberAtom);
+  const [query, setQuery] = useState("");
+  const onSearch = (value) => {
+    setPageNumber(1);
+    setQuery(value);
+  };
   return (
     <section
       style={{
@@ -15,23 +25,9 @@ function Tags() {
       <Container>
         <nav>
           <Title>Top Tags</Title>
-          <Search className="input-search" />
+          <Search className="input-search" onSearch={onSearch} />
         </nav>
-        <section className="tags-list">
-          {["javascript", "java", "css", "react", "vuejs", "angular"].map(
-            (tag) => (
-              <div className="tag">
-                <Title level={3}>
-                  <a href="" className="tag__name">
-                    <span className="tag__prefix">#</span>
-                    {tag}
-                  </a>
-                </Title>
-                <Paragraph>111 post</Paragraph>
-              </div>
-            )
-          )}
-        </section>
+        <TagsList q={query} />
       </Container>
     </section>
   );
