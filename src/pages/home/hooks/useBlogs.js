@@ -4,7 +4,7 @@ import { getBlogs } from "../../../api/Blog";
 export default function useBlogs(pageNumber) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [blogs, setBlogs] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(false);
   useEffect(() => {
     setLoading(true);
@@ -14,7 +14,7 @@ export default function useBlogs(pageNumber) {
         if (Object.keys(res.data).length === 0) return;
         let { _metadata, records } = res.data;
 
-        setBlogs((prevBlogs) => {
+        setPosts((prevBlogs) => {
           return [...prevBlogs, ...records];
         });
 
@@ -30,5 +30,5 @@ export default function useBlogs(pageNumber) {
         setError(true);
       });
   }, [pageNumber]);
-  return { loading, error, blogs, hasMore };
+  return { loading, error, posts, hasMore };
 }

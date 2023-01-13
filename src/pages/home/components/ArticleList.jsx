@@ -1,39 +1,37 @@
-import { useState, useRef, useCallback, Fragment } from "react";
-import BlogPreview from "./blog-preview/BlogPreview";
+import { useCallback, useRef, useState } from "react";
 import useBlogs from "../hooks/useBlogs";
+import Article from "./article/Article";
 
-const BlogPreviewList = () => {
+const ArticleList = () => {
   const [pageNumber, setPageNumber] = useState(1);
-  const { loading, error, blogs, hasMore } = useBlogs(pageNumber);
-
+  const { loading, error, posts, hasMore } = useBlogs(pageNumber);
   const observer = useRef();
 
-  const lastBlogElementRef = useCallback(
+  const lastElementPostRef = useCallback(
     (node) => {
-      console.log("render");
       if (loading) return;
       if (observer.current) observer.current.disconnect();
+
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          console.log("visible");
           setPageNumber((prevPageNumber) => prevPageNumber + 1);
         }
       });
-
       if (node) observer.current.observe(node);
     },
     [loading, hasMore]
   );
   return (
-    <div>
-      {blogs.map((blog, index) => {
-        if (blogs.length === index + 1) {
-          return <BlogPreview ref={lastBlogElementRef} blog={blog} />;
+    <div className="substories">
+      {posts.map((post, index) => {
+        if (posts.length === index + 1) {
+          return <Article key={post.id} ref={lastElementPostRef} post={post} />;
+        } else {
+          return <Article key={post.id} post={post} />;
         }
-        return <BlogPreview blog={blog} />;
       })}
     </div>
   );
 };
 
-export default BlogPreviewList;
+export default ArticleList;
