@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import {
   HeartOutlined,
@@ -9,13 +9,14 @@ import {
 import { Button, Layout, Typography } from "antd";
 import { getBlog } from "../../api/Blog";
 import "./post.css";
-import Container from "../../components/utils/Container";
+import parse from "html-react-parser";
+import { format } from "date-fns";
 
 const { Text, Title, Paragraph } = Typography;
 
 const Post = () => {
   const { id } = useParams();
-  const [blog, setBlog] = useState({});
+  const [post, setPost] = useState({});
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
 
@@ -26,7 +27,7 @@ const Post = () => {
     getBlog(id)
       .then((res) => {
         if (res.status === 200) {
-          setBlog(res.data);
+          setPost(res.data);
           setStatus("resolved");
         }
 
@@ -53,7 +54,7 @@ const Post = () => {
                 </div>
                 <div className="reaction">
                   <CommentOutlined />
-                  <span>3</span>
+                  <span>{post._count?.comments}</span>
                 </div>
                 <div className="reaction">
                   <BookOutlined />
@@ -64,82 +65,49 @@ const Post = () => {
           </aside>
           <div className="content">
             <article className="article">
-              <img
-                className="article_cover"
-                src="https://res.cloudinary.com/practicaldev/image/fetch/s--NC9nfAD6--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/khj27gtaqs5lq6c93l26.png"
-                alt=""
-              />
+              {post.cover && (
+                <img
+                  className="article_cover"
+                  src={`${import.meta.env.VITE_URL}/${post.cover}`}
+                  alt=""
+                />
+              )}
+
               <div className="article_header_meta">
                 <div className="author">
                   <img
-                    src="https://res.cloudinary.com/practicaldev/image/fetch/s--0pPaJBY2--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/243922/13c0045e-6656-4f74-aa57-3f9f39716be5.jpeg"
+                    src={`${import.meta.env.VITE_URL}/${post.author?.img}`}
                     alt=""
                     width="40"
                     height="40"
                   />
                   <div>
-                    <Text>Roberto B.</Text>
-                    <Text>Posted on Dec 28</Text>
+                    <Text>
+                      {post.author?.firstName} {post.author?.lastName}
+                    </Text>
+                    <Text>
+                      Posted on{" "}
+                      {format(
+                        new Date(post.createdAt || Date.now()),
+                        "MMM d, y"
+                      )}
+                    </Text>
                   </div>
                 </div>
                 <Title level={2} className="article_title">
-                  My first Svelte component
+                  {post.title}
                 </Title>
                 <div className="article_tags">
-                  <a href="#" className="tag">
-                    <span className="tag_prefix">#</span>javascript
-                  </a>
-                  <a href="#" className="tag">
-                    <span className="tag_prefix">#</span>svelte
-                  </a>
-                  <a href="#" className="tag">
-                    <span className="tag_prefix">#</span>programming
-                  </a>
+                  {post.tags?.map((tag) => (
+                    <Link to={`/t/${tag.id}`} key={tag.id} className="tag">
+                      <span className="tag_prefix">#</span>
+                      {tag.name}
+                    </Link>
+                  ))}
                 </div>
               </div>
-              <div className="article_main">
-                In this article, I'd like to explore how to create your first
-                svelte component with a basic Svelte application. Svelte allows
-                you to create a reactive web application so we will explore the
-                Svelte reactivity. To do that, we will create a Svelte component
-                that generates a random number (1 to 6), like rolling a dice,
-                and then reactively update the list of all the previous rolls
-                and the result. Install Vite and Svelte skeleton app For using
-                Svelte with all the tools needed by the building process, I
-                strongly suggest using the Vite tool via npm create vite@latest
-                command. Within the execution of the command, you have to
-                specify 3 things: the new directory of your new project, the
-                framework (Svelte), and the variant (JavaScript or Typescript):
-                npm create vite@latest Launching the command without any
-                parameters, during the execution, you have to answer the
-                questions. In the example, we are naming the new directory as
-                roll-the-dice-svelte, the Framework as Svelte and the variants
-                as `JavaScript': Creating Svelte application with Vite Or, if
-                you are using npm, you can define the directory, the framework,
-                and the variant (JavaScript or Typescript) directly in the
-                command line (so the execution of the command is less
-                interactive): In this article, I'd like to explore how to create
-                your first svelte component with a basic Svelte application.
-                Svelte allows you to create a reactive web application so we
-                will explore the Svelte reactivity. To do that, we will create a
-                Svelte component that generates a random number (1 to 6), like
-                rolling a dice, and then reactively update the list of all the
-                previous rolls and the result. Install Vite and Svelte skeleton
-                app For using Svelte with all the tools needed by the building
-                process, I strongly suggest using the Vite tool via npm create
-                vite@latest command. Within the execution of the command, you
-                have to specify 3 things: the new directory of your new project,
-                the framework (Svelte), and the variant (JavaScript or
-                Typescript): npm create vite@latest Launching the command
-                without any parameters, during the execution, you have to answer
-                the questions. In the example, we are naming the new directory
-                as roll-the-dice-svelte, the Framework as Svelte and the
-                variants as `JavaScript': Creating Svelte application with Vite
-                Or, if you are using npm, you can define the directory, the
-                framework, and the variant (JavaScript or Typescript) directly
-                in the command line (so the execution of the command is less
-                interactive):
-              </div>
+
+              <div className="article_main">{parse(`${post.content}`)}</div>
 
               <section className="comments">
                 <Title level={3}>Comments</Title>
@@ -194,28 +162,32 @@ const Post = () => {
             <div className="sidebar-right--sticky">
               <div className="author_details">
                 <div className="avatar">
-                  <a href="#">
+                  <Link to={`/profile/${post.author?.id}`}>
                     <span>
                       <img
-                        src="https://res.cloudinary.com/practicaldev/image/fetch/s--ErEUkFCA--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/243922/13c0045e-6656-4f74-aa57-3f9f39716be5.jpeg"
+                        src={`${import.meta.env.VITE_URL}/${post.author?.img}`}
                         alt=""
                       />
                     </span>
-                    <Text>Roberto B.</Text>
-                  </a>
+                    <Text>
+                      {post.author?.firstName} {post.author?.lastname}
+                    </Text>
+                  </Link>
                 </div>
-                <Paragraph className="bio">
-                  ⚛️ Software Developer @CGI_Global | 🌅 Technical Writer
-                  @ThePracticalDev @hashnode @Medium @LogRocket | 🎨 Content
-                  Creator | 📝 5k+ Blog Subscribers
-                </Paragraph>
+                <Paragraph className="bio">{post.author?.intro}</Paragraph>
                 <div className="metadata_details">
                   <ul>
                     <li>
                       <Text className="key">Joined</Text>
                       <Text className="value">
-                        <time dateTime="2019-10-06T17:53:52Z" className="date">
-                          Oct 6, 2019
+                        <time
+                          dateTime={post.author?.createdAt}
+                          className="date"
+                        >
+                          {format(
+                            new Date(post.author?.createdAt || Date.now()),
+                            "MMM d, y"
+                          )}
                         </time>
                       </Text>
                     </li>

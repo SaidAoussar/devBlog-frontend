@@ -7,10 +7,11 @@ import {
   BookOutlined,
 } from "@ant-design/icons";
 import "../../../profile/components/article/article.css";
+import { Link } from "react-router-dom";
 
 const { Title, Text } = Typography;
 const Article = React.forwardRef(({ post }, ref) => {
-  const { title, createdAt, author, tags } = post;
+  const { id, title, createdAt, author, tags } = post;
   return (
     <div ref={ref} className="story">
       <article className="story__body">
@@ -34,9 +35,12 @@ const Article = React.forwardRef(({ post }, ref) => {
           </div>
         </div>
         <div style={{ marginLeft: "44px" }}>
-          <Title className="story__title" level={3}>
-            {title}
-          </Title>
+          <Link to={`/post/${id}`}>
+            <Title className="story__title" level={3}>
+              {title}
+            </Title>
+          </Link>
+
           <div className="story__tags">
             {tags.map((t) => (
               <Text key={t.tag.id}>#{t.tag.name}</Text>

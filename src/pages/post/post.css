@@ -1,6 +1,6 @@
 .layout-post {
   display: grid;
-  grid-template-columns: 4rem 7fr 3fr;
+  grid-template-columns: 4rem minmax(0, 7fr) 3fr;
 
   gap: 12px;
   padding: 16px;
