@@ -10,7 +10,16 @@ export async function getTags(filters) {
       params: { ...filters },
     });
     return res;
-  } catch (error) {
-    return error;
+  } catch (e) {
+    return e;
+  }
+}
+
+export async function getTag(id) {
+  try {
+    const res = await axios.get(`${URL}/tags/${id}`);
+    return res;
+  } catch (e) {
+    return e;
   }
 }

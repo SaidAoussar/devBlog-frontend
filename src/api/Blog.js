@@ -77,7 +77,16 @@ export const RemoveBlog = async (id) => {
 
 export const nbrPostsOfUser = async (id) => {
   try {
-    const res = await axios.get(`${URL}/posts/nbrPostsOfUser/` + id);
+    const res = await axios.get(`${URL}/posts/nbr-posts-user/` + id);
+    return res;
+  } catch (e) {
+    return e;
+  }
+};
+
+export const nbrPostsByTag = async (id) => {
+  try {
+    const res = await axios.get(`${URL}/posts/nbr-posts-tag/` + id);
     return res;
   } catch (e) {
     return e;

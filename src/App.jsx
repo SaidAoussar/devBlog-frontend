@@ -43,7 +43,7 @@ function App() {
             ></Route>
           </Route>
           <Route path="tags" element={<Tags />} />
-          <Route path="t/:tag" element={<Tag />} />
+          <Route path="t/:tagId" element={<Tag />} />
           <Route path="search" element={<Search />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
