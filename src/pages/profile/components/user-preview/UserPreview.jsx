@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 import { Button, Typography } from "antd";
 import { format } from "date-fns";
+import { userAtom } from "../../store/user";
 import { getUser } from "../../../../api/User";
 
 import "./user-preview.css";
@@ -8,7 +10,7 @@ import { Link } from "react-router-dom";
 
 const { Title, Text } = Typography;
 const UserPreview = ({ id }) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useAtom(userAtom);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
 
