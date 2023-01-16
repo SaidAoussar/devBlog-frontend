@@ -65,8 +65,30 @@
 
 .content .article .article_header_meta .author {
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+}
+
+.content .article .article_header_meta .author .author-details {
+  display: flex;
+  gap: 10px;
+}
+
+.content .article .article_header_meta .author .author-action {
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.1);
+  padding: 4px;
+  border-radius: 6px;
+}
+.content .article .article_header_meta .author .author-action a {
+  display: inline-block;
+  color: rgb(61, 61, 61);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+.content .article .article_header_meta .author .author-action a:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .content .article .article_header_meta .author div span:first-child {
