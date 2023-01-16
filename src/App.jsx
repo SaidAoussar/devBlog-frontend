@@ -18,6 +18,7 @@ import Tags from "./pages/tags";
 import Search from "./pages/search";
 import CreatePost from "./pages/create-post";
 import Tag from "./pages/tag";
+import EditPost from "./pages/edit-post";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           <Route path="search" element={<Search />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
+        <Route path="/:username/:slug/edit" element={<EditPost />} />
         <Route path="/new" element={<CreatePost />} />
       </Routes>
     </Fragment>

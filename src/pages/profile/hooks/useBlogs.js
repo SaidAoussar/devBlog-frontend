@@ -26,8 +26,8 @@ export default function useBlogs(pageNumber, authorId) {
         setLoading(false);
       })
       .catch((e) => {
-        console.log(e);
         setError(true);
+        setLoading(false);
       });
   }, [pageNumber, authorId]);
   return { loading, error, posts, hasMore };

@@ -26,7 +26,16 @@ export const getBlog = async (id) => {
 };
 export const allBlogsOfUser = async (id) => {
   try {
-    const res = await axios.get(`${URL}/posts/user/` + id);
+    const res = await axios.get(`${URL}/posts/user/${id}`);
+    return res;
+  } catch (e) {
+    return e;
+  }
+};
+
+export const getPostBySlug = async (slug) => {
+  try {
+    const res = await axios.get(`${URL}/posts/slug/${slug}`);
     return res;
   } catch (e) {
     return e;
@@ -47,10 +56,10 @@ export const createBlog = async (data) => {
   }
 };
 
-export const updateBlog = async (id, data) => {
+export const updateBlog = async (slug, data) => {
   const { token } = JSON.parse(localStorage.getItem("current_user"));
   try {
-    const res = await axios.patch(`${URL}/posts/${id}`, data, {
+    const res = await axios.patch(`${URL}/posts/${slug}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
