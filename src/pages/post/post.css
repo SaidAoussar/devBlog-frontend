@@ -43,6 +43,15 @@
 .article_actions .reaction .anticon {
   font-size: 24px;
   padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user-activeted {
+}
+.article_actions .reaction .anticon.anticon-heart:hover {
+  color: rgb(220, 38, 38);
+  background-color: rgba(220, 38, 38, 0.1);
 }
 
 .content .article {

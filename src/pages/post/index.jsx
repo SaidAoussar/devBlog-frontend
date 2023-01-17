@@ -4,9 +4,15 @@ import {
   HeartOutlined,
   CommentOutlined,
   BookOutlined,
+  HeartFilled,
 } from "@ant-design/icons";
 import { Button, Layout, Typography } from "antd";
 import { getBlog } from "../../api/Blog";
+import {
+  checkReacted,
+  toggleReaction,
+  nbrReactionsByPost,
+} from "../../api/post-reactions";
 import "./post.css";
 import parse from "html-react-parser";
 import { format } from "date-fns";
@@ -23,6 +29,8 @@ const Post = () => {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
   const authUser = useUserStore((state) => state.user);
+  const [reactionActive, setReactionActive] = useState(false);
+  const [nbrReactions, setNbrReactions] = useState(0);
 
   useEffect(() => {
     setStatus("pending");
@@ -30,6 +38,7 @@ const Post = () => {
       .then((res) => {
         if (res.status === 200) {
           setPost(res.data);
+          setNbrReactions(res.data._count?.reactions);
           setStatus("resolved");
         }
 
@@ -41,7 +50,45 @@ const Post = () => {
         setError(e);
         setStatus("rejected");
       });
+
+    checkReacted({
+      postId: id,
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setReactionActive(res.data?.reacted);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }, [id]);
+
+  useEffect(() => {
+    nbrReactionsByPost(id)
+      .then((res) => {
+        if (res.status === 200) {
+          setNbrReactions(res.data);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [reactionActive, id]);
+
+  const handleToggleReaction = () => {
+    toggleReaction({
+      postId: id,
+    })
+      .then((res) => {
+        if (res.status === 201) {
+          setReactionActive((prevReactionActive) => !prevReactionActive);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <div>
@@ -51,8 +98,12 @@ const Post = () => {
             <div className="article_actions">
               <div className="article_actions--inner">
                 <div className="reaction">
-                  <HeartOutlined />
-                  <span>10</span>
+                  {!reactionActive ? (
+                    <HeartOutlined onClick={handleToggleReaction} />
+                  ) : (
+                    <HeartFilled onClick={handleToggleReaction} />
+                  )}
+                  <span>{nbrReactions}</span>
                 </div>
                 <div className="reaction">
                   <CommentOutlined />
