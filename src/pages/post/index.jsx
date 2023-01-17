@@ -118,7 +118,11 @@ const Post = () => {
                 </div>
               </div>
 
-              <div className="article_main">{parse(`${post.content}`)}</div>
+              <div className="article_main">
+                <div className="ql-snow">
+                  <div className="ql-editor">{parse(`${post.content}`)}</div>
+                </div>
+              </div>
 
               <section className="comments">
                 <Title level={3}>Comments</Title>

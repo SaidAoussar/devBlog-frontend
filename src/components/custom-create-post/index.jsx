@@ -41,7 +41,8 @@ const urlToObject = async (img, name) => {
 };
 
 const CustomCreatePost = ({ post, handleFetch, useStatus, useError }) => {
-  const [contentField] = useAtom(contentFieldAtom);
+  const [form] = Form.useForm();
+  const [contentField, setContentField] = useAtom(contentFieldAtom);
   const [tags, setTags] = useState();
   const [status, setStatus] = useStatus;
   const [error] = useError;
@@ -71,8 +72,6 @@ const CustomCreatePost = ({ post, handleFetch, useStatus, useError }) => {
 
   const onFinish = (values) => {
     setStatus("pending");
-    console.log("values", values);
-    console.log("cover : ", fileList[0].originFileObj);
 
     const formData = new FormData();
     formData.append("title", values.title);
@@ -86,22 +85,21 @@ const CustomCreatePost = ({ post, handleFetch, useStatus, useError }) => {
       });
     }
 
-    handleFetch(formData);
+    handleFetch(formData, resetFields);
   };
 
   const normFile = (e) => {
     return e?.file;
   };
 
-  const handleUploadChange = ({ fileList, file }) => {
-    console.log(fileList);
-    console.log("file : ", file);
-    setFileList(fileList);
+  const resetFields = () => {
+    form.resetFields();
+    setContentField("");
+    setFileList([]);
+  };
 
-    urlToObject(
-      "http://localhost:3000/536a0c05-ad00-418a-aa04-eae3d955199c.png",
-      "536a0c05-ad00-418a-aa04-eae3d955199c.png"
-    );
+  const handleUploadChange = ({ fileList, file }) => {
+    setFileList(fileList);
   };
   return (
     <div style={{ height: "100vh" }} className="create-post">
@@ -176,6 +174,7 @@ const CustomCreatePost = ({ post, handleFetch, useStatus, useError }) => {
           />
         )}
         <Form
+          form={form}
           onFinish={onFinish}
           initialValues={
             post
