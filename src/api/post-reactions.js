@@ -2,13 +2,13 @@ import axios from "axios";
 
 const URL = import.meta.env.VITE_URL;
 
-export const checkReacted = async (data) => {
+export const checkReacted = async (post_id) => {
   const { token } = JSON.parse(localStorage.getItem("current_user"));
   try {
     const res = await axios({
       url: `${URL}/post-reactions/check`,
       method: "GET",
-      data,
+      params: { post_id },
       headers: {
         Authorization: `Bearer ${token}`,
       },
