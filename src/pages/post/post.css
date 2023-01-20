@@ -47,9 +47,21 @@
   cursor: pointer;
 }
 
-.user-activeted {
+.article_actions .reaction.user-activated .anticon.anticon-heart {
+  color: rgb(220, 38, 38);
+  background-color: rgba(220, 38, 38, 0.1);
+  box-shadow: inset 0 0 0 2px rgb(220, 38, 38);
 }
-.article_actions .reaction .anticon.anticon-heart:hover {
+
+.article_actions .reaction.user-activated .reaction__count {
+  color: rgb(220, 38, 38);
+}
+
+.article_actions
+  .reaction
+  .anticon.anticon-heart:hover:not(
+    .article_actions .reaction.user-activated .anticon.anticon-heart
+  ) {
   color: rgb(220, 38, 38);
   background-color: rgba(220, 38, 38, 0.1);
 }

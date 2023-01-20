@@ -38,12 +38,12 @@ const Home = () => {
                   </Link>
                 </li>
                 <li>
-                  <a className="link" href="#">
+                  <Link to="readinglist" className="link">
                     <span>
                       <img src={readingListIcon} alt="" />
                     </span>
                     Reading List
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link to="tags" className="link">

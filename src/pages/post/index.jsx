@@ -1,24 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  HeartOutlined,
-  CommentOutlined,
-  BookOutlined,
-  HeartFilled,
-} from "@ant-design/icons";
+import { CommentOutlined } from "@ant-design/icons";
 import { Button, Layout, Typography } from "antd";
 import { getBlog } from "../../api/Blog";
-import {
-  checkReacted,
-  toggleReaction,
-  nbrReactionsByPost,
-} from "../../api/post-reactions";
 import "./post.css";
 import parse from "html-react-parser";
 import { format } from "date-fns";
 import NewComment from "./components/new-comment/NewComment";
 import CommentsList from "./components/CommentsList";
 import { useUserStore } from "../../store/user";
+import ReactionIcon from "./components/reaction-icon/ReactionIcon";
+import SaveIcon from "./components/save-icon/SaveIcon";
 
 const { Text, Title, Paragraph } = Typography;
 
@@ -50,45 +42,7 @@ const Post = () => {
         setError(e);
         setStatus("rejected");
       });
-
-    checkReacted({
-      postId: id,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          setReactionActive(res.data?.reacted);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
   }, [id]);
-
-  useEffect(() => {
-    nbrReactionsByPost(id)
-      .then((res) => {
-        if (res.status === 200) {
-          setNbrReactions(res.data);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [reactionActive, id]);
-
-  const handleToggleReaction = () => {
-    toggleReaction({
-      postId: id,
-    })
-      .then((res) => {
-        if (res.status === 201) {
-          setReactionActive((prevReactionActive) => !prevReactionActive);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
 
   return (
     <div>
@@ -97,22 +51,12 @@ const Post = () => {
           <aside className="sidebar-left">
             <div className="article_actions">
               <div className="article_actions--inner">
-                <div className="reaction">
-                  {!reactionActive ? (
-                    <HeartOutlined onClick={handleToggleReaction} />
-                  ) : (
-                    <HeartFilled onClick={handleToggleReaction} />
-                  )}
-                  <span>{nbrReactions}</span>
-                </div>
+                <ReactionIcon postId={id} />
                 <div className="reaction">
                   <CommentOutlined />
                   <span>{post._count?.comments}</span>
                 </div>
-                <div className="reaction">
-                  <BookOutlined />
-                  <span>200</span>
-                </div>
+                <SaveIcon postId={id} />
               </div>
             </div>
           </aside>

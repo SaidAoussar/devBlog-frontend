@@ -19,6 +19,7 @@ import Search from "./pages/search";
 import CreatePost from "./pages/create-post";
 import Tag from "./pages/tag";
 import EditPost from "./pages/edit-post";
+import ReadingList from "./pages/reading-list";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <Route path="tags" element={<Tags />} />
           <Route path="t/:tagId" element={<Tag />} />
           <Route path="search" element={<Search />} />
+          <Route path="readinglist" element={<ReadingList />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
         <Route path="/:username/:slug/edit" element={<EditPost />} />

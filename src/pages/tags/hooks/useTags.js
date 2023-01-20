@@ -10,6 +10,7 @@ export default function useTags(pageNumber, q) {
   useEffect(() => {
     setTags([]);
   }, [q]);
+
   useEffect(() => {
     setLoading(true);
     setError(null);
