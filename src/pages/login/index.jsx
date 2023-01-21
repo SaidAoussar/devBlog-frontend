@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { login } from "../../api/Auth";
-
+import { Link } from "react-router-dom";
 import {
   Form,
   Input,
@@ -125,9 +125,11 @@ function Login() {
                   </Button>
                 </Form.Item>
                 <Form.Item style={{ marginBottom: "0px" }}>
-                  <Button block type="link" htmlType="submit">
-                    I forgot my password
-                  </Button>
+                  <Link to="/forgot-password">
+                    <Button block type="link" htmlType="submit">
+                      I forgot my password
+                    </Button>
+                  </Link>
                 </Form.Item>
               </Form>
             </Card>

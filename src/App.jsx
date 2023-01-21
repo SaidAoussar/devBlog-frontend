@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import Home from "./pages/home";
 import Blog from "./pages/post";
-import About from "./components/about/About";
 import Contact from "./components/contact/Contact";
 import Login from "./pages/login";
 import Register from "./pages/register";
@@ -20,6 +19,8 @@ import CreatePost from "./pages/create-post";
 import Tag from "./pages/tag";
 import EditPost from "./pages/edit-post";
 import ReadingList from "./pages/reading-list";
+import ForgotPassword from "./pages/forgot-password";
+import ResetPassword from "./pages/reset-password";
 
 function App() {
   return (
@@ -28,7 +29,6 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/post/:id" element={<Blog />} />
-          <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
 
           <Route path="/profile/:id" element={<Profile />} />
@@ -48,6 +48,8 @@ function App() {
           <Route path="t/:tagId" element={<Tag />} />
           <Route path="search" element={<Search />} />
           <Route path="readinglist" element={<ReadingList />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="reset-password" element={<ResetPassword />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
         <Route path="/:username/:slug/edit" element={<EditPost />} />
