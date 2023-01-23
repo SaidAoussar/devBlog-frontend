@@ -3,9 +3,12 @@ import { Alert, Button } from "antd";
 import ReactQuill from "react-quill";
 import { useUserStore } from "../../../../store/user";
 import { createComment } from "../../../../api/Comment";
+import { useAtom } from "jotai";
+import { commentsAtom } from "../../atom/comments";
 
 const NewComment = ({ postId }) => {
   const authUser = useUserStore((state) => state.user);
+  const [comments, setComments] = useAtom(commentsAtom);
   const [newComment, setNewComment] = useState("");
   const [status, setStatus] = useState("idle");
   const handleNewComment = () => {
@@ -16,7 +19,9 @@ const NewComment = ({ postId }) => {
     })
       .then((res) => {
         if (res.status === 201) {
+          setComments((prevComments) => [res.data, ...prevComments]);
           setNewComment("");
+
           setStatus("resolved");
         }
         console.log(res);
