@@ -1,24 +1,30 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { checkSaved, nbrSavesByPost, toggleSave } from "../../../../api/save";
+import WarningAuthMessage from "../../../../components/warning-auth-message";
+import { useUserStore } from "../../../../store/user";
 import BookmarkFilled from "./BookmarkFilled";
 import BookmarkOutlined from "./BookmarkOutlined";
 
 const SaveIcon = ({ postId }) => {
   const [savedActive, setSavedActive] = useState(false);
   const [nbrSaves, setNbrSaves] = useState(0);
+  const [isModalOpen, setIsMOdalOpen] = useState(false);
+  const authUser = useUserStore((state) => state.user);
 
   useEffect(() => {
-    checkSaved(postId)
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          setSavedActive(res.data.saved);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (Object.keys(authUser).length !== 0) {
+      checkSaved(postId)
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            setSavedActive(res.data.saved);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   }, [savedActive, postId]);
 
   useEffect(() => {
@@ -34,25 +40,32 @@ const SaveIcon = ({ postId }) => {
   }, [savedActive, postId]);
 
   const handleToggleSave = () => {
-    toggleSave(postId)
-      .then((res) => {
-        if (res.status === 201) {
-          setSavedActive((prevSavedActive) => !prevSavedActive);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (Object.keys(authUser).length === 0) {
+      setIsMOdalOpen(true);
+    } else {
+      toggleSave(postId)
+        .then((res) => {
+          if (res.status === 201) {
+            setSavedActive((prevSavedActive) => !prevSavedActive);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
   return (
-    <div className="reaction">
-      {!savedActive ? (
-        <BookmarkOutlined onClick={handleToggleSave} />
-      ) : (
-        <BookmarkFilled onClick={handleToggleSave} />
-      )}
-      <Counter active={savedActive}>{nbrSaves}</Counter>
-    </div>
+    <>
+      <WarningAuthMessage isModalOpenState={[isModalOpen, setIsMOdalOpen]} />
+      <div className="reaction">
+        {!savedActive ? (
+          <BookmarkOutlined onClick={handleToggleSave} />
+        ) : (
+          <BookmarkFilled onClick={handleToggleSave} />
+        )}
+        <Counter active={savedActive}>{nbrSaves}</Counter>
+      </div>
+    </>
   );
 };
 

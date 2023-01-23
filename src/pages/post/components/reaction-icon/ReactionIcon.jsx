@@ -5,20 +5,26 @@ import {
   toggleReaction,
   nbrReactionsByPost,
 } from "../../../../api/post-reactions";
+import { useUserStore } from "../../../../store/user";
+import WarningAuthMessage from "../../../../components/warning-auth-message";
 const ReactionIcon = ({ postId }) => {
   const [reactionActive, setReactionActive] = useState(false);
   const [nbrReactions, setNbrReactions] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const authUser = useUserStore((state) => state.user);
 
   useEffect(() => {
-    checkReacted(postId)
-      .then((res) => {
-        if (res.status === 200) {
-          setReactionActive(res.data?.reacted);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (Object.keys(authUser).length !== 0) {
+      checkReacted(postId)
+        .then((res) => {
+          if (res?.status === 200) {
+            setReactionActive(res.data?.reacted);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   }, [postId]);
 
   useEffect(() => {
@@ -34,27 +40,35 @@ const ReactionIcon = ({ postId }) => {
   }, [reactionActive, postId]);
 
   const handleToggleReaction = () => {
-    toggleReaction({
-      postId,
-    })
-      .then((res) => {
-        if (res.status === 201) {
-          setReactionActive((prevReactionActive) => !prevReactionActive);
-        }
+    if (Object.keys(authUser).length === 0) {
+      console.log("not auth");
+      setIsModalOpen(true);
+    } else {
+      toggleReaction({
+        postId,
       })
-      .catch((e) => {
-        console.log(e);
-      });
+        .then((res) => {
+          if (res.status === 201) {
+            setReactionActive((prevReactionActive) => !prevReactionActive);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
   return (
-    <div className={`reaction ${reactionActive ? "user-activated" : ""}`}>
-      {!reactionActive ? (
-        <HeartOutlined onClick={handleToggleReaction} />
-      ) : (
-        <HeartFilled onClick={handleToggleReaction} className="" />
-      )}
-      <span className="reaction__count">{nbrReactions}</span>
-    </div>
+    <>
+      <WarningAuthMessage isModalOpenState={[isModalOpen, setIsModalOpen]} />
+      <div className={`reaction ${reactionActive ? "user-activated" : ""}`}>
+        {!reactionActive ? (
+          <HeartOutlined onClick={handleToggleReaction} />
+        ) : (
+          <HeartFilled onClick={handleToggleReaction} className="" />
+        )}
+        <span className="reaction__count">{nbrReactions}</span>
+      </div>
+    </>
   );
 };
 
