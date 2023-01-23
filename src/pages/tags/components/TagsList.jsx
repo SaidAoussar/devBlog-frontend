@@ -5,8 +5,8 @@ import { pageNumberAtom } from "../store/page-number";
 import useTags from "../hooks/useTags";
 import Tag from "./tag/tag";
 
-const TagsList = ({ q }) => {
-  const [pageNumber, setPageNumber] = useAtom(pageNumberAtom);
+const TagsList = ({ q, pageNumberState }) => {
+  const [pageNumber, setPageNumber] = pageNumberState;
   const { loading, tags, error, hasMore } = useTags(pageNumber, q);
 
   const observer = useRef();

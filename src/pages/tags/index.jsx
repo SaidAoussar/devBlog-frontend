@@ -9,7 +9,7 @@ import "./tags.css";
 const { Title, Paragraph } = Typography;
 const { Search } = Input;
 function Tags() {
-  const [pageNumber, setPageNumber] = useAtom(pageNumberAtom);
+  const [pageNumber, setPageNumber] = useState(1);
   const [query, setQuery] = useState("");
   const onSearch = (value) => {
     setPageNumber(1);
@@ -27,7 +27,7 @@ function Tags() {
           <Title>Top Tags</Title>
           <Search className="input-search" onSearch={onSearch} />
         </nav>
-        <TagsList q={query} />
+        <TagsList q={query} pageNumberState={[pageNumber, setPageNumber]} />
       </Container>
     </section>
   );

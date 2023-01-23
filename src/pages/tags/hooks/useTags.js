@@ -20,7 +20,13 @@ export default function useTags(pageNumber, q) {
     })
       .then((res) => {
         const { _metadata, records } = res.data;
-        setTags((prevTags) => [...prevTags, ...records]);
+        setTags((prevTags) => {
+          return [
+            ...new Map(
+              [...prevTags, ...records].map((tag) => [tag["id"], tag])
+            ).values(),
+          ];
+        });
         const lastPage = Math.ceil(_metadata.total_count / _metadata.per_page);
         setHasMore(_metadata.page < lastPage);
 
