@@ -1,10 +1,16 @@
 import { Typography, Radio } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDarkModeStore } from "../../../../../store/dark-mode";
 import "./customization-setting.css";
 const { Title } = Typography;
 const CustomizationSetting = () => {
   const [themeValue, setThemeValue] = useState("dark_theme"); // darkTheme, light_theme
+  const mode = useDarkModeStore((state) => state.mode);
+  const setMode = useDarkModeStore((state) => state.setMode);
 
+  useEffect(() => {
+    console.log("theme: ", mode);
+  }, [mode]);
   return (
     <section className="customization-setting">
       <Title level={3}>Appearance</Title>
@@ -15,14 +21,11 @@ const CustomizationSetting = () => {
           columnGap: "16px",
         }}
       >
-        <label
-          className="wrapper-radio"
-          onClick={() => setThemeValue("light_theme")}
-        >
+        <label className="wrapper-radio" onClick={() => setMode("light")}>
           <Radio
             name="config_theme"
             value="light_theme"
-            checked={themeValue === "light_theme"}
+            checked={mode === "light"}
           />
           <div>
             <Title level={5} style={{ marginTop: "0px" }}>
@@ -39,14 +42,11 @@ const CustomizationSetting = () => {
             />
           </div>
         </label>
-        <label
-          className="wrapper-radio"
-          onClick={() => setThemeValue("dark_theme")}
-        >
+        <label className="wrapper-radio" onClick={() => setMode("dark")}>
           <Radio
             name="config_theme"
             value="dark_theme"
-            checked={themeValue === "dark_theme"}
+            checked={mode === "dark"}
           />
           <div>
             <Title level={5} style={{ marginTop: "0px" }}>

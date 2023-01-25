@@ -1,7 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import useBlogs from "../hooks/useBlogs";
-import Article from "./article/Article";
-
+import PreviewPost from "../../../components/preview-post/PreviewPost";
 const ArticleList = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const { loading, error, posts, hasMore } = useBlogs(pageNumber);
@@ -25,9 +24,11 @@ const ArticleList = () => {
     <div className="substories">
       {posts.map((post, index) => {
         if (posts.length === index + 1) {
-          return <Article key={post.id} ref={lastElementPostRef} post={post} />;
+          return (
+            <PreviewPost key={post.id} ref={lastElementPostRef} post={post} />
+          );
         } else {
-          return <Article key={post.id} post={post} />;
+          return <PreviewPost key={post.id} post={post} />;
         }
       })}
     </div>

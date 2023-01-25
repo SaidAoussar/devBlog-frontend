@@ -24,38 +24,36 @@ import ResetPassword from "./pages/reset-password";
 
 function App() {
   return (
-    <Fragment>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/post/:id" element={<Blog />} />
-          <Route path="/contact" element={<Contact />} />
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="/post/:id" element={<Blog />} />
+        <Route path="/contact" element={<Contact />} />
 
-          <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile />} />
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/settings" element={<Settings />}>
-            <Route index element={<Navigate to="profile" />} />
-            <Route path="profile" element={<ProfileSetting />} />
-            <Route path="account" element={<AccountSetting />}></Route>
-            <Route
-              path="customization"
-              element={<CustomizationSetting />}
-            ></Route>
-          </Route>
-          <Route path="tags" element={<Tags />} />
-          <Route path="t/:tagId" element={<Tag />} />
-          <Route path="search" element={<Search />} />
-          <Route path="readinglist" element={<ReadingList />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
-          <Route path="reset-password" element={<ResetPassword />} />
-          <Route path="*" element={<ErrorPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/settings" element={<Settings />}>
+          <Route index element={<Navigate to="profile" />} />
+          <Route path="profile" element={<ProfileSetting />} />
+          <Route path="account" element={<AccountSetting />}></Route>
+          <Route
+            path="customization"
+            element={<CustomizationSetting />}
+          ></Route>
         </Route>
-        <Route path="/:username/:slug/edit" element={<EditPost />} />
-        <Route path="/new" element={<CreatePost />} />
-      </Routes>
-    </Fragment>
+        <Route path="tags" element={<Tags />} />
+        <Route path="t/:tagId" element={<Tag />} />
+        <Route path="search" element={<Search />} />
+        <Route path="readinglist" element={<ReadingList />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Route>
+      <Route path="/:username/:slug/edit" element={<EditPost />} />
+      <Route path="/new" element={<CreatePost />} />
+    </Routes>
   );
 }
 
