@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import ReactQuill from "react-quill";
+import * as S from "./styles";
+import { useTheme } from "styled-components";
 import parse from "html-react-parser";
 import { useAtom } from "jotai";
 
-import "./text-editor.css";
+//import "./text-editor.css";
 import { contentFieldAtom } from "../../store/content-field";
 
 const modules = {
@@ -39,16 +40,17 @@ const formats = [
 
 const TextEditor = () => {
   const [contentField, setContentField] = useAtom(contentFieldAtom);
+  const theme = useTheme();
+
+  console.log("Current theme: ", theme);
 
   return (
     <>
-      <ReactQuill
-        className="text-editor"
+      <S.ReactQuillWrapper
         style={{
           height: "calc(100vh - 48px - 48px - 310px)",
         }}
         placeholder="Write your post content here..."
-        theme="snow"
         value={contentField}
         onChange={(value) => setContentField(value)}
         modules={modules}

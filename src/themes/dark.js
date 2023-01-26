@@ -40,7 +40,7 @@ const colors = {
 };
 
 export const DarkTheme = {
-  bodyBg: `rgb(${colors.dark})`,
+  bodyBg: `rgb(${colors.black})`,
   bodyColor: `rgb(${colors.grey[50]})`,
 
   cardBg: `rgb(${colors.grey[900]})`,
@@ -80,7 +80,7 @@ export const DarkTheme = {
   formBorder: `rgb(${colors.grey[700]})`,
   formBorderHover: `rgb(${colors.grey[600]})`,
   formBorderFocus: `rgb(${colors.accent_brand_lighter_rgb})`,
-  formPlaceholderColor: `rgb(${colors.grey[600]})`,
+  formPlaceholderColor: `rgb(${colors.grey[500]})`,
   labelPrimary: `rgb(${colors.grey[50]})`,
   labelSecondary: `rgb(${colors.grey[30]})"`,
 

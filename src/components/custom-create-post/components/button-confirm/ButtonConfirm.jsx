@@ -1,7 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Modal } from "antd";
+import { Button as ButtonAnt, Modal } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
+import styled from "styled-components";
+
+const Button = styled(ButtonAnt)`
+  && {
+    color: ${(props) => props.theme.bodyColor};
+    &:hover {
+      color: ${(props) => props.theme.btnGhostColorHover};
+      background-color: ${(props) => props.theme.btnGhostBgHover};
+    }
+  }
+`;
 
 const ButtonConfirm = () => {
   const [open, setOpen] = useState(false);

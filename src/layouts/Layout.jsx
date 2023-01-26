@@ -1,11 +1,8 @@
 import { Outlet } from "react-router-dom";
-import styled, { ThemeProvider } from "styled-components";
-import { lightTheme } from "../themes/light";
-import { DarkTheme } from "../themes/dark";
+import styled from "styled-components";
+
 import Footer from "./Footer";
-import Nav from "./navbar/Nav";
 import Navbar from "./navbar/Navbar";
-import { useDarkModeStore } from "../store/dark-mode";
 
 const LayoutWrapper = styled.div`
   color: ${(props) => props.theme.bodyColor};
@@ -13,15 +10,14 @@ const LayoutWrapper = styled.div`
 `;
 
 const Layout = () => {
-  const mode = useDarkModeStore((state) => state.mode);
   return (
-    <ThemeProvider theme={mode === "light" ? lightTheme : DarkTheme}>
+    <>
       <LayoutWrapper>
         <Navbar />
         <Outlet />
         <Footer />
       </LayoutWrapper>
-    </ThemeProvider>
+    </>
   );
 };
 

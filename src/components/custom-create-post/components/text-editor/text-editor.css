@@ -1,4 +1,4 @@
-.menu-text-editor .ant-menu-item-selected::after {
+/* .menu-text-editor .ant-menu-item-selected::after {
   border: none !important;
 }
 
@@ -8,7 +8,7 @@
 
 .menu-text-editor .ant-menu-item::after {
   border: none !important;
-}
+} */
 
 code {
   color: white;
@@ -47,7 +47,8 @@ code {
   padding: 0px;
 }
 
-.text-editor .ql-editor.ql-blank::before {
+.text-editor s.ql-editor.ql-blank::before {
+  color: red;
   left: 48px;
   font-style: normal;
   font-size: 18px;

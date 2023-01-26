@@ -10,18 +10,17 @@ import {
   Spin,
   Alert,
 } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
 import { useAtom } from "jotai";
 import Container from "../../components/utils/Container";
 import TextEditor from "./components/text-editor/TextEditor";
 import { contentFieldAtom } from "./store/content-field";
-import "./create-post.css";
 import { getTags } from "../../api/Tag";
-import { createBlog } from "../../api/Blog";
 import ButtonConfirm from "./components/button-confirm/ButtonConfirm";
+import * as S from "./styles";
 
 const { Text } = Typography;
 const { TextArea } = Input;
+const { Item } = Form;
 
 // this function formatting array come from database to select option array shap (ant-design select options)
 export function formatSelectOptions(arr) {
@@ -102,32 +101,15 @@ const CustomCreatePost = ({ post, handleFetch, useStatus, useError }) => {
     setFileList(fileList);
   };
   return (
-    <div style={{ height: "100vh" }} className="create-post">
+    <S.CustomCreatePost>
       <Container>
-        <nav
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            height: "48px",
-          }}
-        >
-          <div className="left-links">
-            <Text
-              style={{
-                fontSize: "24px",
-                fontWeight: "700",
-                marginRight: "16px",
-              }}
-            >
-              DevBlog
-            </Text>
-            <Text style={{ fontSize: "16px", fontWeight: "500" }}>
-              {post ? "Edit Post" : "Create Post"}
-            </Text>
-          </div>
+        <S.Nav>
+          <S.LeftNav>
+            <S.Logo>DevBlog</S.Logo>
+            <S.ActionText>{post ? "Edit Post" : "Create Post"}</S.ActionText>
+          </S.LeftNav>
           <ButtonConfirm />
-        </nav>
+        </S.Nav>
         {status === "pending" && (
           <Space
             style={{
@@ -185,28 +167,14 @@ const CustomCreatePost = ({ post, handleFetch, useStatus, useError }) => {
               : {}
           }
         >
-          <main
-            style={{
-              backgroundColor: "white",
-              height: "calc(100vh - 48px - 56px)",
-              borderRadius: "8px",
-              boxShadow: "0 0 0 1px #1717171a",
-              overflowWrap: "anywhere",
-              overflowY: "auto",
-            }}
-          >
-            <div
-              style={{
-                padding: "0px 48px 32px",
-              }}
-            >
-              <Form.Item
-                className="cover"
+          <S.FormMain>
+            <S.FormMainTop>
+              <S.Item
                 name="cover"
                 valuePropName="file"
                 getValueFromEvent={normFile}
               >
-                <Upload
+                <S.Upload
                   className="upload"
                   listType="picture-card"
                   maxCount={1}
@@ -215,13 +183,16 @@ const CustomCreatePost = ({ post, handleFetch, useStatus, useError }) => {
                   onChange={handleUploadChange}
                 >
                   {post?.cover ? "change " : "add a "}cover image
-                </Upload>
-              </Form.Item>
-              <Form.Item className="title" name="title">
-                <TextArea placeholder="New post title here..."></TextArea>
-              </Form.Item>
-              <Form.Item name="tags">
-                <Select
+                </S.Upload>
+              </S.Item>
+              <S.Item
+                name="title"
+                style={{ minHeight: "62px", maxHeight: "62px" }}
+              >
+                <S.TextArea placeholder="New post title here..."></S.TextArea>
+              </S.Item>
+              <S.Item name="tags">
+                <S.Select
                   mode="multiple"
                   allowClear
                   options={tags}
@@ -229,20 +200,13 @@ const CustomCreatePost = ({ post, handleFetch, useStatus, useError }) => {
                   placeholder="Add tags..."
                   bordered={false}
                 />
-              </Form.Item>
-            </div>
+              </S.Item>
+            </S.FormMainTop>
 
             <TextEditor />
-          </main>
+          </S.FormMain>
 
-          <footer
-            style={{
-              height: "56px",
-              display: "flex",
-              alignItems: "center",
-              gap: "16px",
-            }}
-          >
+          <S.FormFooter>
             <Button
               type="primary"
               size="large"
@@ -251,10 +215,10 @@ const CustomCreatePost = ({ post, handleFetch, useStatus, useError }) => {
             >
               Publish
             </Button>
-          </footer>
+          </S.FormFooter>
         </Form>
       </Container>
-    </div>
+    </S.CustomCreatePost>
   );
 };
 

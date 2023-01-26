@@ -116,6 +116,10 @@ export const MenuWrapper = styled(Menu)`
       ) {
       color: ${(props) => props.theme.menuColor};
     }
+
+    .ant-menu.ant-menu-sub.ant-menu-vertical {
+      background-color: red;
+    }
   }
 `;
 

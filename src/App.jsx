@@ -1,5 +1,9 @@
 import { Fragment } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import styled, { ThemeProvider } from "styled-components";
+import { lightTheme } from "./themes/light";
+import { DarkTheme } from "./themes/dark";
+import { useDarkModeStore } from "./store/dark-mode";
 
 import Layout from "./layouts/Layout";
 import Home from "./pages/home";
@@ -23,37 +27,40 @@ import ForgotPassword from "./pages/forgot-password";
 import ResetPassword from "./pages/reset-password";
 
 function App() {
+  const mode = useDarkModeStore((state) => state.mode);
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="/post/:id" element={<Blog />} />
-        <Route path="/contact" element={<Contact />} />
+    <ThemeProvider theme={mode === "light" ? lightTheme : DarkTheme}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/post/:id" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
 
-        <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/profile/:id" element={<Profile />} />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/settings" element={<Settings />}>
-          <Route index element={<Navigate to="profile" />} />
-          <Route path="profile" element={<ProfileSetting />} />
-          <Route path="account" element={<AccountSetting />}></Route>
-          <Route
-            path="customization"
-            element={<CustomizationSetting />}
-          ></Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/settings" element={<Settings />}>
+            <Route index element={<Navigate to="profile" />} />
+            <Route path="profile" element={<ProfileSetting />} />
+            <Route path="account" element={<AccountSetting />}></Route>
+            <Route
+              path="customization"
+              element={<CustomizationSetting />}
+            ></Route>
+          </Route>
+          <Route path="tags" element={<Tags />} />
+          <Route path="t/:tagId" element={<Tag />} />
+          <Route path="search" element={<Search />} />
+          <Route path="readinglist" element={<ReadingList />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="reset-password" element={<ResetPassword />} />
+          <Route path="*" element={<ErrorPage />} />
         </Route>
-        <Route path="tags" element={<Tags />} />
-        <Route path="t/:tagId" element={<Tag />} />
-        <Route path="search" element={<Search />} />
-        <Route path="readinglist" element={<ReadingList />} />
-        <Route path="forgot-password" element={<ForgotPassword />} />
-        <Route path="reset-password" element={<ResetPassword />} />
-        <Route path="*" element={<ErrorPage />} />
-      </Route>
-      <Route path="/:username/:slug/edit" element={<EditPost />} />
-      <Route path="/new" element={<CreatePost />} />
-    </Routes>
+        <Route path="/:username/:slug/edit" element={<EditPost />} />
+        <Route path="/new" element={<CreatePost />} />
+      </Routes>
+    </ThemeProvider>
   );
 }
 

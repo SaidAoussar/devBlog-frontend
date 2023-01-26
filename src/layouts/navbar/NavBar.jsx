@@ -42,8 +42,8 @@ function NavBar() {
     if (Object.keys(authUser).length !== 0) {
       setAuthMenu([
         {
+          key: "auth1",
           label: <Avatar src={`${import.meta.env.VITE_URL}/${authUser.img}`} />,
-          key: "auth",
           children: [
             {
               label: (
@@ -126,7 +126,7 @@ function NavBar() {
           <S.MobileMenuWrapper
             mode="inline"
             items={authMenu}
-            defaultOpenKeys={["auth"]}
+            openKeys={["auth1"]}
           />
         </S.DrawerWrapper>
       </Container>
