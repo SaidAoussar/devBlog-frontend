@@ -1,35 +1,26 @@
-import { Button, Input, Typography } from "antd";
-import { Link } from "react-router-dom";
 import { useAtom } from "jotai";
 import { filterAtom } from "./atom/filter";
-import Container from "../../components/utils/Container";
+import Container from "components/utils/Container";
 import { useUserStore } from "../../store/user";
 import ArticleList from "./components/ArticleList";
 import Sidebar from "./components/sidebar/Sidebar";
-import "./reading-list.css";
-import { useEffect, useState } from "react";
-import { totalSavesAtom } from "./atom/total-saves";
+import { Search as SearchNavbar } from "../../layouts/navbar/styles";
 
-const { Title, Text } = Typography;
-const { Search } = Input;
+import { totalSavesAtom } from "./atom/total-saves";
+import styled from "styled-components";
 
 const ReadingList = () => {
   const { id } = useUserStore((state) => state.user);
-  const { query, setQuery } = useState("");
   const [filter, setFilter] = useAtom(filterAtom);
   const [totalSaves] = useAtom(totalSavesAtom);
   const handleSearch = (value) => {
     setFilter((prevFilter) => ({ ...prevFilter, q: value }));
-    console.log(value);
   };
 
-  useEffect(() => {
-    console.log(filter);
-  }, [filter]);
   return (
     <div className="readinglist">
       <Container>
-        <nav className="readinglist__header">
+        <Header className="readinglist__header">
           <h1>Reading List ({totalSaves})</h1>
           <div>
             <Search
@@ -40,13 +31,35 @@ const ReadingList = () => {
               onSearch={handleSearch}
             />
           </div>
-        </nav>
-        <div className="readinglist__body">
+        </Header>
+        <Content>
           <Sidebar userId={id} />
           <ArticleList userId={id} tagId={filter.tagId} query={filter.q} />
-        </div>
+        </Content>
       </Container>
     </div>
   );
 };
+
+const Header = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Search = styled(SearchNavbar)`
+  && {
+    width: 300px;
+    .ant-input-group-addon {
+      background-color: ${(props) => props.theme.base.inverted};
+    }
+  }
+`;
+
+const Content = styled.div`
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 12px;
+`;
+
 export default ReadingList;

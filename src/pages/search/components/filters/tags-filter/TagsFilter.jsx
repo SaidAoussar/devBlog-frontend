@@ -1,5 +1,4 @@
 import React, { useRef, useCallback } from "react";
-import { Typography } from "antd";
 import useTags from "../../../hooks/useTags";
 import HashIcon from "components/HashIcon";
 import "./tags-filter.css";
@@ -7,7 +6,6 @@ import { useAtom } from "jotai";
 import { pageNumberAtom } from "../../../store/page-number";
 import * as S from "./styles";
 
-const { Title } = Typography;
 function TagsFilter({ q }) {
   const [pageNumber, setPageNumber] = useAtom(pageNumberAtom);
   const { loading, error, tags, hasMore } = useTags(pageNumber, q);

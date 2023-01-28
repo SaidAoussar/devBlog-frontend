@@ -41,15 +41,21 @@ const ArticleList = ({ userId, tagId, query }) => {
       });
   };
   return (
-    <section className="reainglist__content">
+    <StyledArticleList>
       {posts.map((post) => {
         return <Article key={post.id} post={post} onDelete={onDeleteSave} />;
       })}
       {posts.length === 0 && <Message>Nothing with this filter 🤔</Message>}
-    </section>
+    </StyledArticleList>
   );
 };
 
+const StyledArticleList = styled.section`
+  background-color: ${(props) => props.theme.cardBg};
+  padding-bottom: 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px ${(props) => props.theme.cardBorder};
+`;
 const Message = styled.h1`
   text-align: center;
   font-size: 18px;

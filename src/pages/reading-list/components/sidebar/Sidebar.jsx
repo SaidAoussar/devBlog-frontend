@@ -1,8 +1,8 @@
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { getAllTagsOfSaves } from "../../../../api/save";
 import { filterAtom } from "../../atom/filter";
+import * as S from "./styles";
 const Sidebar = ({ userId }) => {
   const [tags, setTags] = useState([]);
   const [status, setStatus] = useState("idle");
@@ -24,34 +24,32 @@ const Sidebar = ({ userId }) => {
     setFilter((prevFilter) => ({ ...prevFilter, tagId: tagId }));
   };
   return (
-    <aside className="readinglist__sidebar">
+    <S.Sidebar>
       <nav>
         <ul>
           <li>
-            <Link
-              className={`link ${filter.tagId === 0 ? "link--current" : ""}`}
+            <S.Link
+              className={`${filter.tagId === 0 ? "active" : ""}`}
               onClick={() => handleClickTag(0)}
             >
               All tags
-            </Link>
+            </S.Link>
           </li>
           {tags.map((tag) => {
             return (
               <li key={tag.id}>
-                <Link
-                  className={`link ${
-                    filter.tagId === tag.id ? "link--current" : ""
-                  }`}
+                <S.Link
+                  className={`${filter.tagId === tag.id ? "active" : ""}`}
                   onClick={() => handleClickTag(tag.id)}
                 >
                   {tag.name}
-                </Link>
+                </S.Link>
               </li>
             );
           })}
         </ul>
       </nav>
-    </aside>
+    </S.Sidebar>
   );
 };
 

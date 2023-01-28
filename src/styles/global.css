@@ -27,6 +27,7 @@ a.title-card:hover {
 }
 ul {
   padding-left: 0px;
+  margin: 0px;
 }
 li {
   list-style: none;
