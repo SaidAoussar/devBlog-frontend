@@ -2,13 +2,12 @@ import Container from "../../components/utils/Container";
 import { Button, Typography } from "antd";
 
 import { Link, useParams } from "react-router-dom";
-import "./tag.css";
-import ArticleList from "./components/ArticleList";
+import PostsList from "./components/PostsList";
 import { useEffect, useState } from "react";
 import { getTag } from "../../api/Tag";
 import { nbrPostsByTag } from "../../api/Blog";
+import * as S from "./styles";
 
-const { Title, Text } = Typography;
 function Tag() {
   const { tagId } = useParams();
   const [tag, setTag] = useState({});
@@ -33,26 +32,26 @@ function Tag() {
   }, [tagId]);
   return (
     <Container>
-      <div className="tag-page">
-        <header className="tag-header">
-          <Title level={2}>{tag.name}</Title>
-        </header>
-        <section className="tag-content">
-          <aside className="sidebar-left">
-            <div className="btn-article-create">
+      <S.Tag>
+        <S.Header>
+          <S.Title level={2}>{tag.name}</S.Title>
+        </S.Header>
+        <S.Content>
+          <S.Sidebar>
+            <S.Widget>
               <Link to="/new">
                 <Button type="primary">Create Post</Button>
               </Link>
-            </div>
-            <div className="sidebar-data">
-              <Text>{nbrPosts} Posts Published</Text>
-            </div>
-          </aside>
+            </S.Widget>
+            <S.SidebarData>
+              <S.Text>{nbrPosts} Posts Published</S.Text>
+            </S.SidebarData>
+          </S.Sidebar>
           <main>
-            <ArticleList tagId={+tagId} />
+            <PostsList tagId={+tagId} />
           </main>
-        </section>
-      </div>
+        </S.Content>
+      </S.Tag>
     </Container>
   );
 }

@@ -42,6 +42,7 @@ export const lightTheme = {
   cardColor: `rgb(${colors.grey[900]})`,
   cardColorSecondary: `rgb(${colors.grey[700]})`,
   cardColorTertiary: `rgb(${colors.grey[600]})`,
+  cardSecondaryBg: `rgb(${colors.grey[50]})`,
   cardBorder: `rgba(${colors.grey[900]},0.1)`,
 
   headerBg: `rgb(${colors.white})`,
@@ -52,6 +53,8 @@ export const lightTheme = {
   linkColor: `rgb(${colors.grey[700]})`,
   linkColorHover: `rgb(${colors.accent_brand_darker_rgb})`,
   linkBrandedColorHover: `rgb(${colors.accent_brand_darker_rgb})`,
+  linkColorCurrent: `${colors.base[100]}`,
+  linkBgCurrent: `${colors.base.inverted}`,
 
   tagColor: `rgb(${colors.grey[700]})`,
   tagColorHover: `rgb(${colors.grey[900]})`,

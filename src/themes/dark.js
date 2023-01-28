@@ -47,16 +47,19 @@ export const DarkTheme = {
   cardColor: `rgb(${colors.grey[50]})`,
   cardColorSecondary: `rgb(${colors.grey[300]})`,
   cardColorTertiary: `rgb(${colors.grey[400]})`,
+  cardSecondaryBg: `rgb(${colors.grey[900]})`,
   cardBorder: `rgba(${colors.white},0.15)`,
 
   headerBg: `rgb(${colors.grey[900]})`,
-  headerShadow: `rgba(${colors.black},0.1)`,
+  headerShadow: `rgba(${colors.black})`,
 
   linkBg: "transparent",
   linkBgHover: `rgba(${colors.indigo[900]}, 0.75)`,
   linkColor: `rgb(${colors.grey[300]})`,
   linkColorHover: `rgb(${colors.indigo[300]})`,
   linkBrandedColorHover: `rgb(${colors.indigo[300]})`,
+  linkColorCurrent: `${colors.base[100]}`,
+  linkBgCurrent: `${colors.base.inverted}`,
 
   tagColor: `rgb(${colors.grey[300]})`,
   tagColorHover: `rgb(${colors.grey[100]})`,

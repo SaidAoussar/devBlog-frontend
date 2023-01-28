@@ -1,10 +1,10 @@
-import { Typography, Radio } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDarkModeStore } from "../../../../../store/dark-mode";
-import "./customization-setting.css";
-const { Title } = Typography;
+import darkModeImg from "/public/img/dark-mode-img.svg";
+import lightModeImg from "/public/img/light-mode-img.svg";
+import * as S from "./styles";
+
 const CustomizationSetting = () => {
-  const [themeValue, setThemeValue] = useState("dark_theme"); // darkTheme, light_theme
   const mode = useDarkModeStore((state) => state.mode);
   const setMode = useDarkModeStore((state) => state.setMode);
 
@@ -12,59 +12,53 @@ const CustomizationSetting = () => {
     console.log("theme: ", mode);
   }, [mode]);
   return (
-    <section className="customization-setting">
-      <Title level={3}>Appearance</Title>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2,minmax(0,1fr))",
-          columnGap: "16px",
-        }}
-      >
-        <label className="wrapper-radio" onClick={() => setMode("light")}>
-          <Radio
+    <S.CustomizationSetting>
+      <S.Title level={3}>Appearance</S.Title>
+      <S.ThemeSelector>
+        <S.RadioWrapper onClick={() => setMode("light")}>
+          <S.Radio
             name="config_theme"
             value="light_theme"
             checked={mode === "light"}
           />
           <div>
-            <Title level={5} style={{ marginTop: "0px" }}>
+            <S.Title level={5} style={{ marginTop: "0px" }}>
               Light Theme
-            </Title>
-            <img
+            </S.Title>
+            <S.Image
               style={{
                 borderRadius: "6px",
                 boxShadow: "0 0 0 1px rgba(0,0,0,0.1)",
               }}
-              src="https://github.githubassets.com/images/modules/settings/color_modes/light_tritanopia_preview.svg"
+              src={lightModeImg}
               alt=""
               width={"100%"}
             />
           </div>
-        </label>
-        <label className="wrapper-radio" onClick={() => setMode("dark")}>
-          <Radio
+        </S.RadioWrapper>
+        <S.RadioWrapper onClick={() => setMode("dark")}>
+          <S.Radio
             name="config_theme"
             value="dark_theme"
             checked={mode === "dark"}
           />
           <div>
-            <Title level={5} style={{ marginTop: "0px" }}>
+            <S.Title level={5} style={{ marginTop: "0px" }}>
               Dark Theme
-            </Title>
-            <img
+            </S.Title>
+            <S.Image
               style={{
                 borderRadius: "6px",
                 boxShadow: "0 0 0 1px rgba(0,0,0,0.1)",
               }}
-              src="https://github.githubassets.com/images/modules/settings/color_modes/dark_preview.svg"
+              src={darkModeImg}
               alt=""
               width={"100%"}
             />
           </div>
-        </label>
-      </div>
-    </section>
+        </S.RadioWrapper>
+      </S.ThemeSelector>
+    </S.CustomizationSetting>
   );
 };
 

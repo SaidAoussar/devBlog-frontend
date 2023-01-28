@@ -4,10 +4,9 @@ import { Typography, Input } from "antd";
 import { pageNumberAtom } from "./store/page-number";
 import Container from "../../components/utils/Container";
 import TagsList from "./components/TagsList";
-import "./tags.css";
+import * as S from "./styles";
 
 const { Title, Paragraph } = Typography;
-const { Search } = Input;
 function Tags() {
   const [pageNumber, setPageNumber] = useState(1);
   const [query, setQuery] = useState("");
@@ -16,20 +15,15 @@ function Tags() {
     setQuery(value);
   };
   return (
-    <section
-      style={{
-        padding: "16px 0px",
-      }}
-      className="tags-page"
-    >
+    <S.Tags>
       <Container>
-        <nav>
-          <Title>Top Tags</Title>
-          <Search className="input-search" onSearch={onSearch} />
-        </nav>
+        <S.Nav>
+          <S.Title>Top Tags</S.Title>
+          <S.Search className="input-search" onSearch={onSearch} />
+        </S.Nav>
         <TagsList q={query} pageNumberState={[pageNumber, setPageNumber]} />
       </Container>
-    </section>
+    </S.Tags>
   );
 }
 

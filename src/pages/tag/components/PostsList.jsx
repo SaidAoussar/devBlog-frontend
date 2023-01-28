@@ -1,8 +1,8 @@
 import { useCallback, useRef, useState } from "react";
 import useBlogs from "../hooks/useBlogs";
-import Article from "./article/Article";
+import PreviewPost from "../../../components/preview-post/PreviewPost";
 
-const ArticleList = ({ tagId }) => {
+const PostsList = ({ tagId }) => {
   const [pageNumber, setPageNumber] = useState(1);
 
   const { loading, error, posts, hasMore } = useBlogs(pageNumber, tagId);
@@ -28,16 +28,18 @@ const ArticleList = ({ tagId }) => {
     [loading, hasMore]
   );
   return (
-    <div className="article-list">
+    <div>
       {posts.map((post, index) => {
         if (posts.length === index + 1) {
-          return <Article key={post.id} ref={lastElementPostRef} post={post} />;
+          return (
+            <PreviewPost key={post.id} ref={lastElementPostRef} post={post} />
+          );
         } else {
-          return <Article key={post.id} post={post} />;
+          return <PreviewPost key={post.id} post={post} />;
         }
       })}
     </div>
   );
 };
 
-export default ArticleList;
+export default PostsList;

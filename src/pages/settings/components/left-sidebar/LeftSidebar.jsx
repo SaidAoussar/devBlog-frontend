@@ -2,39 +2,31 @@ import { NavLink } from "react-router-dom";
 import { Typography } from "antd";
 import { LockOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
 import "./left-sidebar.css";
+import * as S from "./styles";
 
 const { Text } = Typography;
 
 const LeftSidebar = () => {
   return (
     <nav className="left-sidebar">
-      <NavLink
-        to="profile"
-        className={({ isActive }) => `link ${isActive ? "link--active" : ""}`}
-      >
-        <Text>
+      <S.NavLinkWrapper to="profile">
+        <S.Text>
           <UserOutlined />
           Profile
-        </Text>
-      </NavLink>
-      <NavLink
-        to="account"
-        className={({ isActive }) => `link ${isActive ? "link--active" : ""}`}
-      >
-        <Text>
+        </S.Text>
+      </S.NavLinkWrapper>
+      <S.NavLinkWrapper to="account">
+        <S.Text>
           <LockOutlined />
           Account
-        </Text>
-      </NavLink>
-      <NavLink
-        to="customization"
-        className={({ isActive }) => `link ${isActive ? "link--active" : ""}`}
-      >
-        <Text>
+        </S.Text>
+      </S.NavLinkWrapper>
+      <S.NavLinkWrapper to="customization">
+        <S.Text>
           <SettingOutlined />
           Customization
-        </Text>
-      </NavLink>
+        </S.Text>
+      </S.NavLinkWrapper>
     </nav>
   );
 };

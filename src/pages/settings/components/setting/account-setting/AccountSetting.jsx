@@ -1,8 +1,7 @@
-import { Form, Typography, Input, Button } from "antd";
+import { Form, Input, Button } from "antd";
 import { useState } from "react";
 import { setNewPassword } from "../../../../../api/User";
-import "./account-setting.css";
-const { Title, Text } = Typography;
+import * as S from "./styles";
 const { Password } = Input;
 const AccountSetting = () => {
   const [status, setStatus] = useState("idle");
@@ -25,12 +24,14 @@ const AccountSetting = () => {
       });
   };
   return (
-    <section className="account-setting">
-      <Title level={3}>Set new password</Title>
+    <S.AccountSetting>
+      <S.Title level={3}>Set new password</S.Title>
       <Form layout="vertical" onFinish={onFinish}>
-        <Form.Item
+        <S.Item
           name="currentPassword"
-          label={<Text className="input-label">Current Password</Text>}
+          label={
+            <S.LabelText className="input-label">Current Password</S.LabelText>
+          }
           rules={[
             {
               required: true,
@@ -38,19 +39,23 @@ const AccountSetting = () => {
             },
           ]}
         >
-          <Password autoComplete="current-password" />
-        </Form.Item>
-        <Form.Item
+          <S.Password autoComplete="current-password" />
+        </S.Item>
+        <S.Item
           name="password"
-          label={<Text className="input-label">Password</Text>}
+          label={<S.LabelText className="input-label">Password</S.LabelText>}
           rules={[{ required: true, message: "Please input your password" }]}
           hasFeedback
         >
-          <Password />
-        </Form.Item>
-        <Form.Item
+          <S.Password />
+        </S.Item>
+        <S.Item
           name="confirmNewPassword"
-          label={<Text className="input-label">Confirm new password</Text>}
+          label={
+            <S.LabelText className="input-label">
+              Confirm new password
+            </S.LabelText>
+          }
           dependencies={["password"]}
           hasFeedback
           rules={[
@@ -70,15 +75,15 @@ const AccountSetting = () => {
             }),
           ]}
         >
-          <Password />
-        </Form.Item>
-        <Form.Item>
+          <S.Password />
+        </S.Item>
+        <S.Item>
           <Button type="primary" htmlType="submit">
             Set New Password
           </Button>
-        </Form.Item>
+        </S.Item>
       </Form>
-    </section>
+    </S.AccountSetting>
   );
 };
 

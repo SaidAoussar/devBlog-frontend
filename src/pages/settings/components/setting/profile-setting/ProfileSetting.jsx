@@ -1,21 +1,10 @@
-import {
-  Typography,
-  Form,
-  Input,
-  Upload,
-  Button,
-  Space,
-  Spin,
-  Alert,
-} from "antd";
+import { useState } from "react";
+import { Form, Upload, Button, Space, Spin, Alert } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import "./profile-setting.css";
 import { useUserStore } from "../../../../../store/user";
 import { updateUser } from "../../../../../api/User";
-import { useState } from "react";
+import * as S from "./styles";
 
-const { Title, Text } = Typography;
-const { TextArea } = Input;
 const ProfileSetting = () => {
   const authUser = useUserStore((state) => state.user);
   const setAuthUser = useUserStore((state) => state.setUser);
@@ -103,8 +92,8 @@ const ProfileSetting = () => {
         />
       )}
 
-      <section className="profile-setting">
-        <Title level={3}>User</Title>
+      <S.ProfileSetting>
+        <S.Title level={3}>User</S.Title>
         <Form
           form={form}
           layout="vertical"
@@ -117,54 +106,32 @@ const ProfileSetting = () => {
           }}
           onFinish={onFinish}
         >
-          <Form.Item
+          <S.Item
             name="firstName"
-            label={<Text className="input-label">First name</Text>}
+            label={<S.LabelText>First name</S.LabelText>}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="lastName"
-            label={<Text className="input-label">Last name</Text>}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="email"
-            label={<Text className="input-label">Email</Text>}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="username"
-            label={<Text className="input-label">Username</Text>}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
+            <S.Input placeholder="John" />
+          </S.Item>
+          <S.Item name="lastName" label={<S.LabelText>Last name</S.LabelText>}>
+            <S.Input placeholder="Doe" />
+          </S.Item>
+          <S.Item name="email" label={<S.LabelText>Email</S.LabelText>}>
+            <S.Input placeholder="john.doe@example.com" />
+          </S.Item>
+          <S.Item name="username" label={<S.LabelText>Username</S.LabelText>}>
+            <S.Input placeholder="johndoe" />
+          </S.Item>
+          <S.Item
             name="img"
-            label={<Text className="input-label">Profile image</Text>}
+            label={<S.LabelText>Profile image</S.LabelText>}
             valuePropName="file"
             getValueFromEvent={normFile}
           >
             <Upload listType="picture" maxCount={1} beforeUpload={() => false}>
-              <div
-                style={{
-                  display: "flex",
-                  columnGap: "16px",
-                  alignItems: "center",
-                }}
-              >
-                <span
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    backgroundColor: "#525252",
-                    borderRadius: "100%",
-                  }}
-                >
+              <S.UploadContainer>
+                <S.ImageWrapper>
                   <img
-                    style={{ borderRadius: "100%" }}
+                    style={{ borderRadius: "100%", objectFit: "cover" }}
                     src={`${import.meta.env.VITE_URL}/${
                       authUser.img
                     }?v=${Date.now()}`}
@@ -172,18 +139,15 @@ const ProfileSetting = () => {
                     width="48"
                     height="48"
                   />
-                </span>
-                <Button icon={<UploadOutlined />}>Click to upload</Button>
-              </div>
+                </S.ImageWrapper>
+                <S.Button icon={<UploadOutlined />}>Click to upload</S.Button>
+              </S.UploadContainer>
             </Upload>
-          </Form.Item>
-          <Form.Item
-            name="intro"
-            label={<Text className="input-label">Bio</Text>}
-          >
-            <TextArea rows={3} />
-          </Form.Item>
-          <Form.Item>
+          </S.Item>
+          <S.Item name="intro" label={<S.LabelText>Bio</S.LabelText>}>
+            <S.TextArea rows={3} placeholder="A short bio..." />
+          </S.Item>
+          <S.Item>
             <Button
               type="primary"
               block
@@ -192,9 +156,9 @@ const ProfileSetting = () => {
             >
               Save Profile information
             </Button>
-          </Form.Item>
+          </S.Item>
         </Form>
-      </section>
+      </S.ProfileSetting>
     </div>
   );
 };
