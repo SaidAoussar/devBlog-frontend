@@ -5,15 +5,25 @@ import LeftSidebar from "./components/left-sidebar/LeftSidebar";
 import PostsFilter from "./components/filters/posts-filter/PostsFilter";
 import UsersFilter from "./components/filters/users-filter/UsersFilter";
 import TagsFilter from "./components/filters/tags-filter/TagsFilter";
-const { Title } = Typography;
+import styled from "styled-components";
+
+const Title = styled(Typography.Title)`
+  && {
+    color: ${(props) => props.theme.base[100]};
+  }
+`;
+
 function Search() {
-  const [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams({
+    filters: "posts",
+    q: "",
+  });
   const filters = searchParams.get("filters");
   const q = searchParams.get("q");
 
   return (
     <Container>
-      <Title level={2}>Settings For @saidaoussar1</Title>
+      <Title level={2}>Search For {q}</Title>
       <section
         style={{
           display: "grid",

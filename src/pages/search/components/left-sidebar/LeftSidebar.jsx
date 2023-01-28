@@ -1,9 +1,8 @@
-import { NavLink } from "react-router-dom";
-import { Typography } from "antd";
 import { useAtom } from "jotai";
 import { pageNumberAtom } from "../../store/page-number";
 
-const { Text } = Typography;
+import * as S from "./styles";
+
 function LeftSidebar({ q, filters }) {
   const [_, setPageNumber] = useAtom(pageNumberAtom);
   const clearNumberPage = () => {
@@ -11,27 +10,27 @@ function LeftSidebar({ q, filters }) {
   };
   return (
     <nav className="left-sidebar">
-      <NavLink
+      <S.NavLinkWrapper
         to={`?q=${q}&filters=posts`}
-        className={`link ${filters === "posts" ? "link--active" : ""}`}
+        className={`${filters === "posts" ? "active" : ""}`}
         onClick={clearNumberPage}
       >
-        <Text>Post</Text>
-      </NavLink>
-      <NavLink
+        <S.Text>Post</S.Text>
+      </S.NavLinkWrapper>
+      <S.NavLinkWrapper
         to={`?q=${q}&filters=people`}
-        className={`link ${filters === "people" ? "link--active" : ""}`}
+        className={`link ${filters === "people" ? "active" : ""}`}
         onClick={clearNumberPage}
       >
-        <Text>People</Text>
-      </NavLink>
-      <NavLink
+        <S.Text>People</S.Text>
+      </S.NavLinkWrapper>
+      <S.NavLinkWrapper
         to={`?q=${q}&filters=tags`}
-        className={`link ${filters === "tags" ? "link--active" : ""}`}
+        className={`${filters === "tags" ? "active" : ""}`}
         onClick={clearNumberPage}
       >
-        <Text>Tags</Text>
-      </NavLink>
+        <S.Text>Tags</S.Text>
+      </S.NavLinkWrapper>
     </nav>
   );
 }

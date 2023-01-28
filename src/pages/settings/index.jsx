@@ -3,8 +3,13 @@ import { Outlet } from "react-router-dom";
 import Container from "../../components/utils/Container";
 import LeftSidebar from "./components/left-sidebar/LeftSidebar";
 import { useUserStore } from "../../store/user";
+import styled from "styled-components";
 
-const { Title } = Typography;
+const Title = styled(Typography.Title)`
+  && {
+    color: ${(props) => props.theme.base[100]};
+  }
+`;
 const Settings = () => {
   const authUser = useUserStore((state) => state.user);
   return (

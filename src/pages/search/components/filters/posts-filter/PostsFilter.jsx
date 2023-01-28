@@ -1,7 +1,6 @@
 import { useCallback, useRef } from "react";
 import { useAtom } from "jotai";
-import Article from "./Article";
-import "./posts-filter.css";
+import PreviewPost from "components/preview-post/PreviewPost";
 import useBlogs from "../../../hooks/useBlogs";
 import { pageNumberAtom } from "../../../store/page-number";
 
@@ -29,9 +28,11 @@ function PostsFilter({ q }) {
     <section className="list-posts">
       {posts.map((post, index) => {
         if (posts.length === index + 1) {
-          return <Article key={post.id} ref={lastPostElementRef} post={post} />;
+          return (
+            <PreviewPost key={post.id} ref={lastPostElementRef} post={post} />
+          );
         } else {
-          return <Article key={post.id} post={post} />;
+          return <PreviewPost key={post.id} post={post} />;
         }
       })}
     </section>

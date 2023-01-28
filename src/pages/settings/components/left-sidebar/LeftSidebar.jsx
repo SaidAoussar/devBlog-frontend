@@ -1,10 +1,5 @@
-import { NavLink } from "react-router-dom";
-import { Typography } from "antd";
 import { LockOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
-import "./left-sidebar.css";
 import * as S from "./styles";
-
-const { Text } = Typography;
 
 const LeftSidebar = () => {
   return (

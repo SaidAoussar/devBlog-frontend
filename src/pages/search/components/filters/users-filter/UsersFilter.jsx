@@ -1,11 +1,11 @@
 import { forwardRef, useRef, useCallback } from "react";
-import { Typography } from "antd";
-import "./users-filter.css";
 import useUsers from "../../../hooks/useUsers";
 import { useAtom } from "jotai";
 import { pageNumberAtom } from "../../../store/page-number";
 
-const { Title, Text } = Typography;
+import * as S from "./styles";
+import { Link } from "react-router-dom";
+
 function UsersFilter({ q }) {
   const [pageNumber, setPageNumber] = useAtom(pageNumberAtom);
   const { loading, users, error, hasMore } = useUsers(pageNumber, q);
@@ -40,22 +40,22 @@ function UsersFilter({ q }) {
 
 const User = forwardRef(({ user }, ref) => {
   return (
-    <div ref={ref} className="user">
-      <a href="#">
-        <img
+    <Link to={`/profile/${user.id}`}>
+      <S.User ref={ref}>
+        <S.Image
           src={`${import.meta.env.VITE_URL}/${user.img}`}
-          alt=""
+          alt={`${user.firstName} ${user.lastName}`}
           height={32}
           width={32}
         />
-      </a>
-      <div className="user__details">
-        <Title level={4}>
-          {user.firstName} {user.lastName}
-        </Title>
-        <Text>{user.username}</Text>
-      </div>
-    </div>
+        <div>
+          <S.Title level={4}>
+            {user.firstName} {user.lastName}
+          </S.Title>
+          <S.Text>{user.username}</S.Text>
+        </div>
+      </S.User>
+    </Link>
   );
 });
 

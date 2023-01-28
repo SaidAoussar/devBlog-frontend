@@ -1,10 +1,12 @@
 import React, { useRef, useCallback } from "react";
 import { Typography } from "antd";
 import useTags from "../../../hooks/useTags";
-import HashIcon from "../../../../../components/HashIcon";
+import HashIcon from "components/HashIcon";
 import "./tags-filter.css";
 import { useAtom } from "jotai";
 import { pageNumberAtom } from "../../../store/page-number";
+import * as S from "./styles";
+
 const { Title } = Typography;
 function TagsFilter({ q }) {
   const [pageNumber, setPageNumber] = useAtom(pageNumberAtom);
@@ -43,12 +45,14 @@ function TagsFilter({ q }) {
 
 const Tag = React.forwardRef(({ tag }, ref) => {
   return (
-    <div ref={ref} className="tag">
-      <div className="wrapper-hashicon">
-        <HashIcon color="#f7df1e" />
-      </div>
-      <Title level={4}>{tag.name}</Title>
-    </div>
+    <S.Tag ref={ref}>
+      <S.HashIconWrapper>
+        <HashIcon />
+      </S.HashIconWrapper>
+      <S.Title level={4}>
+        <S.Link to={`/t/${tag.id}`}>{tag.name} </S.Link>
+      </S.Title>
+    </S.Tag>
   );
 });
 export default TagsFilter;
