@@ -1,34 +1,31 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Container from "../../components/utils/Container";
-import "./profile.module.css";
 import UserPreview from "./components/user-preview/UserPreview";
 import SideBar from "./components/sidebar/Sidebar";
 import ArticlesList from "./components/ArticlesList";
+import styled from "styled-components";
 
 function Profile() {
   const { id } = useParams();
-  const [user, setUser] = useState({});
-  const navigate = useNavigate();
 
   return (
     <Container>
       <UserPreview id={id} />
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 2fr",
-          columnGap: "12px",
-        }}
-      >
+      <Content>
         <SideBar userId={id} />
-        <main className="content">
+        <main>
           <ArticlesList userId={id} />
         </main>
-      </section>
+      </Content>
     </Container>
   );
 }
+
+const Content = styled.section`
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  column-gap: 12px;
+`;
 
 export default Profile;

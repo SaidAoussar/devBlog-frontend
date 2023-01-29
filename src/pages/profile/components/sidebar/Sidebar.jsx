@@ -1,27 +1,24 @@
-import { Typography } from "antd";
 import { useAtom } from "jotai";
 import { FileTextOutlined, MessageOutlined } from "@ant-design/icons";
-import { userAtom } from "../../store/user";
-import "./sidebar.css";
-import { useEffect, useState } from "react";
+import { userAtom } from "../../atom/user";
+import * as S from "./styles";
 
-const { Text } = Typography;
-const SideBar = ({ userId }) => {
+const SideBar = () => {
   const [user] = useAtom(userAtom);
-  console.log(user);
+
   return (
-    <div className="sidebar">
-      <div className="sidebar__card">
-        <div className="item">
+    <S.Sidebar>
+      <S.Card>
+        <S.Item>
           <FileTextOutlined />
-          <Text>{user._count?.posts} posts published</Text>
-        </div>
-        <div className="item">
+          <S.Text>{user._count?.posts} posts published</S.Text>
+        </S.Item>
+        <S.Item>
           <MessageOutlined />
-          <Text>{user._count?.comments} comments written</Text>
-        </div>
-      </div>
-    </div>
+          <S.Text>{user._count?.comments} comments written</S.Text>
+        </S.Item>
+      </S.Card>
+    </S.Sidebar>
   );
 };
 

@@ -48,7 +48,9 @@ export const DarkTheme = {
   cardColorSecondary: `rgb(${colors.grey[300]})`,
   cardColorTertiary: `rgb(${colors.grey[400]})`,
   cardSecondaryBg: `rgb(${colors.grey[900]})`,
+  cardSecondaryColor: `rgb(${colors.grey[200]})`,
   cardBorder: `rgba(${colors.white},0.15)`,
+  cardSecondaryBorder: `rgba(${colors.white},0.1)`,
 
   headerBg: `rgb(${colors.grey[900]})`,
   headerShadow: `rgba(${colors.black})`,

@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { Button, Typography } from "antd";
 import { format } from "date-fns";
-import { userAtom } from "../../store/user";
+import { userAtom } from "../../atom/user";
 import { getUser } from "../../../../api/User";
 
-import "./user-preview.css";
+import * as S from "./styles";
 import { Link } from "react-router-dom";
 
-const { Title, Text } = Typography;
 const UserPreview = ({ id }) => {
   const [user, setUser] = useAtom(userAtom);
   const [status, setStatus] = useState("idle");
@@ -33,33 +31,33 @@ const UserPreview = ({ id }) => {
       });
   }, [id]);
   return (
-    <header className="profile-header">
-      <div className="profile-header__top">
-        <img
+    <S.ProfileHeader>
+      <S.HeaderTop>
+        <S.Image
           src={`${import.meta.env.VITE_URL}/${user.img}`}
           width="128"
           height="128"
           alt="said"
         />
         <Link to="/settings">
-          <Button type="primary" size="large">
+          <S.Button type="primary" size="large">
             Edit profile
-          </Button>
+          </S.Button>
         </Link>
-      </div>
-      <div className="profile-header__details">
-        <Title level={2} className="author-name">
+      </S.HeaderTop>
+      <S.HeaderDetails>
+        <S.Title level={2}>
           {user.firstName} {user.lastName}
-        </Title>
-        <Text className="author-bio">{user.intro}</Text>
-        <Text className="author-date">
+        </S.Title>
+        <S.Bio>{user.intro}</S.Bio>
+        <S.Date>
           Joined on
           <time dateTime={user.registeredAt}>
             {format(new Date(user.registeredAt || Date.now()), " MMM d, y")}
           </time>
-        </Text>
-      </div>
-    </header>
+        </S.Date>
+      </S.HeaderDetails>
+    </S.ProfileHeader>
   );
 };
 

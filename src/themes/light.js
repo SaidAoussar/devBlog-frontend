@@ -43,7 +43,9 @@ export const lightTheme = {
   cardColorSecondary: `rgb(${colors.grey[700]})`,
   cardColorTertiary: `rgb(${colors.grey[600]})`,
   cardSecondaryBg: `rgb(${colors.grey[50]})`,
+  cardSecondaryColor: `rgb(${colors.grey[700]})`,
   cardBorder: `rgba(${colors.grey[900]},0.1)`,
+  cardSecondaryBorder: `rgba(${colors.grey[900]},0.05)`,
 
   headerBg: `rgb(${colors.white})`,
   headerShadow: `rgba(${colors.black},0.1)`,

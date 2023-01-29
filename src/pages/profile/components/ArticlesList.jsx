@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback } from "react";
 import useBlogs from "../hooks/useBlogs";
-import Article from "./article/Article";
+import PreviewPost from "components/preview-post/PreviewPost";
 
 const ArticlesList = ({ userId }) => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -26,9 +26,11 @@ const ArticlesList = ({ userId }) => {
     <section className="substories">
       {posts.map((post, index) => {
         if (posts.length === index + 1) {
-          return <Article key={post.id} ref={lastPostElementRef} post={post} />;
+          return (
+            <PreviewPost key={post.id} ref={lastPostElementRef} post={post} />
+          );
         } else {
-          return <Article key={post.id} post={post} />;
+          return <PreviewPost key={post.id} post={post} />;
         }
       })}
     </section>
