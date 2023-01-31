@@ -12,9 +12,7 @@ const CommentsList = ({ postId }) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
-        console.log("hasMore :", hasMore);
         if (entries[0].isIntersecting && hasMore) {
-          console.log("hi");
           setPageNumber((prevPageNumber) => prevPageNumber + 1);
         }
       });

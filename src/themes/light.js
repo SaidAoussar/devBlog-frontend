@@ -94,6 +94,7 @@ export const lightTheme = {
   drawerBg: `rgb(${colors.white})`,
   drawerColor: "rgba(0, 0, 0, 0.88)",
 
+  accentWarningA10: `rgba(245,158,11,0.1)`,
   base: {
     ...colors.base,
   },

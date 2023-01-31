@@ -18,27 +18,25 @@ const WarningAuthMessage = ({ isModalOpenState }) => {
   };
 
   return (
-    <div>
-      <Modal
-        title="Log in to continue"
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <ModalActions>
-          <Link to="/login">
-            <Button type="primary" size="large" block>
-              Login in
-            </Button>
-          </Link>
-          <Link to="/register">
-            <Button type="link" size="large" block>
-              Create account
-            </Button>
-          </Link>
-        </ModalActions>
-      </Modal>
-    </div>
+    <Modal
+      title="Log in to continue"
+      open={isModalOpen}
+      onCancel={handleCancel}
+      footer={null}
+    >
+      <ModalActions>
+        <Link to="/login">
+          <Button type="primary" size="large" block>
+            Login in
+          </Button>
+        </Link>
+        <Link to="/register">
+          <Button type="link" size="large" block>
+            Create account
+          </Button>
+        </Link>
+      </ModalActions>
+    </Modal>
   );
 };
 

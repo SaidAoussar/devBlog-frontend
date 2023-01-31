@@ -15,7 +15,7 @@ export default function useComments(postId, pageNumber) {
       .then((res) => {
         if (Object.keys(res.data).length === 0) return;
         let { _metadata, records } = res.data;
-        console.log("comments before", comments);
+
         setComments((prevComments) => {
           return [
             ...new Map(
@@ -28,8 +28,6 @@ export default function useComments(postId, pageNumber) {
           //https://stackoverflow.com/questions/2218999/how-to-remove-all-duplicates-from-an-array-of-objects
           //return [...[...prevComments, ...records]];
         });
-
-        console.log("comments after", [...new Set([...comments, ...records])]);
 
         const lastPage = Math.ceil(_metadata.total_count / _metadata.per_page);
         setHasMore(_metadata.page < lastPage);

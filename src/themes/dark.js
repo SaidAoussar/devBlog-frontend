@@ -98,6 +98,8 @@ export const DarkTheme = {
 
   drawerBg: `rgb(${colors.black})`,
   drawerColor: `rgb(${colors.grey[50]})`,
+
+  accentWarningA10: `rgba(245,158,11,0.2)`,
   base: {
     ...colors.base,
   },

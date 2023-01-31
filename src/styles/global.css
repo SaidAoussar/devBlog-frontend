@@ -26,8 +26,9 @@ a.title-card:hover {
   text-decoration: underline;
 }
 ul {
-  padding-left: 0px;
+  padding: 0px;
   margin: 0px;
+  list-style: none;
 }
 li {
   list-style: none;

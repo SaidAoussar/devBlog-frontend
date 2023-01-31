@@ -5,6 +5,7 @@ import WarningAuthMessage from "../../../../components/warning-auth-message";
 import { useUserStore } from "../../../../store/user";
 import BookmarkFilled from "./BookmarkFilled";
 import BookmarkOutlined from "./BookmarkOutlined";
+import { Reaction } from "../sidebar-left/styles";
 
 const SaveIcon = ({ postId }) => {
   const [savedActive, setSavedActive] = useState(false);
@@ -16,7 +17,6 @@ const SaveIcon = ({ postId }) => {
     if (Object.keys(authUser).length !== 0) {
       checkSaved(postId)
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             setSavedActive(res.data.saved);
           }
@@ -57,20 +57,21 @@ const SaveIcon = ({ postId }) => {
   return (
     <>
       <WarningAuthMessage isModalOpenState={[isModalOpen, setIsMOdalOpen]} />
-      <div className="reaction">
+      <Reaction>
         {!savedActive ? (
           <BookmarkOutlined onClick={handleToggleSave} />
         ) : (
           <BookmarkFilled onClick={handleToggleSave} />
         )}
-        <Counter active={savedActive}>{nbrSaves}</Counter>
-      </div>
+        <Counter $active={savedActive}>{nbrSaves}</Counter>
+      </Reaction>
     </>
   );
 };
 
 const Counter = styled.span`
-  color: ${(props) => (props.active ? "rgb(79,70,229)" : "575757")};
+  color: ${(props) =>
+    props.$active ? "rgb(79,70,229)" : props.theme.btnGhostColor};
 `;
 
 export default SaveIcon;

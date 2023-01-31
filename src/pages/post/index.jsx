@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { CommentOutlined } from "@ant-design/icons";
-import { Button, Layout, Typography } from "antd";
-import { getBlog } from "../../api/Blog";
-import "./post.css";
+import { useParams } from "react-router-dom";
+
+import { Typography } from "antd";
 import parse from "html-react-parser";
 import { format } from "date-fns";
+
+import { useUserStore } from "../../store/user";
+import { getBlog } from "../../api/Blog";
+
 import NewComment from "./components/new-comment/NewComment";
 import CommentsList from "./components/CommentsList";
-import { useUserStore } from "../../store/user";
-import ReactionIcon from "./components/reaction-icon/ReactionIcon";
-import SaveIcon from "./components/save-icon/SaveIcon";
+import SidebarRight from "./components/sidebar-right/SidebarRight";
 
-const { Text, Title, Paragraph } = Typography;
+import * as S from "./styles";
+import SidebarLeft from "./components/sidebar-left/SidebarLeft";
+
+const { Title } = Typography;
 
 const Post = () => {
   const { id } = useParams();
@@ -21,8 +24,6 @@ const Post = () => {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
   const authUser = useUserStore((state) => state.user);
-  const [reactionActive, setReactionActive] = useState(false);
-  const [nbrReactions, setNbrReactions] = useState(0);
 
   useEffect(() => {
     setStatus("pending");
@@ -30,7 +31,6 @@ const Post = () => {
       .then((res) => {
         if (res.status === 200) {
           setPost(res.data);
-          setNbrReactions(res.data._count?.reactions);
           setStatus("resolved");
         }
 
@@ -45,128 +45,69 @@ const Post = () => {
   }, [id]);
 
   return (
-    <div>
-      <Layout>
-        <div className="layout-post">
-          <aside className="sidebar-left">
-            <div className="article_actions">
-              <div className="article_actions--inner">
-                <ReactionIcon postId={id} />
-                <div className="reaction">
-                  <CommentOutlined />
-                  <span>{post._count?.comments}</span>
-                </div>
-                <SaveIcon postId={id} />
-              </div>
-            </div>
-          </aside>
-          <div className="content">
-            <article className="article">
-              {post.cover && (
-                <img
-                  className="article_cover"
-                  src={`${import.meta.env.VITE_URL}/${post.cover}`}
-                  alt=""
+    <S.Layout>
+      <SidebarLeft postId={id} commentsCount={post._count?.comments} />
+      <S.Content>
+        <S.Article>
+          {post.cover && (
+            <S.Cover src={`${import.meta.env.VITE_URL}/${post.cover}`} alt="" />
+          )}
+
+          <S.Meta>
+            <S.WrapperDetails>
+              <S.Details>
+                <S.Avatar
+                  src={`${import.meta.env.VITE_URL}/${post.author?.img}`}
+                  alt={`${post.author?.firstName} ${post.author?.lastName}`}
+                  width="40"
+                  height="40"
                 />
+                <div>
+                  <S.AuthorName>
+                    {post.author?.firstName} {post.author?.lastName}
+                  </S.AuthorName>
+                  <S.PublishDate>
+                    Posted on{" "}
+                    {format(new Date(post.createdAt || Date.now()), "MMM d, y")}
+                  </S.PublishDate>
+                </div>
+              </S.Details>
+              {authUser?.id === post.author?.id && (
+                <S.AuthorActions>
+                  <S.EditLink
+                    to={`/${post.author?.username}/${post.slug}/edit`}
+                  >
+                    Edit
+                  </S.EditLink>
+                </S.AuthorActions>
               )}
+            </S.WrapperDetails>
+            <S.Title level={2}>{post.title}</S.Title>
+            <S.Tags>
+              {post.tags?.map((tag) => (
+                <S.Tag to={`/t/${tag.id}`} key={tag.id} className="tag">
+                  <S.TagPrefix>#</S.TagPrefix>
+                  {tag.name}
+                </S.Tag>
+              ))}
+            </S.Tags>
+          </S.Meta>
 
-              <div className="article_header_meta">
-                <div className="author">
-                  <div className="author-details">
-                    <img
-                      src={`${import.meta.env.VITE_URL}/${post.author?.img}`}
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                    <div>
-                      <Text>
-                        {post.author?.firstName} {post.author?.lastName}
-                      </Text>
-                      <Text>
-                        Posted on{" "}
-                        {format(
-                          new Date(post.createdAt || Date.now()),
-                          "MMM d, y"
-                        )}
-                      </Text>
-                    </div>
-                  </div>
-                  {authUser?.id === post.author?.id && (
-                    <div className="author-action">
-                      <Link to={`/${post.author?.username}/${post.slug}/edit`}>
-                        Edit
-                      </Link>
-                    </div>
-                  )}
-                </div>
-                <Title level={2} className="article_title">
-                  {post.title}
-                </Title>
-                <div className="article_tags">
-                  {post.tags?.map((tag) => (
-                    <Link to={`/t/${tag.id}`} key={tag.id} className="tag">
-                      <span className="tag_prefix">#</span>
-                      {tag.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              <div className="article_main">
-                <div className="ql-snow">
-                  <div className="ql-editor">{parse(`${post.content}`)}</div>
-                </div>
-              </div>
-
-              <section className="comments">
-                <Title level={3}>Comments</Title>
-                <NewComment postId={post.id} />
-                <CommentsList postId={id} />
-              </section>
-            </article>
-          </div>
-          <aside className="sidebar-right">
-            <div className="sidebar-right--sticky">
-              <div className="author_details">
-                <div className="avatar">
-                  <Link to={`/profile/${post.author?.id}`}>
-                    <span>
-                      <img
-                        src={`${import.meta.env.VITE_URL}/${post.author?.img}`}
-                        alt=""
-                      />
-                    </span>
-                    <Text>
-                      {post.author?.firstName} {post.author?.lastname}
-                    </Text>
-                  </Link>
-                </div>
-                <Paragraph className="bio">{post.author?.intro}</Paragraph>
-                <div className="metadata_details">
-                  <ul>
-                    <li>
-                      <Text className="key">Joined</Text>
-                      <Text className="value">
-                        <time
-                          dateTime={post.author?.createdAt}
-                          className="date"
-                        >
-                          {format(
-                            new Date(post.author?.createdAt || Date.now()),
-                            "MMM d, y"
-                          )}
-                        </time>
-                      </Text>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+          <S.Main>
+            <div className="ql-snow">
+              <div className="ql-editor">{parse(`${post.content}`)}</div>
             </div>
-          </aside>
-        </div>
-      </Layout>
-    </div>
+          </S.Main>
+
+          <S.Comments>
+            <S.CommentsTitle level={3}>Comments</S.CommentsTitle>
+            <NewComment postId={post.id} />
+            <CommentsList postId={id} />
+          </S.Comments>
+        </S.Article>
+      </S.Content>
+      <SidebarRight author={post.author} />
+    </S.Layout>
   );
 };
 

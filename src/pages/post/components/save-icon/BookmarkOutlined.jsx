@@ -21,7 +21,7 @@ const BookmarkOutlined = (props) => {
 const IconWrapper = styled.span`
   padding: 8px;
   border-radius: 50%;
-  color: 3d3d3d;
+  color: ${(props) => props.theme.btnGhostColor};
   background-color: none;
   cursor: pointer;
   box-shadow: none;

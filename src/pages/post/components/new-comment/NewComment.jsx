@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useAtom } from "jotai";
 import { Alert, Button } from "antd";
-import ReactQuill from "react-quill";
+
 import { useUserStore } from "../../../../store/user";
 import { createComment } from "../../../../api/Comment";
-import { useAtom } from "jotai";
 import { commentsAtom } from "../../atom/comments";
+import * as S from "./styles";
 
 const NewComment = ({ postId }) => {
   const authUser = useUserStore((state) => state.user);
@@ -24,7 +25,6 @@ const NewComment = ({ postId }) => {
 
           setStatus("resolved");
         }
-        console.log(res);
       })
       .catch((e) => {
         setStatus("rejected");
@@ -50,22 +50,17 @@ const NewComment = ({ postId }) => {
         />
       )}
 
-      <div className="wrapper-new-comment">
-        <div className="avatar">
-          <img
-            src={`${import.meta.env.VITE_URL}/${authUser.img}`}
-            alt=""
-            height="32"
-            width="32"
-          />
-        </div>
-        <div className="new-comment">
+      <S.NewComment>
+        <S.Image
+          src={`${import.meta.env.VITE_URL}/${authUser.img}`}
+          alt="user image"
+          height="32"
+          width="32"
+        />
+
+        <S.Field>
           <form>
-            <ReactQuill
-              theme="snow"
-              value={newComment}
-              onChange={setNewComment}
-            />
+            <S.TextEditor value={newComment} onChange={setNewComment} />
             <Button
               type="primary"
               onClick={handleNewComment}
@@ -74,8 +69,8 @@ const NewComment = ({ postId }) => {
               Submit
             </Button>
           </form>
-        </div>
-      </div>
+        </S.Field>
+      </S.NewComment>
     </>
   );
 };
