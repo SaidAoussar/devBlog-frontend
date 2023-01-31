@@ -8,6 +8,7 @@ import {
   BookOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
+import SaveIcon from "./save-icon/SaveIcon";
 
 const { Title, Text } = Typography;
 const PreviewContainer = styled.div`
@@ -201,7 +202,7 @@ const PreviewPost = React.forwardRef(({ post }, ref) => {
             <PreviewSave>
               <PreviewSaveText>9 min</PreviewSaveText>
               <SaveButton type="text" size="small">
-                <BookOutlined style={{ fontSize: "16px" }} />
+                <SaveIcon postId={post.id} />
               </SaveButton>
             </PreviewSave>
           </PreviewBottom>
