@@ -49,8 +49,19 @@ const ResetPassword = () => {
       <Container>
         <Row justify="center">
           <Col md={14}>
+            {status === "pending" && (
+              <Space
+                style={{
+                  width: "100%",
+                  justifyContent: "center",
+                  marginBottom: "16px",
+                }}
+              >
+                <Spin size="large"></Spin>
+              </Space>
+            )}
             <Card className="login__card">
-              {status !== "resolved" ? (
+              {status !== "resolved" && (
                 <>
                   <Title className="login__title" style={{ fontSize: "28px" }}>
                     Choose a new password
@@ -127,7 +138,9 @@ const ResetPassword = () => {
                     </Form.Item>
                   </Form>
                 </>
-              ) : (
+              )}
+
+              {status === "resolved" && (
                 <div style={{ textAlign: "center" }}>
                   <Title className="login__title" style={{ fontSize: "28px" }}>
                     login to your account

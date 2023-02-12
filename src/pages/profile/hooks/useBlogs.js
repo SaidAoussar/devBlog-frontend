@@ -15,12 +15,14 @@ export default function useBlogs(pageNumber, authorId) {
         let { _metadata, records } = res.data;
 
         setPosts((prevBlogs) => {
-          return [...prevBlogs, ...records];
+          return [
+            ...new Map(
+              [...prevBlogs, ...records].map((blog) => [blog["id"], blog])
+            ).values(),
+          ];
         });
 
         const lastPage = Math.ceil(_metadata.total_count / _metadata.per_page);
-
-        console.log("page : ", _metadata.page, "| lastpage : ", lastPage);
 
         setHasMore(_metadata.page < lastPage);
         setLoading(false);

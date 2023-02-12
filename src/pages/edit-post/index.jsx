@@ -27,7 +27,6 @@ const EditPost = () => {
         }
       })
       .catch((e) => {
-        console.log(e);
         setPostStatus("rejected");
       });
   }, [slug]);

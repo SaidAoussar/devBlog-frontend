@@ -27,6 +27,15 @@ export async function getUser(id) {
   }
 }
 
+export async function getUserByUsername(username) {
+  try {
+    const res = await axios.get(`${URL}/users/user/${username}`);
+    return res;
+  } catch (e) {
+    return e;
+  }
+}
+
 export async function removeUser(id) {
   try {
     const response = await axios.delete(`${URL}/users/'${id}`);
@@ -39,6 +48,21 @@ export async function removeUser(id) {
 export async function updateUser(id, formData) {
   try {
     const response = await axios.patch(`${URL}/users/${id}`, formData);
+    return response;
+  } catch (e) {
+    return e;
+  }
+}
+
+export async function updateMode(mode) {
+  const { token } = JSON.parse(localStorage.getItem("current_user"));
+  try {
+    const response = await axios({
+      url: `${URL}/users/update-mode`,
+      method: "patch",
+      params: { mode },
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response;
   } catch (e) {
     return e;

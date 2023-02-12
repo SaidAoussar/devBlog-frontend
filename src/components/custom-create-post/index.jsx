@@ -149,7 +149,9 @@ const CustomCreatePost = ({ post, handleFetch, useStatus, useError }) => {
         )}
         {status === "resolved" && (
           <Alert
-            message="Post Added with Success"
+            message={
+              post ? "Post updated with Success" : "Post Added with Success"
+            }
             type="success"
             closable
             onClose={() => setStatus("idle")}
@@ -162,7 +164,7 @@ const CustomCreatePost = ({ post, handleFetch, useStatus, useError }) => {
             post
               ? {
                   title: post.title,
-                  tags: post.tags?.map((tag) => tag.tagId) || [],
+                  tags: post.tags?.map((tag) => tag.id) || [],
                 }
               : {}
           }

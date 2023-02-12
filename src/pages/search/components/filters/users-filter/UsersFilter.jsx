@@ -40,7 +40,7 @@ function UsersFilter({ q }) {
 
 const User = forwardRef(({ user }, ref) => {
   return (
-    <Link to={`/profile/${user.id}`}>
+    <Link to={`/${user.username}`}>
       <S.User ref={ref}>
         <S.Image
           src={`${import.meta.env.VITE_URL}/${user.img}`}

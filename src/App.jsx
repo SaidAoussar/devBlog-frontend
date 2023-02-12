@@ -29,14 +29,14 @@ import ResetPassword from "./pages/reset-password";
 function App() {
   const mode = useDarkModeStore((state) => state.mode);
   return (
-    <ThemeProvider theme={mode === "light" ? lightTheme : DarkTheme}>
+    <ThemeProvider theme={mode === "LIGHT" ? lightTheme : DarkTheme}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="/post/:id" element={<Blog />} />
+          <Route path="/:username/:slug" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
 
-          <Route path="/profile/:id" element={<Profile />} />
+          <Route path=":username" element={<Profile />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

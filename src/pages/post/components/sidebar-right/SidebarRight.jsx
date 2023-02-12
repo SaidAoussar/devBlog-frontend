@@ -16,7 +16,7 @@ const SidebarRight = ({ author }) => {
                 />
               </S.WrapperImage>
               <S.SubTitle>
-                {author?.firstName} {author?.lastname}
+                {author?.firstName} {author?.lastName}
               </S.SubTitle>
             </S.Link>
           </S.Header>

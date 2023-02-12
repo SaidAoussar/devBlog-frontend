@@ -90,7 +90,7 @@ const Home = () => {
           </nav>
         </HomeSidebar>
         <HomeMain>
-          <header>
+          <header style={{ marginBottom: "12px" }}>
             <nav>
               <ul>
                 <li>
@@ -98,11 +98,11 @@ const Home = () => {
                     Latest
                   </SecondaryNavLink>
                 </li>
-                <li>
+                {/* <li>
                   <SecondaryNavLink $active={false} to="/top">
                     Top
                   </SecondaryNavLink>
-                </li>
+                </li> */}
               </ul>
             </nav>
           </header>

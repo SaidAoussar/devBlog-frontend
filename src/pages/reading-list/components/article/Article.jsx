@@ -10,7 +10,7 @@ const Article = ({ post, onDelete }) => {
   return (
     <S.Card>
       <S.CardWrapper>
-        <Link to={`/profile/${post.author?.id}`} style={{ display: "block" }}>
+        <Link to={`/${post.author?.username}`} style={{ display: "block" }}>
           <S.CardImage
             src={`${import.meta.env.VITE_URL}/${post.author?.img}`}
             height={32}
@@ -19,12 +19,12 @@ const Article = ({ post, onDelete }) => {
           />
         </Link>
         <S.CardContent>
-          <S.CardTitle to={`/post/${post.id}`}>
+          <S.CardTitle to={`/${post.author?.username}/${post.slug}`}>
             <S.Title level={4}>{post.title}</S.Title>
           </S.CardTitle>
 
           <S.CardDetails>
-            <Link to={`/profile/${post.author?.id}`}>
+            <Link to={`/${post.author?.username}`}>
               <S.Text>
                 {post.author?.firstName} {post.author?.lastName}
               </S.Text>

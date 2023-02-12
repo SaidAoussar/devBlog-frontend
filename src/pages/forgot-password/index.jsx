@@ -14,12 +14,13 @@ import {
 import { forgotPassword } from "../../api/Auth";
 import Container from "../../components/utils/Container";
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 const ForgotPassword = () => {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
   const [form] = Form.useForm();
   const onFinish = (values) => {
+    setStatus("pending");
     forgotPassword(values.email)
       .then((res) => {
         if (res.status === 200) {
@@ -41,16 +42,17 @@ const ForgotPassword = () => {
       <Container>
         <Row justify="center">
           <Col md={14}>
-            {status === "resolved" && (
-              <Alert
-                message="Your password reset instructions have been sent."
-                type="success"
-                closable
-                onClose={() => setStatus("idle")}
-                style={{ margin: "8px 0px" }}
-              />
+            {status === "pending" && (
+              <Space
+                style={{
+                  width: "100%",
+                  justifyContent: "center",
+                  marginBottom: "16px",
+                }}
+              >
+                <Spin size="large"></Spin>
+              </Space>
             )}
-
             {status === "rejected" && (
               <Alert
                 message={error}
@@ -60,6 +62,16 @@ const ForgotPassword = () => {
                 style={{ margin: "8px 0px" }}
               />
             )}
+            {status === "resolved" && (
+              <Alert
+                message="Your password reset instructions have been sent to your inbox."
+                type="success"
+                closable
+                onClose={() => setStatus("idle")}
+                style={{ margin: "8px 0px" }}
+              />
+            )}
+
             <Card className="login__card">
               <Title className="login__title" style={{ fontSize: "28px" }}>
                 Forgot your password?
@@ -83,7 +95,11 @@ const ForgotPassword = () => {
                     { type: "email" },
                   ]}
                 >
-                  <Input size="large" placeholder="you@email.com" />
+                  <Input
+                    size="large"
+                    autoComplete="off"
+                    placeholder="you@example.com"
+                  />
                 </Form.Item>
                 <Form.Item style={{ marginBottom: "16px" }}>
                   <Button

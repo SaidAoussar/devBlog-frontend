@@ -25,7 +25,7 @@ const SaveIcon = ({ postId }) => {
           console.log(e);
         });
     }
-  }, [savedActive, postId]);
+  }, [savedActive, postId, authUser]);
 
   useEffect(() => {
     nbrSavesByPost(postId)

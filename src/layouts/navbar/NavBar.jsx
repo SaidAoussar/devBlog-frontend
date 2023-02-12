@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Menu, Drawer, Avatar, Input } from "antd";
+import { Button, Menu, Drawer, Avatar, Input, Image } from "antd";
 import {
   LogoutOutlined,
   MenuOutlined,
@@ -9,6 +9,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { useAtom } from "jotai";
+import userDefaultImg from "/public/img/user.png";
 import * as S from "./styles";
 import { useLogout } from "../../hooks/useLogout";
 import Container from "../../components/utils/Container";
@@ -43,11 +44,19 @@ function NavBar() {
       setAuthMenu([
         {
           key: "auth1",
-          label: <Avatar src={`${import.meta.env.VITE_URL}/${authUser.img}`} />,
+          label: (
+            <Avatar
+              src={
+                authUser.img
+                  ? `${import.meta.env.VITE_URL}/${authUser.img}`
+                  : userDefaultImg
+              }
+            />
+          ),
           children: [
             {
               label: (
-                <Link to={`/profile/${authUser.id}`}>
+                <Link to={`/${authUser.username}`}>
                   <UserOutlined style={{ marginRight: "8px" }} />
                   Profile
                 </Link>

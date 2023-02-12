@@ -21,6 +21,7 @@ const colors = {
 
   indigo: {
     300: "165, 180, 252",
+    400: "129, 140, 248",
     900: "49, 46, 129",
   },
   base: {
@@ -59,6 +60,7 @@ export const DarkTheme = {
   linkBgHover: `rgba(${colors.indigo[900]}, 0.75)`,
   linkColor: `rgb(${colors.grey[300]})`,
   linkColorHover: `rgb(${colors.indigo[300]})`,
+  linkBrandedColor: `rgb(${colors.indigo[400]})`,
   linkBrandedColorHover: `rgb(${colors.indigo[300]})`,
   linkColorCurrent: `${colors.base[100]}`,
   linkBgCurrent: `${colors.base.inverted}`,
@@ -95,6 +97,9 @@ export const DarkTheme = {
   menuBg: "rgba(0, 0, 0, 0.02)",
   menuColor: `rgb(${colors.grey[50]})`,
   menuLinkBorderColor: `rgb(${colors.grey[50]})`,
+
+  footerBg: `rgb(${colors.grey[900]})`,
+  footerColor: `rgb(${colors.grey[400]})`,
 
   drawerBg: `rgb(${colors.black})`,
   drawerColor: `rgb(${colors.grey[50]})`,

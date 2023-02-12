@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
-import * as S from "./styles";
-import { useTheme } from "styled-components";
-import parse from "html-react-parser";
 import { useAtom } from "jotai";
-
-//import "./text-editor.css";
 import { contentFieldAtom } from "../../store/content-field";
+import * as S from "./styles";
 
 const modules = {
+  clipboard: {
+    matchVisual: false,
+  },
   toolbar: [
     [{ header: [1, 2, false] }],
     ["bold", "italic", "underline", "strike", "blockquote", "code-block"],
@@ -40,9 +38,6 @@ const formats = [
 
 const TextEditor = () => {
   const [contentField, setContentField] = useAtom(contentFieldAtom);
-  const theme = useTheme();
-
-  console.log("Current theme: ", theme);
 
   return (
     <>

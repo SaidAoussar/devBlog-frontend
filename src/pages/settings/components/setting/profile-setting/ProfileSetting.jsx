@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, Upload, Button, Space, Spin, Alert } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import userDefaultImg from "/public/img/user.png";
 import { useUserStore } from "../../../../../store/user";
 import { updateUser } from "../../../../../api/User";
 import * as S from "./styles";
@@ -132,9 +133,13 @@ const ProfileSetting = () => {
                 <S.ImageWrapper>
                   <img
                     style={{ borderRadius: "100%", objectFit: "cover" }}
-                    src={`${import.meta.env.VITE_URL}/${
+                    src={
                       authUser.img
-                    }?v=${Date.now()}`}
+                        ? `${import.meta.env.VITE_URL}/${
+                            authUser.img
+                          }?v=${Date.now()}`
+                        : userDefaultImg
+                    }
                     alt=""
                     width="48"
                     height="48"

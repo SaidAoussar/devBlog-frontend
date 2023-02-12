@@ -70,3 +70,13 @@ li {
     width: 1320px;
   }
 }
+
+code {
+  color: white;
+  background: #08090a;
+  word-wrap: break-word;
+  box-decoration-break: clone;
+  border-radius: 0.2rem;
+  padding: 8px;
+  display: inline;
+}

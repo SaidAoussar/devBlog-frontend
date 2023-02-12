@@ -54,6 +54,7 @@ export const lightTheme = {
   linkBgHover: `rgba(${colors.accent_brand_rgb}, 0.1)`,
   linkColor: `rgb(${colors.grey[700]})`,
   linkColorHover: `rgb(${colors.accent_brand_darker_rgb})`,
+  linkBrandedColor: `rgb(${colors.accent_brand_rgb})`,
   linkBrandedColorHover: `rgb(${colors.accent_brand_darker_rgb})`,
   linkColorCurrent: `${colors.base[100]}`,
   linkBgCurrent: `${colors.base.inverted}`,
@@ -90,6 +91,9 @@ export const lightTheme = {
   menuBg: "rgba(0, 0, 0, 0.02)",
   menuColor: "rgba(0, 0, 0, 0.88)",
   menuLinkBorderColor: "#1677ff",
+
+  footerBg: `rgb(${colors.grey[200]})`,
+  footerColor: `rgb(${colors.grey[700]})`,
 
   drawerBg: `rgb(${colors.white})`,
   drawerColor: "rgba(0, 0, 0, 0.88)",

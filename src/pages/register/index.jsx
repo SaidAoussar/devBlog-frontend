@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Row,
   Col,
@@ -18,16 +18,18 @@ import Container from "../../components/utils/Container";
 import "./register.css";
 const { Title, Paragraph } = Typography;
 function Register() {
+  const [form] = Form.useForm();
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
   const onFinish = (values) => {
+    setStatus("pending");
     register(values)
       .then((res) => {
-        console.log(res);
         if (res.status === 201) {
+          form.resetFields();
           setStatus("resolved");
         }
 
@@ -57,12 +59,25 @@ function Register() {
               </Space>
             )}
             {status === "rejected" && (
-              <Alert message={error} type="error" showIcon />
+              <Alert
+                style={{
+                  marginBottom: "8px",
+                }}
+                message={error}
+                type="error"
+                showIcon
+              />
             )}
 
-            {status === "resolved" && (
+            {status === "idle" && (
               <Alert
-                message={<p>You register with succcess, check your email.</p>}
+                style={{ marginBottom: "8px" }}
+                message={
+                  <p>
+                    Your registration was successful! try to{" "}
+                    <Link to="/login">Login</Link>.
+                  </p>
+                }
                 type="success"
               />
             )}
@@ -80,7 +95,12 @@ function Register() {
               >
                 Register
               </Paragraph>
-              <Form name="register-form" layout="vertical" onFinish={onFinish}>
+              <Form
+                form={form}
+                name="register-form"
+                layout="vertical"
+                onFinish={onFinish}
+              >
                 <Form.Item
                   label={<span>First Name</span>}
                   name="firstName"
@@ -92,7 +112,7 @@ function Register() {
                     },
                   ]}
                 >
-                  <Input size="large" />
+                  <Input size="large" autoComplete="off" />
                 </Form.Item>
                 <Form.Item
                   label={<span>Last Name</span>}
@@ -105,7 +125,7 @@ function Register() {
                     },
                   ]}
                 >
-                  <Input size="large" />
+                  <Input size="large" autoComplete="off" />
                 </Form.Item>
                 <Form.Item
                   label={<span>Email</span>}
@@ -116,18 +136,18 @@ function Register() {
                     { type: "email" },
                   ]}
                 >
-                  <Input size="large" />
+                  <Input size="large" autoComplete="off" />
                 </Form.Item>
                 {/* todo: create username in database unique. localhost/sabiri10 */}
-                {/* <Form.Item
-                label="Username"
-                name="username"
-                rules={[
-                  { required: true, message: "Please input your username!" },
-                ]}
-              >
-                <Input />
-              </Form.Item> */}
+                <Form.Item
+                  label={<span>Username</span>}
+                  name="username"
+                  rules={[
+                    { required: true, message: "Please input your username!" },
+                  ]}
+                >
+                  <Input autoComplete="off" />
+                </Form.Item>
                 <Form.Item
                   label={<span>Password</span>}
                   name="password"
@@ -148,7 +168,7 @@ function Register() {
                     htmlType="submit"
                     disabled={status === "pending"}
                   >
-                    Sign In
+                    Register
                   </Button>
                 </Form.Item>
               </Form>

@@ -38,11 +38,6 @@ function Tag() {
         </S.Header>
         <S.Content>
           <S.Sidebar>
-            <S.Widget>
-              <Link to="/new">
-                <Button type="primary">Create Post</Button>
-              </Link>
-            </S.Widget>
             <S.SidebarData>
               <S.Text>{nbrPosts} Posts Published</S.Text>
             </S.SidebarData>

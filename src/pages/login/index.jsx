@@ -17,11 +17,13 @@ import { useNavigate } from "react-router-dom";
 import Container from "../../components/utils/Container";
 import { useUserStore } from "../../store/user";
 import "./login.css";
+import { useDarkModeStore } from "../../store/dark-mode";
 
 const { Title, Paragraph } = Typography;
 function Login() {
   const setUser = useUserStore((state) => state.setUser);
   const authUser = useUserStore((state) => state.user);
+  const setMode = useDarkModeStore((state) => state.setMode);
 
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
@@ -35,7 +37,8 @@ function Login() {
         if (res.status === 201) {
           localStorage.setItem("current_user", JSON.stringify(res.data));
           setUser(res.data);
-          navigate("/profile/" + res.data.id);
+          setMode(res.data.mode);
+          navigate("/" + res.data.username);
         }
 
         throw new Error("password and email incorrect");
@@ -95,7 +98,7 @@ function Login() {
                     { type: "email" },
                   ]}
                 >
-                  <Input size="large" />
+                  <Input size="large" autoComplete="off" />
                 </Form.Item>
                 <Form.Item
                   label={

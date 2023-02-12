@@ -4,8 +4,8 @@ import reactjsLogo from "/public/img/reactjs-logo.svg";
 import nestjsLogo from "/public/img/nestjs-logo.svg";
 
 const FooterWrapper = styled.footer`
-  color: rgb(64, 64, 64);
-  background-color: rgb(229, 229, 229);
+  color: ${(props) => props.theme.footerColor};
+  background-color: ${(props) => props.theme.footerBg};
   text-align: center;
   padding: 48px;
   margin-top: 8px;
@@ -17,10 +17,10 @@ const FooterDescription = styled.p`
 
 const FooterBlogLink = styled(Link)`
   font-weight: 500;
-  color: rgb(59, 73, 229);
+  color: ${(props) => props.theme.linkBrandedColor};
   text-decoration: none;
   &:hover {
-    color: rgb(47, 58, 178);
+    color: ${(props) => props.theme.linkBrandedColorHover};
     text-decoration: underline;
   }
 `;
@@ -34,14 +34,14 @@ const FooterNavLink = styled.li`
   display: flex;
   align-items: center;
   a {
-    color: rgb(59, 73, 223);
+    color: ${(props) => props.theme.linkBrandedColor};
   }
   .dot {
     margin-left: 4px;
     display: inline-block;
     height: 4px;
     width: 4px;
-    background-color: #575757;
+    background-color: ${(props) => props.theme.base[70]};
     border-radius: 50%;
   }
 `;

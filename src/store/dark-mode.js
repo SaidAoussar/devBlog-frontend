@@ -2,7 +2,7 @@ import create from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 
 export const useDarkModeStore = create((set, get) => ({
-  mode: localStorage.getItem("devblog:mode") || "light",
+  mode: JSON.parse(localStorage.getItem("current_user"))?.mode || "LIGHT",
   setMode: (mode) => set({ mode }),
 }));
 

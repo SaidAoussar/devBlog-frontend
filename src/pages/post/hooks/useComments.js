@@ -8,6 +8,11 @@ export default function useComments(postId, pageNumber) {
   const [error, setError] = useState(false);
   const [comments, setComments] = useAtom(commentsAtom);
   const [hasMore, setHasMore] = useState(false);
+
+  useEffect(() => {
+    setComments([]);
+  }, [postId, setComments]);
+
   useEffect(() => {
     setLoading(true);
     setError(false);

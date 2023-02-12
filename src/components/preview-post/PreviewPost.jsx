@@ -151,7 +151,7 @@ const SaveButton = styled.button`
 `;
 
 const PreviewPost = React.forwardRef(({ post }, ref) => {
-  const { id, title, createdAt, author, tags } = post;
+  const { id, title, slug, createdAt, author, tags } = post;
   return (
     <PreviewContainer ref={ref}>
       <article>
@@ -165,7 +165,7 @@ const PreviewPost = React.forwardRef(({ post }, ref) => {
           <div>
             <PreviewTopTitleLink>
               <Title level={5}>
-                {author.lastName} {author.firstName}
+                {author.firstName} {author.lastName}
               </Title>
             </PreviewTopTitleLink>
             <PreviewTopDate>
@@ -177,7 +177,7 @@ const PreviewPost = React.forwardRef(({ post }, ref) => {
         </PreviewTop>
         <PreviewBody>
           <PreviewTitle level={3}>
-            <Link to={`/post/${id}`}>{title} </Link>
+            <Link to={`/${author.username}/${slug}`}>{title} </Link>
           </PreviewTitle>
 
           <PreviewTags>
@@ -192,18 +192,18 @@ const PreviewPost = React.forwardRef(({ post }, ref) => {
             <PreviewReactions>
               <Reaction>
                 <HeartOutlined style={{ marginRight: "8px" }} />
-                <ReactionText>540 reactions</ReactionText>
+                <ReactionText>{post._count?.reactions} reactions</ReactionText>
               </Reaction>
               <Reaction>
                 <MessageOutlined style={{ marginRight: "8px" }} />
-                <ReactionText> 42 comments</ReactionText>
+                <ReactionText> {post._count?.comments} comments</ReactionText>
               </Reaction>
             </PreviewReactions>
             <PreviewSave>
-              <PreviewSaveText>9 min</PreviewSaveText>
-              <SaveButton type="text" size="small">
-                <SaveIcon postId={post.id} />
-              </SaveButton>
+              {/* <PreviewSaveText>9 min</PreviewSaveText> */}
+              {/* <SaveButton type="text" size="small"> */}
+              <SaveIcon postId={post.id} />
+              {/* </SaveButton> */}
             </PreviewSave>
           </PreviewBottom>
         </PreviewBody>
